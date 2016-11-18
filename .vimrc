@@ -1,57 +1,81 @@
-syntax on
-colorscheme hybrid
-set background=dark
-set number
-set laststatus=2
-set expandtab
-set tabstop=2
-set shiftwidth=2
-let g:python3_host_prog = '/home/xyz/.linuxbrew/var/pyenv/versions/venv351/bin/python'
-
-"dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
-" Required:
-set runtimepath^=/home/xyz/.vim/repos/github.com/Shougo/dein.vim
+syntax enable
+set background=dark
+colorscheme hybrid
+
+set title
+set ambiwidth=double
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set smartindent
+
+set number
+set cursorline
+set virtualedit=onemore
+set smartindent
+set visualbell
+set showmatch
+set laststatus=2
+
+let mapleader = "\<Space>"
 
 " Required:
-call dein#begin(expand('/home/xyz/.vim'))
-" Let dein manage dein
-" Required:
-call dein#add('Shougo/dein.vim')
-" Add or remove your plugins here:
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
-call dein#add('Shougo/deoplete.nvim')
-call dein#add('zchee/deoplete-jedi')
-call dein#add('flazz/vim-colorschemes')
-call dein#add('itchyny/lightline.vim')
-call dein#add('scrooloose/nerdtree')
-call dein#add('ervandew/supertab')
-call dein#add('mattn/emmet-vim')
-call dein#add('tpope/vim-surround')
-call dein#add('hail2u/vim-css3-syntax')
-call dein#add('pangloss/vim-javascript')
-call dein#add('marijnh/tern_for_vim')
-
-" You can specify revision/branch/tag.
-call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+call plug#begin('~/.vim/plugged')
 
 " Required:
-call dein#end()
+Plug 'Shougo/dein.vim'
+Plug 'Shougo/deoplete.nvim'
+Plug 'scrooloose/nerdtree'
+Plug 'mattn/emmet-vim', {'for': 'html'}
+Plug 'itchyny/lightline.vim'
+Plug 'ervandew/supertab'
+Plug 'Townk/vim-autoclose'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
+Plug 'scrooloose/syntastic'
+Plug 'sheerun/vim-polyglot'
+Plug 'klen/python-mode', {'for': 'python'}
+Plug 'flazz/vim-colorschemes'
+" Required:
+call plug#end()
 
 " Required:
 filetype plugin indent on
 
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
-"End dein Scripts-------------------------
+" Use deoplete
 let g:deoplete#enable_at_startup = 1
-let g:SuperTabDefaultCompletionType = "<c-n>"
+setlocal omnifunc=jedi#completions
 
-au BufNewFile,BufRead *.ejs set filetype=html
+autocmd FileType python setlocal completeopt-=preview
+
+let g:syntastic_python_checkers = ['pyflakes']
+
+hi IndentGuidesOdd  ctermbg=black
+hi IndentGuidesEven ctermbg=darkgrey
+
+
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_enable_on_vim_startup = 1
+
+let g:indent_guides_guide_size = 1
+
+
+let python_highlight_all = 1
+
+
+" syntax highlighting
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+
+" Don't autofold code
+let g:pymode_folding = 0
+
+let g:pymode_rope = 0
