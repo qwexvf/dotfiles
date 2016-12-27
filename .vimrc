@@ -1,1 +1,1 @@
-/home/vagrant/.vimrc
+/home/vagrant/.dotfiles/.vimrc
