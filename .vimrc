@@ -1,12 +1,9 @@
 if &compatible
   set nocompatible
 endif
-
-let g:onedark_termcolors=16
-
 syntax on
-colorscheme onedark
-
+colorscheme hybrid
+set background=dark
 set encoding=utf8
 set title
 set number
@@ -44,6 +41,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'joshdick/onedark.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'KeitaNakamura/neodark.vim'
 call plug#end()
 filetype plugin indent on
 

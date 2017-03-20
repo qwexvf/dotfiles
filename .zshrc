@@ -11,23 +11,17 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-export PATH="$HOME/.yarn/bin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+alias vi=nvim
+export XDG_CONFIG_HOME=$HOME/.config
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-alias vi=nvim
-alias vim=nvim
-
-jet() {
-  cd ~/work/jet
-  source ./venv/bin/activate
-  pyenv rehash
+pug(){
+  cd ~/Documents/pug
+  pyenv deactivate
+  pyenv activate sanic
 }
 
-pug() {
-  cd ~/work/csgo-pug-flask
-  source ./venv/bin/activate
-  pyenv rehash
-}
+alias pug=pug
