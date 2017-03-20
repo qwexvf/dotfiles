@@ -25,7 +25,7 @@ NC='\033[0m'
 STEAMCMD_API=$STEAMCMD_HOME/linux32/steamclient.so
 UNTURNED_API=$UNTURNED_HOME/Unturned_Data/Plugins/x86/steamclient.so
 
-update() {
+update_rocket() {
   echo "Cheking for latest version."
   latest_version=$(curl -s https://ci.rocketmod.net/job/Rocket.Unturned/api/xml?xpath=/*/lastStableBuild/number | sed -e 's/<[^>]*>//g')
   old_ver=$(cat $UPDATE_FILE)
@@ -65,7 +65,54 @@ ask() {
   fi
 }
 
-install() { ]
+update_unturned() {
+  # if there is no updated steamcmd will quit and do nothing which is very helpful!
+  ask
+  ./steamcmd.sh +@sSteamCmdForcePlatformBitness 32 +login "$STEAM_USERNAME" "$STEAM_PASSWORD" +force_install_dir $UNTURNED_HOME +app_update 304930 validate +exit
+}
+
+start() {
+  # if auto update is enabled checks for update
+  if $AUTO_UPDATE ; then
+    update_unturned
+  fi
+
+  if $ROCKET_AUTOUPDATE ; then
+    update_rocket
+  fi
+
+  echo "Updating steamclient.so"
+  if [ -f $STEAMCMD_API ]; then
+    if diff $STEAMCMD_API $UNTURNED_API >/dev/null ; then
+      printf "${GREEN}UP TO DATE${NC}\n\n"
+    else
+      cp $STEAMCMD_API $UNTURNED_API
+      printf "${YELLLOW}UPDATING${NC}\n\n"
+    fi
+  else
+    printf "${RED}steamclient.so WAS NOT FOUND${NC}\n\n"
+  fi
+
+  sleep 1
+
+  cd $UNTURNED_HOME
+
+  if [ ! -f RocketLauncher.exe ]; then
+    echo "RocketLauncher not found. Reinstalling RocketMod"
+    update_rocket
+  else
+    tmux new-session -d -n $SESSION_NAME mono RocketLauncher.exe $INSTANCE_NAME
+    echo "Started Server"
+  fi
+}
+
+stop() {
+  #screen -r $SESSION_NAME -X shutdown
+  tmux send-keys -t $SESSION_NAME "shutdown" C-m
+}
+
+
+install() {
   PKG_OK=$(dpkg-query -W --showformat='${Status}\n' "lib32gcc1" |grep "install ok installed")
   if [ "" == "$PKG_OK" ]; then
     printf "${RED}lib32gcc1 was not found on your computed. Installing it now."
@@ -98,45 +145,8 @@ install() { ]
   echo "Done installing steamcmd. Installing the game"
   # if you didnt edited the username
   # it will ask you the username everytime and the password :D
-  ask
   echo "This will take a while"
-  ./steamcmd.sh +@sSteamCmdForcePlatformBitness 32 +login "$STEAM_USERNAME" "$STEAM_PASSWORD" +force_install_dir $UNTURNED_HOME +app_update 304930 validate +exit
-}
-
-start() {
-  # if auto update is enabled checks for update
-  if $AUTO_UPDATE ; then
-    update
-  fi
-
-  echo "Updating steamclient.so"
-  if [ -f $STEAMCMD_API ]; then
-    if diff $STEAMCMD_API $UNTURNED_API >/dev/null ; then
-      printf "${GREEN}UP TO DATE${NC}\n\n"
-    else
-      cp $STEAMCMD_API $UNTURNED_API
-      printf "${YELLLOW}UPDATING${NC}\n\n"
-    fi
-  else
-    printf "${RED}steamclient.so WAS NOT FOUND${NC}\n\n"
-  fi
-
-  sleep 1
-
-  cd $UNTURNED_HOME
-
-  if [ ! -f RocketLauncher.exe ]; then
-    echo "RocketLauncher not found. Reinstalling RocketMod"
-    update
-  else
-    tmux new-session -d -n $SESSION_NAME mono RocketLauncher.exe $INSTANCE_NAME
-    echo "Started Server"
-  fi
-}
-
-stop() {
-  #screen -r $SESSION_NAME -X shutdown
-  tmux send-keys -t $SESSION_NAME "shutdown" C-m
+  update_unturned
 }
 
 status() {
@@ -178,7 +188,12 @@ case "$1" in
 
   update)
     printf "Updating $SESSION_NAME..."
-    update
+    update_unturned
+    ;;
+
+  update-rocket)
+    printf "Updating $SESSION_NAME..."
+    update_rocket
     ;;
 
   install)
