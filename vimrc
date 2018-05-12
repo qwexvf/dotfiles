@@ -28,8 +28,6 @@ set cursorline
 set mouse=a
 set clipboard+=unnamedplus
 
-let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
-
 call plug#begin('~/.vim/plugged')
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/denite.nvim'
@@ -58,10 +56,11 @@ Plug 'thaerkh/vim-indentguides'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn globall add tern' }
 Plug 'joshdick/onedark.vim'
 Plug 'artur-shaik/vim-javacomplete2'
+Plug 'leafgarland/typescript-vim'
 call plug#end()
 filetype plugin indent on
 
-colorscheme hybrid
+" colorscheme hybrid
 
 nnoremap <silent><C-b> :NERDTreeToggle<CR>
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
@@ -86,3 +85,5 @@ let g:airline#extensions#tabline#enabled = 1
 let g:deoplete#sources#ternjs#filetypes = ["vue"]
 
 " autocmd! BufWritePost * Neomake
+"
+let g:vue_disable_pre_processors=1
