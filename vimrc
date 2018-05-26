@@ -1,8 +1,6 @@
 if &compatible
-  set nocompatible
+  set nocompatible               " Be iMproved
 endif
-syntax on
-set background=dark
 set termguicolors
 set encoding=utf-8
 set fileencodings=utf-8
@@ -25,65 +23,44 @@ set smartindent
 set expandtab
 set autoindent
 set cursorline
-set mouse=a
 set clipboard+=unnamedplus
 
-call plug#begin('~/.vim/plugged')
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/denite.nvim'
-Plug 'sheerun/vim-polyglot'
-Plug 'morhetz/gruvbox'
-Plug 'mattn/emmet-vim'
-Plug 'ervandew/supertab'
-Plug 'Townk/vim-autoclose'
-Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-Plug 'davidhalter/jedi-vim', {'for': 'python'}
-Plug 'python-mode/python-mode', {'branch': 'develop'}
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree'
-Plug 'posva/vim-vue', {'for': 'vue'}
-Plug 'tpope/vim-fugitive'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'elixir-editors/vim-elixir'
-Plug 'slashmili/alchemist.vim'
-" Plug 'neomake/neomake'
-Plug 'wavded/vim-stylus'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'thaerkh/vim-indentguides'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn globall add tern' }
-Plug 'joshdick/onedark.vim'
-Plug 'artur-shaik/vim-javacomplete2'
-Plug 'leafgarland/typescript-vim'
-call plug#end()
+" reset augroup
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+" Required:
+set runtimepath+=/home/qwexvf/.cache/dein/repos/github.com/Shougo/dein.vim
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+
+let s:dein_dir = s:cache_home . '/dein'
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+if !isdirectory(s:dein_repo_dir)
+  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+endif
+let &runtimepath = s:dein_repo_dir .",". &runtimepath
+
+let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+let s:toml_lazy_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
+
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+  call dein#load_toml(s:toml_file, {'lazy': 0})
+  call dein#load_toml(s:toml_lazy_file, {'lazy': 1})
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
 filetype plugin indent on
+syntax enable
 
-" colorscheme hybrid
+" If you want to install not installed plugins on startup.
+" if dein#check_install()
+"  call dein#install()
+" endif
 
-nnoremap <silent><C-b> :NERDTreeToggle<CR>
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
-let g:alchemist#elixir_erlang_src = "~/Documents/erlang"
-
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 0
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#enable_camel_case = 0
-let g:deoplete#enable_ignore_case = 0
-let g:deoplete#enable_refresh_always = 0
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#file#enable_buffer_path = 1
-let g:deoplete#max_list = 10000
-
-let g:pymode_rope_lookup_project = 0
-
-let g:airline#extensions#tabline#enabled = 1
-" let g:gruvbox_contrast_dark = "hard"
-
-let g:deoplete#sources#ternjs#filetypes = ["vue"]
-
-" autocmd! BufWritePost * Neomake
-"
-let g:vue_disable_pre_processors=1
+hi Normal guibg=NONE ctermbg=NONE
