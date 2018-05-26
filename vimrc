@@ -64,3 +64,5 @@ syntax enable
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
 hi Normal guibg=NONE ctermbg=NONE
+
+let g:airline_powerline_fonts=1
