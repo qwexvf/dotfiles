@@ -57,12 +57,13 @@ filetype plugin indent on
 syntax enable
 
 " If you want to install not installed plugins on startup.
-" if dein#check_install()
-"  call dein#install()
-" endif
+if dein#check_install()
+ call dein#install()
+endif
 
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+inoremap <silent> jj <ESC>
 
-hi Normal guibg=NONE ctermbg=NONE
-
-let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
