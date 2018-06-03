@@ -2,6 +2,13 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
 repo = 'scrooloose/nerdtree'
 
 [[plugins]]
@@ -15,7 +22,7 @@ let g:deoplete#enable_ignore_case = 0
 let g:deoplete#enable_refresh_always = 0
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#file#enable_buffer_path = 1
-let g:deoplete#max_list = 10000
+let g:deoplete#max_list = 20
 '''
 
 [[plugins]]
@@ -33,9 +40,6 @@ depends = ['context_filetype.vim']
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
 set background=dark
-" colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
-" 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
-
 au MyAutoCmd VimEnter * nested colorscheme hybrid
 '''
 
@@ -43,10 +47,19 @@ au MyAutoCmd VimEnter * nested colorscheme hybrid
 repo = 'Yggdroot/indentLine'
 
 [[plugins]]
+repo = 'vim-ruby/vim-ruby'
+on_ft = ['ruby']
+
+[[plugins]]
 repo = 'tpope/vim-endwise'
+on_ft = ['ruby']
 
 [[plugins]]
 repo = 'tpope/vim-rails'
+on_ft = ['ruby']
+
+[[plugins]]
+repo = 'fishbullet/deoplete-ruby'
 on_ft = ['ruby']
 
 [[plugins]]
@@ -70,13 +83,7 @@ repo = 'vim-airline/vim-airline-themes'
 repo = 'Townk/vim-autoclose'
 
 [[plugins]]
-repo =  'scrooloose/syntastic'
-
-[[plugins]]
 repo = 'tpope/vim-fugitive'
-
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
@@ -90,3 +97,19 @@ repo = 'mattn/emmet-vim'
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
+
+[[plugins]]
+repo = 'neomake/neomake'
+
+[[plugins]]
+repo = 'rhysd/accelerated-jk'
+hook_add = '''
+"nmap j <Plug>(accelerated_jk_gj)
+"nmap k <Plug>(accelerated_jk_gk)
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
