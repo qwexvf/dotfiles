@@ -6,9 +6,6 @@ repo = 'fatih/vim-go'
 on_ft = ['go']
 
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-
-[[plugins]]
 repo = 'rcmdnk/vim-markdown'
 on_ft = ['md', 'markdown']
 
@@ -18,3 +15,18 @@ repo = 'szw/vim-tags'
 [[plugins]]
 repo = 'scrooloose/nerdtree'
 hook_add = 'nnoremap <silent><C-b> :NERDTreeToggle<CR>'
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+hook_source = '''
+  "Ctrl+Kにターゲットジャンプ割当
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+'''
+on_i  = 1
+on_ft = ['snippet']
+depends = ['neosnippet-snippets']
