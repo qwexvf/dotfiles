@@ -9,10 +9,8 @@ build = 'make'
 repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
-repo = 'scrooloose/nerdtree'
-
-[[plugins]]
 repo = 'Shougo/deoplete.nvim'
+on_i = 1
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 0
@@ -23,6 +21,24 @@ let g:deoplete#enable_refresh_always = 0
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#max_list = 20
+
+inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+\ neosnippet#expandable_or_jumpable() ?
+\    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
+'''
+
+[[plugins]]
+repo = 'zchee/deoplete-clang'
+hook_add = '''
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
+'''
+
+[[plugins]]
+repo = 'Shougo/neoinclude.vim'
+hook_add = '''
+" let g:neoinclude#paths = '/usr/include/X11'
 '''
 
 [[plugins]]
@@ -72,8 +88,8 @@ repo = 'terryma/vim-multiple-cursors'
 repo    = 'vim-airline/vim-airline'
 depends = ['vim-airline-themes']
 hook_add = '''   
-    set laststatus=2
-    let g:airline_theme = 'deus'
+set laststatus=2
+let g:airline_theme = 'deus'
 '''
 
 [[plugins]]
@@ -109,7 +125,5 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'Shougo/neosnippet.vim'
-
-[[plugins]]
 repo = 'Shougo/neosnippet-snippets'
+

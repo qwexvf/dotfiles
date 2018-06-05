@@ -1,3 +1,3 @@
 
 #!/bin/bash
-export TERMINAL=alacritty
+export TERMINAL=konsole
