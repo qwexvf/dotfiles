@@ -1,5 +1,5 @@
 if &compatible
-  set nocompatible               " Be iMproved
+  set nocompatible
 endif
 set termguicolors
 set encoding=utf-8
@@ -17,21 +17,23 @@ set hlsearch
 set tabstop=2 
 set softtabstop=2 
 set shiftwidth=2
-set laststatus=2
 set showtabline=2
 set smartindent
 set expandtab
 set autoindent
 set cursorline
+set laststatus=2
+
+
+
 set clipboard+=unnamedplus
 
-" reset augroup
 augroup MyAutoCmd
   autocmd!
 augroup END
 
 " Required:
-set runtimepath+=/home/qwexvf/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 
 let s:dein_dir = s:cache_home . '/dein'
@@ -58,12 +60,34 @@ syntax enable
 
 " If you want to install not installed plugins on startup.
 if dein#check_install()
- call dein#install()
+  call dein#install()
 endif
 
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 inoremap <silent> jj <ESC>
 
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
+set statusline=%<     " 行が長すぎるときに切り詰める位置
+set statusline+=[%n]  " バッファ番号
+set statusline+=%m    " %m 修正フラグ
+set statusline+=%r    " %r 読み込み専用フラグ
+set statusline+=%h    " %h ヘルプバッファフラグ
+set statusline+=%w    " %w プレビューウィンドウフラグ
+set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
+set statusline+=%y    " バッファ内のファイルのタイプ
+set statusline+=\     " 空白スペース
+if winwidth(0) >= 130
+  set statusline+=%F    " バッファ内のファイルのフルパス
+else
+  set statusline+=%t    " ファイル名のみ
+endif
+set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
+set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
+set statusline+=\ \   " 空白スペース2個
+set statusline+=%1l   " 何行目にカーソルがあるか
+set statusline+=/
+set statusline+=%L    " バッファ内の総行数
+set statusline+=,
+set statusline+=%c    " 何列目にカーソルがあるか
+set statusline+=%V    " 画面上の何列目にカーソルがあるか
+set statusline+=\ \   " 空白スペース2個
+set statusline+=%P    " ファイル内の何％の位置にあるか

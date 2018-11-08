@@ -56,7 +56,7 @@ depends = ['context_filetype.vim']
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
 set background=dark
-au MyAutoCmd VimEnter * nested colorscheme hybrid
+"au MyAutoCmd VimEnter * nested colorscheme hybrid
 '''
 
 [[plugins]]
@@ -83,17 +83,6 @@ repo = 'ervandew/supertab'
 
 [[plugins]]
 repo = 'terryma/vim-multiple-cursors'
-
-[[plugins]]
-repo    = 'vim-airline/vim-airline'
-depends = ['vim-airline-themes']
-hook_add = '''   
-set laststatus=2
-let g:airline_theme = 'deus'
-'''
-
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
 
 [[plugins]]
 repo = 'Townk/vim-autoclose'
