@@ -1,25 +1,22 @@
 set $mod Mod4
 
-font Ricty:monospace 8
+font pango:monospace 8
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-exec --no-startup-id compton -cbm 0.75
+exec --no-startup-id compton --config ~/compton.conf -b
 exec --no-startup-id fcitx
-exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec_always --no-startup-id feh --bg-scale --randomize ~/Wallpaper/*
-exec_always ~/.dotfiles/tmux-workflow.sh
+exec_always --no-startup-id feh --bg-scale --randomize ~/wallpapers/*
 
 # show up our dropdown scratchpad
-bindsym $mod+u [title="workflow"] scratchpad show; [title="workflow"] move position center
+# bindsym $mod+u [title="workflow"] scratchpad show; [title="workflow"] move position center
 
 # start a terminal
-bindsym $mod+Return exec alacritty
-bindsym $mod+Shift+Return exec firefox-developer-edition
+bindsym $mod+Return exec kitty
 
-# firefox
-bindsym $mod+Shift+Return exec firefox-developer-edition
+# browser
+bindsym $mod+Shift+Return exec google-chrome-beta
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -151,9 +148,9 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-#bar {
-#        status_command i3status
-#}
+bar {
+        status_command i3status
+}
 
 # i3 gaps
 for_window [class="^.*"] border pixel 4
@@ -170,23 +167,12 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 client.background       #ffffff
 
-
-# First I have a tmux window used for background scripts.
-# I'll later bind this to mod+u.
-for_window [title="workflow"] floating enable
-for_window [title="workflow"] resize set 1800 900
-for_window [title="workflow"] move scratchpad
-for_window [title="workflow"] border pixel 5
-# Runs the tmuxinit script, which searches for an earlier tmux instance,
-# otherwise starts a new one (to prevent multiple dropdown sessions).
-exec_always --no-startup-id alacritty -t workflow -e ~/.dotfiles/tmux-workflow.sh
-
 # slack
-for_window [instance="slack"] floating enable
-for_window [instance="slack"] resize set 800 300
-for_window [instance="slack"] move scratchpad
-for_window [instance="slack"] border pixel 5
-exec --no-startup-id $term -n math -f mono:pixelsize=24 -e dropdowncalc
+#for_window [instance="slack"] floating enable
+#for_window [instance="slack"] resize set 800 300
+#for_window [instance="slack"] move scratchpad
+#for_window [instance="slack"] border pixel 5
+# exec --no-startup-id $term -n math -f mono:pixelsize=24 -e dropdowncalc
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume

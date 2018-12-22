@@ -56,7 +56,7 @@ depends = ['context_filetype.vim']
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
 set background=dark
-"au MyAutoCmd VimEnter * nested colorscheme hybrid
+au MyAutoCmd VimEnter * nested colorscheme hybrid
 '''
 
 [[plugins]]
@@ -128,3 +128,6 @@ call submode#map('bufmove', 'n', '', '<', '<C-w><')
 call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 '''
+
+[[plugins]]
+repo = 'elixir-editors/vim-elixir'

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # neovim
 if [ ! -d ${HOME}/.config/nvim ];then
