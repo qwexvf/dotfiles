@@ -1,13 +1,16 @@
-set $mod Mod4
+set $mod Mod1
 
-font pango:monospace 8
+font pango: Hack, M+ 1m, FontAwesome, Ionicons, 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-exec --no-startup-id compton --config ~/compton.conf -b
 exec --no-startup-id fcitx
-exec_always --no-startup-id feh --bg-scale --randomize ~/wallpapers/*
+# exec_always --no-startup-id compton --config ~/.config/compton/compton.conf -b
+exec_always --no-startup-id feh --bg-fill --randomize ~/wallpapers/*
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
 
 # show up our dropdown scratchpad
 # bindsym $mod+u [title="workflow"] scratchpad show; [title="workflow"] move position center
@@ -156,7 +159,7 @@ bar {
 for_window [class="^.*"] border pixel 4
 
 gaps inner 10
-gaps outer 4
+gaps outer 9
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #34495e #34495e #ffffff #34495e   #34495e

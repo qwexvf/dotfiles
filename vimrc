@@ -14,8 +14,8 @@ set smartcase
 set incsearch
 set wrapscan
 set hlsearch
-set tabstop=2 
-set softtabstop=2 
+set tabstop=2
+set softtabstop=2
 set shiftwidth=2
 set showtabline=2
 set smartindent
@@ -29,6 +29,7 @@ set clipboard+=unnamedplus
 augroup MyAutoCmd
   autocmd!
 augroup END
+
 
 " Required:
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
@@ -89,3 +90,7 @@ set statusline+=%c    " 何列目にカーソルがあるか
 set statusline+=%V    " 画面上の何列目にカーソルがあるか
 set statusline+=\ \   " 空白スペース2個
 set statusline+=%P    " ファイル内の何％の位置にあるか
+
+
+" for elixir
+imap >> \|><Space>

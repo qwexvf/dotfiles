@@ -2,11 +2,19 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
+repo = 'HerringtonDarkholme/yats.vim'
 
 [[plugins]]
-repo = 'sheerun/vim-polyglot'
+repo = 'itchyny/lightline.vim'
+
+
+[[plugins]]
+repo = 'mhartington/nvim-typescript'
+build = './install.sh'
+hook_add = '''
+let g:nvim_typescript#vue_support = 1
+let g:nvim_typescript#diagnostics_enable = 0
+'''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
@@ -29,19 +37,6 @@ inoremap <expr><tab> pumvisible() ? "\<C-n>" :
 '''
 
 [[plugins]]
-repo = 'zchee/deoplete-clang'
-hook_add = '''
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
-'''
-
-[[plugins]]
-repo = 'Shougo/neoinclude.vim'
-hook_add = '''
-" let g:neoinclude#paths = '/usr/include/X11'
-'''
-
-[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
@@ -57,6 +52,21 @@ repo = 'w0ng/vim-hybrid'
 hook_add = '''
 set background=dark
 au MyAutoCmd VimEnter * nested colorscheme hybrid
+'''
+
+[[plugins]]
+repo = 'mhartington/oceanic-next'
+hook_add = '''
+"if (has("termguicolors"))
+" set termguicolors
+"endif
+
+" Theme
+"syntax enable
+"let g:oceanic_next_terminal_bold = 1
+"let g:oceanic_next_terminal_italic = 1
+"let g:airline_theme='oceanicnext'
+"colorscheme OceanicNext
 '''
 
 [[plugins]]
@@ -104,9 +114,6 @@ repo = 'mattn/emmet-vim'
 repo = 'majutsushi/tagbar'
 
 [[plugins]]
-repo = 'neomake/neomake'
-
-[[plugins]]
 repo = 'rhysd/accelerated-jk'
 hook_add = '''
 nmap j <Plug>(accelerated_jk_gj)
@@ -131,3 +138,18 @@ call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
 [[plugins]]
 repo = 'elixir-editors/vim-elixir'
+
+[[plugins]]
+repo = 'elmcast/elm-vim'
+hook_add = '''
+let g:polyglot_disabled = ['elm']
+'''
+
+[[plugins]]
+repo = 'posva/vim-vue'
+hook_add = '''
+let g:vue_disable_pre_processors=1
+'''
+
+[[plugins]]
+repo = 'junegunn/rainbow_parentheses.vim'
