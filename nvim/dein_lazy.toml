@@ -31,3 +31,19 @@ on_i  = 1
 on_ft = ['snippet']
 depends = ['neosnippet-snippets']
 
+[[plugins]]
+repo = 'deoplete-plugins/deoplete-jedi'
+on_ft = ['py', 'python']
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = ['py', 'python']
+hook_add = '''
+let g:jedi#auto_initialization = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#completions_enabled = 0
+" コード参照のキーバインドを登録
+let g:jedi#goto_command = "<Leader>d"
+'''
+

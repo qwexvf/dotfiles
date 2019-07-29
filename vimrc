@@ -23,6 +23,7 @@ set expandtab
 set autoindent
 set cursorline
 set laststatus=2
+set noswapfile
 
 set clipboard+=unnamedplus
 
