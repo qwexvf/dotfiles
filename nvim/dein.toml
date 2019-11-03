@@ -51,9 +51,9 @@ depends = ['context_filetype.vim']
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
 set background=dark
-"let g:hybrid_custom_term_colors = 1
-"let g:hybrid_reduced_contrast = 1
-" au MyAutoCmd VimEnter * nested colorscheme hybrid
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1
+au MyAutoCmd VimEnter * nested colorscheme hybrid
 '''
 
 [[plugins]]
