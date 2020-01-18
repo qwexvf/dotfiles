@@ -1,49 +1,9 @@
 [[plugins]]
-repo ='flazz/vim-colorschemes'
-
-[[plugins]]
-repo = 'fatih/vim-go'
-on_ft = ['go']
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = ['md', 'markdown']
-
-[[plugins]]
-repo = 'szw/vim-tags'
-
-[[plugins]]
-repo = 'scrooloose/nerdtree'
-hook_add = 'nnoremap <silent><C-b> :NERDTreeToggle<CR>'
-
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-hook_source = '''
-  "Ctrl+Kにターゲットジャンプ割当
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
-'''
-on_i  = 1
-on_ft = ['snippet']
-depends = ['neosnippet-snippets']
-
-[[plugins]]
-repo = 'deoplete-plugins/deoplete-jedi'
-on_ft = ['py', 'python']
-
-[[plugins]]
-repo = 'davidhalter/jedi-vim'
-on_ft = ['py', 'python']
+repo = 'preservim/nerdtree'
 hook_add = '''
-let g:jedi#auto_initialization = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#completions_enabled = 0
-" コード参照のキーバインドを登録
-let g:jedi#goto_command = "<Leader>d"
+map <C-n> :NERDTreeToggle<CR>
 '''
+
+[[plugins]]
+repo = 'dense-analysis/ale'
 
