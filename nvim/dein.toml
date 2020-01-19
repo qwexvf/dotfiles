@@ -33,3 +33,10 @@ repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+hook_add = '''
+set background=dark
+au MyAutoCmd VimEnter * nested colorscheme iceberg
+'''
