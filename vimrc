@@ -24,8 +24,9 @@ set autoindent
 set cursorline
 set laststatus=2
 set noswapfile
+set relativenumber
 
-set updatetime=300
+set updatetime=100
 set cmdheight=2
 set shortmess+=c
 set signcolumn=yes
@@ -141,6 +142,8 @@ endfunction
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
+let mapleader = ","
+
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -207,3 +210,11 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " for elixir
 imap >> \|><Space>
+
+nnoremap <silent> ,f :Files<CR>
+nnoremap <silent> ,F :GFiles?<CR>
+nnoremap <silent> ,b :Buffers<CR>
+nnoremap <silent> ,l :BLines<CR>
+nnoremap <silent> ,h :History<CR>
+nnoremap <silent> ,m :Mark<CR>
+

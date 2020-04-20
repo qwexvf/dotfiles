@@ -9,6 +9,9 @@ merged = '0'
 
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
+hook_add = '''
+" let g:polyglot_disabled = ['typescript', 'elixir']
+'''
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
@@ -17,26 +20,32 @@ repo = 'tpope/vim-fugitive'
 repo = 'tpope/vim-surround'
 
 [[plugins]]
-repo = 'junegunn/fzf.vim'
-
-[[plugins]]
 repo = 'tpope/vim-commentary'
-
-[[plugins]]
-repo = 'vim-airline/vim-airline'
-
-[[plugins]]
-repo = 'junegunn/fzf'
-
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
-repo = 'cocopon/iceberg.vim'
+#repo = 'cocopon/iceberg.vim'
+repo = 'chriskempson/base16-vim'
 hook_add = '''
 set background=dark
-au MyAutoCmd VimEnter * nested colorscheme iceberg
+au MyAutoCmd VimEnter * nested colorscheme base16-default-dark
+'''
+
+[[plugins]]
+repo = 'junegunn/fzf'
+build_on = '''
+./install --all
+'''
+merged = '0'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
+
+[[plugins]]
+repo = "takac/vim-hardtime"
+hook_add = '''
+" let g:hardtime_default_on = 1
 '''

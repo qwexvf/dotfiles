@@ -1,9 +1,2 @@
 [[plugins]]
-repo = 'preservim/nerdtree'
-hook_add = '''
-map <C-n> :NERDTreeToggle<CR>
-'''
-
-[[plugins]]
 repo = 'dense-analysis/ale'
-
