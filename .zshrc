@@ -25,7 +25,5 @@ alias makeconfig="sudo nvim /etc/portage/make.conf"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-eval "$(starship init zsh)"
-
 export GPG_TTY=$(tty)
 export XDG_DATA_HOME=$HOME/.local/share
