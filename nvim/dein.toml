@@ -29,8 +29,8 @@ repo = 'editorconfig/editorconfig-vim'
 #repo = 'cocopon/iceberg.vim'
 repo = 'chriskempson/base16-vim'
 hook_add = '''
-set background=dark
-au MyAutoCmd VimEnter * nested colorscheme base16-default-dark
+"set background=dark
+"au MyAutoCmd VimEnter * nested colorscheme base16-default-dark
 '''
 
 [[plugins]]
@@ -48,4 +48,23 @@ depends = 'fzf'
 repo = "takac/vim-hardtime"
 hook_add = '''
 " let g:hardtime_default_on = 1
+'''
+
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'alampros/vim-styled-jsx'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'
+hook_add = '''
+set background=dark
+au MyAutoCmd VimEnter * nested colorscheme nord
 '''
