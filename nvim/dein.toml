@@ -26,14 +26,6 @@ repo = 'tpope/vim-commentary'
 repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
-#repo = 'cocopon/iceberg.vim'
-repo = 'chriskempson/base16-vim'
-hook_add = '''
-"set background=dark
-"au MyAutoCmd VimEnter * nested colorscheme base16-default-dark
-'''
-
-[[plugins]]
 repo = 'junegunn/fzf'
 build_on = '''
 ./install --all
@@ -66,5 +58,5 @@ on_ft = ['javascript', 'javascript.jsx']
 repo = 'arcticicestudio/nord-vim'
 hook_add = '''
 set background=dark
-au MyAutoCmd VimEnter * nested colorscheme nord
+"au MyAutoCmd VimEnter * nested colorscheme nord
 '''
