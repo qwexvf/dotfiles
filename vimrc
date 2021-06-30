@@ -217,4 +217,46 @@ nnoremap <silent> ,b :Buffers<CR>
 nnoremap <silent> ,l :BLines<CR>
 nnoremap <silent> ,h :History<CR>
 nnoremap <silent> ,m :Mark<CR>
+nnoremap <silent> ,g :GFiles<CR>
+nnoremap <silent> ,G :GFiles?<CR>
+nnoremap <silent> ,r :Rg<CR>
 
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+" Go settings
+augroup filetype
+  au! BufRead,BufNewFile *.proto setfiletype proto
+augroup end
+autocmd FileType go setlocal noexpandtab
+autocmd FileType go setlocal tabstop=4
+autocmd FileType go setlocal shiftwidth=4
+
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+"スペースfmtでFormat
+nmap <silent> <space>fmt <Plug>(coc-format)
+"スペース2回でCocList
+nmap <silent> <space><space> :<C-u>CocList<cr>
+"スペースhでHover
+nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
+"スペースdfでDefinition
+nmap <silent> <space>df <Plug>(coc-definition)
+"スペースrfでReferences
+nmap <silent> <space>rf <Plug>(coc-references)
+"スペースrnでRename
+nmap <silent> <space>rn <Plug>(coc-rename)

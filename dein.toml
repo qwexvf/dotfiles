@@ -6,6 +6,24 @@ repo = 'neoclide/coc.nvim'
 rev = 'release'
 on_i = 1
 merged = '0'
+hook_add = '''
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  command! -nargs=0 Format :call CocAction('format')
+  nmap <silent> ff :call CocAction('format')<Enter>
+'''
 
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
@@ -26,14 +44,6 @@ repo = 'tpope/vim-commentary'
 repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
-#repo = 'cocopon/iceberg.vim'
-repo = 'chriskempson/base16-vim'
-hook_add = '''
-set background=dark
-au MyAutoCmd VimEnter * nested colorscheme base16-default-dark
-'''
-
-[[plugins]]
 repo = 'junegunn/fzf'
 build_on = '''
 ./install --all
@@ -41,11 +51,45 @@ build_on = '''
 merged = '0'
 
 [[plugins]]
+repo = 'chriskempson/base16-vim'
+hook_add = '''
+set background=dark
+au MyAutoCmd VimEnter * nested colorscheme base16-default-dark
+'''
+
+[[plugins]]
 repo = 'junegunn/fzf.vim'
 depends = 'fzf'
+hook_add = '''
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+'''
 
 [[plugins]]
 repo = "takac/vim-hardtime"
 hook_add = '''
 " let g:hardtime_default_on = 1
 '''
+
+[[plugins]]
+repo = "lifepillar/pgsql.vim"
+hook_add = '''
+let g:sql_type_default = 'pgsql'
+'''
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+
+[[plugins]]
+repo = 'meain/vim-jsontogo'
