@@ -1,0 +1,1 @@
+/Users/marumaru/.zshrc
