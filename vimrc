@@ -248,15 +248,22 @@ autocmd FileType go setlocal tabstop=4
 autocmd FileType go setlocal shiftwidth=4
 
 autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-"スペースfmtでFormat
 nmap <silent> <space>fmt <Plug>(coc-format)
-"スペース2回でCocList
 nmap <silent> <space><space> :<C-u>CocList<cr>
-"スペースhでHover
 nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
-"スペースdfでDefinition
 nmap <silent> <space>df <Plug>(coc-definition)
-"スペースrfでReferences
 nmap <silent> <space>rf <Plug>(coc-references)
-"スペースrnでRename
 nmap <silent> <space>rn <Plug>(coc-rename)
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+  indent = {
+    enable = true
+  }
+}
+EOF

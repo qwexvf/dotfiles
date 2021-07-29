@@ -15,7 +15,7 @@ bindsym $mod+minus scratchpad show
 # bindsym $mod+u [title="workflow"] scratchpad show; [title="workflow"] move position center
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty
 
 # browser
 bindsym $mod+Shift+Return exec ~/.apps/firefox/firefox-bin
@@ -24,12 +24,12 @@ bindsym $mod+Shift+Return exec ~/.apps/firefox/firefox-bin
 bindsym $mod+Shift+q kill
 
 # ROFI
-bindsym $mod+d exec --no-startup-id "rofi -show drun -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
-bindsym $mod+c exec --no-startup-id "rofi -show window -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
+#bindsym $mod+d exec --no-startup-id "rofi -show drun -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
+# bindsym $mod+c exec --no-startup-id "rofi -show window -font \\"DejaVu 9\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec dmenu_run
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left

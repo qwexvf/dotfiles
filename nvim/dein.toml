@@ -8,12 +8,6 @@ on_i = 1
 merged = '0'
 
 [[plugins]]
-repo = 'sheerun/vim-polyglot'
-hook_add = '''
-" let g:polyglot_disabled = ['typescript', 'elixir']
-'''
-
-[[plugins]]
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
@@ -33,6 +27,10 @@ build_on = '''
 merged = '0'
 
 [[plugins]]
+repo = 'yuki-yano/fzf-preview.vim'
+rev = 'release/rpc'
+
+[[plugins]]
 repo = 'junegunn/fzf.vim'
 depends = 'fzf'
 
@@ -43,20 +41,17 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'pangloss/vim-javascript'
-on_ft = ['javascript', 'javascript.jsx']
-
-[[plugins]]
-repo = 'maxmellon/vim-jsx-pretty'
-on_ft = ['javascript', 'javascript.jsx']
-
-[[plugins]]
-repo = 'alampros/vim-styled-jsx'
-on_ft = ['javascript', 'javascript.jsx']
-
-[[plugins]]
-repo = 'arcticicestudio/nord-vim'
+repo = 'lifepillar/vim-gruvbox8'
 hook_add = '''
 set background=dark
-"au MyAutoCmd VimEnter * nested colorscheme nord
+au MyAutoCmd VimEnter * nested colorscheme gruvbox8_hard
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+
+[[plugins]]
+repo = 'elixir-lsp/coc-elixir'
+build_on = '''
+yarn install && yarn prepack
 '''

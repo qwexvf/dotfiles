@@ -22,7 +22,7 @@ alias vf='nvim $(fzf)'
 fpath=(${ASDF_DIR}/completions $fpath)
 
 # Golang
-export GOROOT=/usr/local/src/go
+export GOROOT="$(asdf where golang)/go/"
 export GOOS=$OS
 export GOARCH=amd64
 export GOBIN=$GOROOT/bin
@@ -31,6 +31,7 @@ export GOPATH=$HOME/go
 
 # Yarn
 export PATH=$(yarn global bin):$PATH
+export PATH=$(npm config get prefix)/bin:$PATH
 
 # GPG
 export GPG_TTY=$(tty)
@@ -41,5 +42,15 @@ alias dc="docker compose"
 alias ls=exa
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
+# Rust
+source $HOME/.cargo/env
+
+alias dc="docker compose"
+
+export QT_QPA_PLATFORM=wayland
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_WEBRENDER=1
+export XDG_SESSION_TYPE=wayland
+export XDG_CURRENT_DESKTOP=sway
 
 autoload -Uz compinit && compinit
