@@ -1,2 +1,14 @@
 [[plugins]]
 repo = 'dense-analysis/ale'
+
+[[plugins]]
+repo = 'preservim/vimux'
+
+[[plugins]]
+repo = 'sebdah/vim-delve'
+on_ft = ['go', 'golang']
+hook_add = '''
+let g:delve_backend = "native"
+let g:delve_use_vimux = 1
+'''
+
