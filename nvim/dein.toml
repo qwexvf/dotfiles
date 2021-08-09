@@ -41,17 +41,50 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'lifepillar/vim-gruvbox8'
-hook_add = '''
-set background=dark
-au MyAutoCmd VimEnter * nested colorscheme gruvbox8_hard
-'''
+repo = 'nvim-treesitter/nvim-treesitter'
 
 [[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
+repo = 'romgrk/nvim-treesitter-context'
 
 [[plugins]]
 repo = 'elixir-lsp/coc-elixir'
 build_on = '''
 yarn install && yarn prepack
 '''
+
+[[plugins]]
+repo = 'lifepillar/vim-gruvbox8'
+
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+
+[[plugins]]
+repo = 'bluz71/vim-nightfly-guicolors'
+
+[[plugins]]
+repo = 'bluz71/vim-moonfly-colors'
+
+[[plugins]]
+repo = 'folke/tokyonight.nvim'
+
+[[plugins]]
+repo = 'camspiers/animate.vim'
+
+[[plugins]]
+repo = 'camspiers/lens.vim'
+
+[[plugins]]
+repo = 'hoob3rt/lualine.nvim'
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'akinsho/nvim-bufferline.lua'
+
+[[plugins]]
+repo = 'antoinemadec/coc-fzf'
+

@@ -266,4 +266,19 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   }
 }
+require('lualine').setup{
+  options = {theme = 'auto'}
+}
+require('bufferline').setup{}
+
+require('treesitter-context').setup{
+  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+  throttle = true, -- Throttles plugin updates (may improve performance)
+}
 EOF
+
+let g:moonflyCursorColor = 1
+au MyAutoCmd VimEnter * nested colorscheme moonfly
+
+" Y?
+nnoremap Y y$
