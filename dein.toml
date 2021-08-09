@@ -26,12 +26,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'sheerun/vim-polyglot'
-hook_add = '''
-" let g:polyglot_disabled = ['typescript', 'elixir']
-'''
-
-[[plugins]]
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
@@ -93,3 +87,6 @@ repo = 'honza/vim-snippets'
 
 [[plugins]]
 repo = 'meain/vim-jsontogo'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
