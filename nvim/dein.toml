@@ -88,3 +88,23 @@ repo = 'akinsho/nvim-bufferline.lua'
 [[plugins]]
 repo = 'antoinemadec/coc-fzf'
 
+[[plugins]]
+repo = 'digitaltoad/vim-pug'
+
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'leafOfTree/vim-vue-plugin'
+hook_add = '''
+let g:vim_vue_plugin_config = { 
+      \'syntax': {
+      \   'template': ['html', 'pug'],
+      \   'script': ['javascript', 'typescript'],
+      \},
+      \'attribute': 1,
+      \'keyword': 1,
+      \'foldexpr': 1,
+      \'debug': 0,
+      \}
+'''

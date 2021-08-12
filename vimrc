@@ -246,8 +246,9 @@ augroup end
 autocmd FileType go setlocal noexpandtab
 autocmd FileType go setlocal tabstop=4
 autocmd FileType go setlocal shiftwidth=4
-
 autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
+" Coc
 nmap <silent> <space>fmt <Plug>(coc-format)
 nmap <silent> <space><space> :<C-u>CocList<cr>
 nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
@@ -264,14 +265,16 @@ require'nvim-treesitter.configs'.setup {
   },
   indent = {
     enable = true
+  },
+  disable = { "vue" },
+}
+
+require('lualine').setup {
+  options = {
+    theme = '16color'
   }
 }
-
-require('lualine').setup{
-  options = {theme = 'auto'}
-}
 require('bufferline').setup{}
-
 require('treesitter-context').setup{
   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
   throttle = true, -- Throttles plugin updates (may improve performance)
