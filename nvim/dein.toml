@@ -83,8 +83,4 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
-repo = 'akinsho/nvim-bufferline.lua'
-
-[[plugins]]
-repo = 'antoinemadec/coc-fzf'
-
+repo = 'arcticicestudio/nord-vim'
