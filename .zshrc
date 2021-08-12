@@ -13,6 +13,7 @@ alias vim='arch -arm64 nvim'
 alias vi='arch -arm64 nvim'
 alias vf='nvim $(fzf)'
 
+# cd ... 
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -20,6 +21,10 @@ alias ....='cd ../../..'
 # 数字で表現
 alias ..2='cd ../..'
 alias ..3='cd ../../..'
+
+# shortcuts
+alias vimdiff='nvim -d '
+alias dc="docker compose"
 
 # Golang
 alias go-reshim='asdf reshim golang && export GOROOT="$(asdf where golang)/go/"'
@@ -38,14 +43,15 @@ export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 # GPG
 export GPG_TTY=$(tty)
-export EDITOR=nvim
- alias vimdiff='nvim -d '
- alias dc="docker compose"
 
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
 export PKG_CONFIG_PATH="/opt/homebrew/zlib/lib/pkgconfig"
+# Rust
+source $HOME/.cargo/env
+
+export EDITOR='nvim'
 
 autoload -Uz compinit && compinit
