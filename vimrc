@@ -31,7 +31,7 @@ set cmdheight=2
 set shortmess+=c
 set signcolumn=yes
 
-set clipboard+=unnamedplus
+set clipboard=unnamed,unnamedplus
 
 augroup MyAutoCmd
   autocmd!
@@ -257,27 +257,88 @@ nmap <silent> <space>rn <Plug>(coc-rename)
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "maintained",
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
   },
   indent = {
     enable = true
-  }
+  },
+  throttle = true, -- Throttles plugin updates (may improve performance)
 }
 
-require('lualine').setup{
-  options = {theme = 'auto'}
+require('lualine').setup {
+  options = {
+    theme = 'spaceduck',
+    section_separators = {'', ''},
+    component_separators = {'', ''},
+    icons_enabled = true,
+  },
+  sections = {
+    lualine_a = {
+      {'mode', upper = true}
+    },
+    lualine_b = {
+      {'branch', icon = ''}
+    },
+    lualine_c = {
+      {'filename', file_status = true }
+    },
+    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { 'filename' },
+    lualine_x = { 'location' },
+    lualine_y = {},
+    lualine_z = {}
+  },
+  extensions = {'fzf'}
 }
 
 require('treesitter-context').setup{
   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
   throttle = true, -- Throttles plugin updates (may improve performance)
 }
+
+require("bufferline").setup{
+  custom_areas = {
+    right = function()
+      local result = {}
+      local error = vim.lsp.diagnostic.get_count(0, [[Error]])
+      local warning = vim.lsp.diagnostic.get_count(0, [[Warning]])
+      local info = vim.lsp.diagnostic.get_count(0, [[Information]])
+      local hint = vim.lsp.diagnostic.get_count(0, [[Hint]])
+
+      if error ~= 0 then
+        table.insert(result, {text = "  " .. error, guifg = "#EC5241"})
+      end
+
+      if warning ~= 0 then
+        table.insert(result, {text = "  " .. warning, guifg = "#EFB839"})
+      end
+
+      if hint ~= 0 then
+        table.insert(result, {text = "  " .. hint, guifg = "#A3BA5E"})
+      end
+
+      if info ~= 0 then
+        table.insert(result, {text = "  " .. info, guifg = "#7EA9A7"})
+      end
+      return result
+    end,
+  }
+}
 EOF
 
-au MyAutoCmd VimEnter * nested colorscheme iceberg
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-" Y?
+au MyAutoCmd VimEnter * nested colorscheme spaceduck
+
+" Y? the true copy keymap
 nnoremap Y y$

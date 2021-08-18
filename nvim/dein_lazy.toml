@@ -2,12 +2,6 @@
 repo = 'dense-analysis/ale'
 
 [[plugins]]
-repo = 'preservim/nerdtree'
-hook_add = '''
-nnoremap <silent><C-b> :NERDTreeToggle<CR>
-'''
-
-[[plugins]]
 repo = 'kristijanhusak/vim-carbon-now-sh'
 hook_add = '''
 vnoremap <F5> :CarbonNowSh<CR>
