@@ -84,3 +84,18 @@ repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
 repo = 'arcticicestudio/nord-vim'
+
+[[plugins]]
+repo = 'sainnhe/everforest'
+
+[[plugins]]
+repo = 'ulwlu/elly.vim'
+
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'pineapplegiant/spaceduck'
+
+[[plugins]]
+repo = 'akinsho/nvim-bufferline.lua'
