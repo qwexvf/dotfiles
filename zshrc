@@ -22,12 +22,13 @@ alias vf='nvim $(fzf)'
 fpath=(${ASDF_DIR}/completions $fpath)
 
 # Golang
-export GOROOT=/usr/local/src/go
+alias go-reshim='asdf reshim golang && export GOROOT="$(asdf where golang)/go/"'
+export GOROOT="$(asdf where golang)/go/"
 export GOOS=$OS
 export GOARCH=amd64
 export GOBIN=$GOROOT/bin
+export GOPATH=$HOME/.go
 export PATH=$PATH:$GOBIN
-export GOPATH=$HOME/go
 
 # Yarn
 export PATH=$(yarn global bin):$PATH
