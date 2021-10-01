@@ -11,7 +11,7 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
 alias vim='arch -arm64 nvim'
 alias vi='arch -arm64 nvim'
-alias vf='nvim $(fzf)'
+alias vf='vi $(fzf)'
 
 # cd ... 
 alias ..='cd ..'

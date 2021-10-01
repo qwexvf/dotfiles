@@ -83,7 +83,6 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
-<<<<<<< HEAD
 repo = 'akinsho/nvim-bufferline.lua'
 
 [[plugins]]
@@ -112,3 +111,12 @@ let g:vim_vue_plugin_config = {
 
 [[plugins]]
 repo = 'arcticicestudio/nord-vim'
+
+[[plugins]]
+repo = 'sainnhe/everforest'
+
+[[plugins]]
+repo = 'ulwlu/elly.vim'
+
+[[plugins]]
+repo = 'pineapplegiant/spaceduck'
