@@ -35,6 +35,13 @@ repo = 'junegunn/fzf.vim'
 depends = 'fzf'
 
 [[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'lewis6991/gitsigns.nvim'
+depends = 'plenary.nvim'
+
+[[plugins]]
 repo = "takac/vim-hardtime"
 hook_add = '''
 " let g:hardtime_default_on = 1
@@ -83,34 +90,43 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
-repo = 'akinsho/nvim-bufferline.lua'
+repo = 'arcticicestudio/nord-vim'
 
 [[plugins]]
-repo = 'antoinemadec/coc-fzf'
+repo = 'sainnhe/everforest'
 
 [[plugins]]
-repo = 'digitaltoad/vim-pug'
+repo = 'ulwlu/elly.vim'
 
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
-repo = 'leafOfTree/vim-vue-plugin'
-hook_add = '''
-let g:vim_vue_plugin_config = { 
-      \'syntax': {
-      \   'template': ['html', 'pug'],
-      \   'script': ['javascript', 'typescript'],
-      \},
-      \'attribute': 1,
-      \'keyword': 1,
-      \'foldexpr': 1,
-      \'debug': 0,
-      \}
-'''
-
-[[plugins]]
 repo = 'pineapplegiant/spaceduck'
 
 [[plugins]]
+repo = 'akinsho/nvim-bufferline.lua'
+
+[[plugins]]
+repo = 'glacambre/firenvim'
+hook_post_update = 'call firenvim#install(0)'
+
+[[plugins]]
+repo = 'nikolvs/vim-sunbather'
+
+[[plugins]]
 repo = 'Pocco81/Catppuccino.nvim'
+
+[[plugins]]
+repo = 'windwp/windline.nvim'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+depends = 'plenary.nvim'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope-fzy-native.nvim'
+
+[[plugins]]
+repo = 'earthly/earthly.vim'
+rev = 'main'
