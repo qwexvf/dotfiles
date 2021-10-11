@@ -110,13 +110,7 @@ let g:vim_vue_plugin_config = {
 '''
 
 [[plugins]]
-repo = 'arcticicestudio/nord-vim'
-
-[[plugins]]
-repo = 'sainnhe/everforest'
-
-[[plugins]]
-repo = 'ulwlu/elly.vim'
-
-[[plugins]]
 repo = 'pineapplegiant/spaceduck'
+
+[[plugins]]
+repo = 'Pocco81/Catppuccino.nvim'
