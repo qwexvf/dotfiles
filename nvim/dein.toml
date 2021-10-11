@@ -48,12 +48,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-
-[[plugins]]
-repo = 'romgrk/nvim-treesitter-context'
-
-[[plugins]]
 repo = 'elixir-lsp/coc-elixir'
 build_on = '''
 yarn install && yarn prepack
@@ -130,3 +124,15 @@ repo = 'nvim-telescope/telescope-fzy-native.nvim'
 [[plugins]]
 repo = 'earthly/earthly.vim'
 rev = 'main'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+
+[[plugins]]
+repo = 'romgrk/nvim-treesitter-context'
+
+[[plugins]]
+repo = 'p00f/nvim-ts-rainbow'
+
+[[plugins]]
+repo = 'ggandor/lightspeed.nvim'

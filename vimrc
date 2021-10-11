@@ -10,6 +10,9 @@ set number
 set showmatch
 set matchtime=1
 set ignorecase
+set nohlsearch
+set hidden
+set nowrap
 set smartcase
 set incsearch
 set wrapscan
@@ -25,6 +28,8 @@ set cursorline
 set laststatus=2
 set noswapfile
 set relativenumber
+set scrolloff=8
+set colorcolumn=80
 
 set updatetime=100
 set cmdheight=2
@@ -257,7 +262,7 @@ nmap <silent> <space>rn <Plug>(coc-rename)
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
+  ensure_installed = {'javascript', 'vue', 'elixir'},
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = true,
@@ -270,7 +275,7 @@ require'nvim-treesitter.configs'.setup {
 
 require('lualine').setup {
   options = {
-    theme = 'spaceduck',
+    theme = 'catppuccino',
     section_separators = {'', ''},
     component_separators = {'', ''},
     icons_enabled = true,
@@ -298,6 +303,26 @@ require('lualine').setup {
     lualine_z = {}
   },
   extensions = {'fzf'}
+}
+
+require'lightspeed'.setup {
+  jump_to_first_match = true,
+  jump_on_partial_input_safety_timeout = 400,
+  -- This can get _really_ slow if the window has a lot of content,
+  -- turn it on only if your machine can always cope with it.
+  highlight_unique_chars = false,
+  grey_out_search_area = true,
+  match_only_the_start_of_same_char_seqs = true,
+  limit_ft_matches = 5,
+  x_mode_prefix_key = '<c-x>',
+  substitute_chars = { ['\r'] = '¬' },
+  instant_repeat_fwd_key = nil,
+  instant_repeat_bwd_key = nil,
+  -- If no values are given, these will be set at runtime,
+  -- based on `jump_to_first_match`.
+  labels = nil,
+  cycle_group_fwd_key = nil,
+  cycle_group_bwd_key = nil,
 }
 
 require('treesitter-context').setup{
@@ -341,13 +366,13 @@ catppuccino.setup(
     {
 		colorscheme = "neon_latte",
 		transparency = false,
-		term_colors = false,
+		term_colors = true,
 		styles = {
 			comments = "italic",
 			functions = "italic",
 			keywords = "italic",
-			strings = "NONE",
-			variables = "NONE",
+			strings = "bold",
+			variables = "bold",
 		},
 		integrations = {
 			treesitter = true,
@@ -369,16 +394,16 @@ catppuccino.setup(
 			lsp_trouble = false,
 			lsp_saga = false,
 			gitgutter = false,
-			gitsigns = false,
-			telescope = false,
+			gitsigns = true,
+			telescope = true,
 			nvimtree = {
 				enabled = false,
 				show_root = false,
 			},
-			which_key = false,
+			which_key = true,
 			indent_blankline = {
-				enabled = false,
-				colored_indent_levels = false,
+				enabled = true,
+				colored_indent_levels = true,
 			},
 			dashboard = false,
 			neogit = false,
@@ -387,8 +412,8 @@ catppuccino.setup(
 			barbar = false,
 			bufferline = false,
 			markdown = false,
-			lightspeed = false,
-			ts_rainbow = false,
+			lightspeed = true,
+			ts_rainbow = true,
 			hop = false,
 		}
 	}
@@ -478,8 +503,11 @@ require('wlfloatline').setup({
 require('telescope').load_extension('fzy_native')
 EOF
 
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 au MyAutoCmd VimEnter * nested colorscheme neon_latte
 
