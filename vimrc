@@ -69,7 +69,6 @@ endif
 filetype plugin indent on
 syntax enable
 
-" If you want to install not installed plugins on startup.
 if dein#check_install()
   call dein#install()
 endif
@@ -77,22 +76,22 @@ endif
 let mapleader = ","
 
 lua <<EOF
--- require'nvim-treesitter.configs'.setup {
--- ensure_installed = {'javascript', 'vue', 'typescript', 'elixir'},
---   highlight = {
---     enable = true,
---     additional_vim_regex_highlighting = true,
---   },
---   indent = {
---     enable = true
---   },
---   throttle = true, -- Throttles plugin updates (may improve performance)
---   rainbow = {
---     enable = true,
---     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
---     max_file_lines = nil, -- Do not enable for files with more than n lines, int
---   },
--- }
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {'javascript', 'vue', 'typescript', 'elixir'},
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = true,
+  },
+  indent = {
+    enable = true
+  },
+  throttle = true,
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = 1000, -- Do not enable for files with more than n lines, int
+  },
+}
 
 require('lualine').setup {
   options = {
@@ -146,10 +145,10 @@ require'lightspeed'.setup {
   cycle_group_bwd_key = nil,
 }
 
--- require('treesitter-context').setup{
---   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
---   throttle = true, -- Throttles plugin updates (may improve performance)
--- }
+require('treesitter-context').setup{
+  enable = true,
+  throttle = true,
+}
 
 require("bufferline").setup{
   custom_areas = {
@@ -212,8 +211,8 @@ catppuccino.setup(
 					information = "underline",
 				}
 			},
-			lsp_trouble = false,
-			lsp_saga = false,
+			lsp_trouble = true,
+			lsp_saga = true,
 			gitgutter = false,
 			gitsigns = true,
 			telescope = true,
@@ -325,7 +324,6 @@ require('telescope').load_extension('fzy_native')
 
 local null_ls = require("null-ls")
 
--- register any number of sources simultaneously
 local sources = {
   null_ls.builtins.formatting.prettier,
   null_ls.builtins.formatting.eslint,
@@ -334,12 +332,8 @@ local sources = {
 }
 
 null_ls.config({ sources = sources })
-
 local nvim_lsp = require "lspconfig"
-local coq = require "coq"
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -371,47 +365,40 @@ local on_attach = function(client, bufnr)
 end
 
 require("lspconfig")["null-ls"].setup({
-    on_attach = on_attach
+  on_attach = on_attach
 })
 
+local cmp = require "cmp"
+local lspkind = require "lspkind"
 
--- Setup nvim-cmp.
--- local cmp = require'cmp'
-local lspkind = require('lspkind')
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'buffer' },
+    { name = 'treesitter' },
+  },
+  formatting = {
+    format = lspkind.cmp_format({with_text = true, maxwidth = 20})
+  },
+  completion = {
+    keyword_length = 2
+  }
+})
 
--- cmp.setup({
---   snippet = {
---     expand = function(args)
---       -- For `vsnip` user.
---       vim.fn["vsnip#anonymous"](args.body)
--- 
---       -- For `luasnip` user.
---       -- require('luasnip').lsp_expand(args.body)
--- 
---       -- For `ultisnips` user.
---       -- vim.fn["UltiSnips#Anon"](args.body)
---     end,
---   },
---   mapping = {
---     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
---     ['<C-f>'] = cmp.mapping.scroll_docs(4),
---     ['<C-Space>'] = cmp.mapping.complete(),
---     ['<C-e>'] = cmp.mapping.close(),
---     ['<CR>'] = cmp.mapping.confirm({ select = true }),
---     ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
---   },
---   sources = {
---     { name = 'nvim_lsp' },
---     { name = 'vsnip' },
---     { name = 'buffer' },
---     { name = 'treesitter' },
---   },
---   formatting = {
---     format = lspkind.cmp_format({with_text = false, maxwidth = 50})
---   }
--- })
-
--- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
@@ -465,36 +452,25 @@ local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
     print(server.name)
     local opts = {}
-    -- opts.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
     opts.capabilities = capabilities
     opts.on_attach = on_attach
     opts.flags = {
       debounce_text_changes = 150,
     }
     if server.name == "elixirls" then
-        opts.settings = {
-          elixirLS = {
-            -- I choose to disable dialyzer for personal reasons, but
-            -- I would suggest you also disable it unless you are well
-            -- aquainted with dialzyer and know how to use it.
-            dialyzerEnabled = true,
-            -- I also choose to turn off the auto dep fetching feature.
-            -- It often get's into a weird state that requires deleting
-            -- the .elixir_ls directory and restarting your editor.
-            fetchDeps = true
-          }
+      opts.settings = {
+        elixirLS = {
+          dialyzerEnabled = true,
+          fetchDeps = true
         }
+      }
     end
 
-    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-    -- server:setup(opts)
-    server:setup(coq.lsp_ensure_capabilities(opts))
+    server:setup(opts)
     vim.cmd [[ do User LspAttachBuffers ]]
 end)
 
--- local saga = require 'lspsaga'
--- saga.init_lsp_saga()
-
+require "lspsaga".init_lsp_saga()
 EOF
 
 set completeopt=menu,menuone,noselect
