@@ -2,37 +2,7 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'neoclide/coc.nvim'
-rev = 'release'
-on_i = 1
-merged = '0'
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-
-[[plugins]]
 repo = 'tpope/vim-surround'
-
-[[plugins]]
-repo = 'tpope/vim-commentary'
-
-[[plugins]]
-repo = 'editorconfig/editorconfig-vim'
-
-[[plugins]]
-repo = 'junegunn/fzf'
-build_on = '''
-./install --all
-'''
-merged = '0'
-
-[[plugins]]
-repo = 'yuki-yano/fzf-preview.vim'
-rev = 'release/rpc'
-
-[[plugins]]
-repo = 'junegunn/fzf.vim'
-depends = 'fzf'
 
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
@@ -40,33 +10,6 @@ repo = 'nvim-lua/plenary.nvim'
 [[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
 depends = 'plenary.nvim'
-
-[[plugins]]
-repo = "takac/vim-hardtime"
-hook_add = '''
-" let g:hardtime_default_on = 1
-'''
-
-[[plugins]]
-repo = 'elixir-lsp/coc-elixir'
-build_on = '''
-yarn install && yarn prepack
-'''
-
-[[plugins]]
-repo = 'lifepillar/vim-gruvbox8'
-
-[[plugins]]
-repo = 'cocopon/iceberg.vim'
-
-[[plugins]]
-repo = 'bluz71/vim-nightfly-guicolors'
-
-[[plugins]]
-repo = 'bluz71/vim-moonfly-colors'
-
-[[plugins]]
-repo = 'folke/tokyonight.nvim'
 
 [[plugins]]
 repo = 'camspiers/animate.vim'
@@ -84,19 +27,7 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
-repo = 'arcticicestudio/nord-vim'
-
-[[plugins]]
-repo = 'sainnhe/everforest'
-
-[[plugins]]
-repo = 'ulwlu/elly.vim'
-
-[[plugins]]
 repo = 'sheerun/vim-polyglot'
-
-[[plugins]]
-repo = 'pineapplegiant/spaceduck'
 
 [[plugins]]
 repo = 'akinsho/nvim-bufferline.lua'
@@ -104,9 +35,6 @@ repo = 'akinsho/nvim-bufferline.lua'
 [[plugins]]
 repo = 'glacambre/firenvim'
 hook_post_update = 'call firenvim#install(0)'
-
-[[plugins]]
-repo = 'nikolvs/vim-sunbather'
 
 [[plugins]]
 repo = 'Pocco81/Catppuccino.nvim'
@@ -136,3 +64,48 @@ repo = 'p00f/nvim-ts-rainbow'
 
 [[plugins]]
 repo = 'ggandor/lightspeed.nvim'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+
+[[plugins]]
+repo = 'hrsh7th/cmp-vsnip'
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+
+[[plugins]]
+repo = 'hrsh7th/cmp-nvim-lsp'
+
+[[plugins]]
+repo = 'hrsh7th/cmp-buffer'
+
+[[plugins]]
+repo = 'hrsh7th/nvim-cmp'
+
+[[plugins]]
+repo = 'williamboman/nvim-lsp-installer'
+
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+depends = ['plenary.nvim', 'nvim-lspconfig']
+
+[[plugins]]
+repo = 'glepnir/lspsaga.nvim'
+
+[[plugins]]
+repo = 'ray-x/lsp_signature.nvim'
+
+[[plugins]]
+repo = 'onsails/lspkind-nvim'
+
+[[plugins]]
+repo = 'ms-jpq/coq_nvim'
+rev = 'coq'
+
+[[plugins]]
+repo = 'ms-jpq/coq.artifacts'
+rev = 'artifacts'
+
+[[plugins]]
+repo = 'ray-x/cmp-treesitter'

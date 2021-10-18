@@ -74,204 +74,25 @@ if dein#check_install()
   call dein#install()
 endif
 
-nmap <Esc><Esc> :nohlsearch<CR><Esc>
-inoremap <silent> jj <ESC>
-
-set statusline=%<     " 行が長すぎるときに切り詰める位置
-set statusline+=[%n]  " バッファ番号
-set statusline+=%m    " %m 修正フラグ
-set statusline+=%r    " %r 読み込み専用フラグ
-set statusline+=%h    " %h ヘルプバッファフラグ
-set statusline+=%w    " %w プレビューウィンドウフラグ
-set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
-set statusline+=%y    " バッファ内のファイルのタイプ
-set statusline+=\     " 空白スペース
-if winwidth(0) >= 130
-  set statusline+=%F    " バッファ内のファイルのフルパス
-else
-  set statusline+=%t    " ファイル名のみ
-endif
-set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
-set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
-set statusline+=\ \   " 空白スペース2個
-set statusline+=%1l   " 何行目にカーソルがあるか
-set statusline+=/
-set statusline+=%L    " バッファ内の総行数
-set statusline+=,
-set statusline+=%c    " 何列目にカーソルがあるか
-set statusline+=%V    " 画面上の何列目にカーソルがあるか
-set statusline+=\ \   " 空白スペース2個
-set statusline+=%P    " ファイル内の何％の位置にあるか
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 let mapleader = ","
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-" for elixir
-imap >> \|><Space>
-
-nnoremap <silent> ,f :Files<CR>
-nnoremap <silent> ,F :GFiles?<CR>
-nnoremap <silent> ,b :Buffers<CR>
-nnoremap <silent> ,l :BLines<CR>
-nnoremap <silent> ,h :History<CR>
-nnoremap <silent> ,m :Mark<CR>
-nnoremap <silent> ,g :GFiles<CR>
-nnoremap <silent> ,G :GFiles?<CR>
-nnoremap <silent> ,r :Rg<CR>
-
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
-
-" Go settings
-augroup filetype
-  au! BufRead,BufNewFile *.proto setfiletype proto
-augroup end
-autocmd FileType go setlocal noexpandtab
-autocmd FileType go setlocal tabstop=4
-autocmd FileType go setlocal shiftwidth=4
-
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-nmap <silent> <space>fmt <Plug>(coc-format)
-nmap <silent> <space><space> :<C-u>CocList<cr>
-nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
-nmap <silent> <space>df <Plug>(coc-definition)
-nmap <silent> <space>rf <Plug>(coc-references)
-nmap <silent> <space>rn <Plug>(coc-rename)
-
 lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {'javascript', 'vue', 'elixir'},
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = true,
-  },
-  indent = {
-    enable = true
-  },
-  throttle = true, -- Throttles plugin updates (may improve performance)
-}
+-- require'nvim-treesitter.configs'.setup {
+-- ensure_installed = {'javascript', 'vue', 'typescript', 'elixir'},
+--   highlight = {
+--     enable = true,
+--     additional_vim_regex_highlighting = true,
+--   },
+--   indent = {
+--     enable = true
+--   },
+--   throttle = true, -- Throttles plugin updates (may improve performance)
+--   rainbow = {
+--     enable = true,
+--     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+--     max_file_lines = nil, -- Do not enable for files with more than n lines, int
+--   },
+-- }
 
 require('lualine').setup {
   options = {
@@ -325,10 +146,10 @@ require'lightspeed'.setup {
   cycle_group_bwd_key = nil,
 }
 
-require('treesitter-context').setup{
-  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-  throttle = true, -- Throttles plugin updates (may improve performance)
-}
+-- require('treesitter-context').setup{
+--   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+--   throttle = true, -- Throttles plugin updates (may improve performance)
+-- }
 
 require("bufferline").setup{
   custom_areas = {
@@ -365,7 +186,7 @@ local catppuccino = require("catppuccino")
 catppuccino.setup(
     {
 		colorscheme = "neon_latte",
-		transparency = false,
+		transparency = true,
 		term_colors = true,
 		styles = {
 			comments = "italic",
@@ -375,7 +196,7 @@ catppuccino.setup(
 			variables = "bold",
 		},
 		integrations = {
-			treesitter = true,
+			-- treesitter = true,
 			native_lsp = {
 				enabled = true,
 				virtual_text = {
@@ -501,7 +322,182 @@ require('wlfloatline').setup({
 })
 
 require('telescope').load_extension('fzy_native')
+
+local null_ls = require("null-ls")
+
+-- register any number of sources simultaneously
+local sources = {
+  null_ls.builtins.formatting.prettier,
+  null_ls.builtins.formatting.eslint,
+  null_ls.builtins.diagnostics.write_good,
+  null_ls.builtins.code_actions.gitsigns,
+}
+
+null_ls.config({ sources = sources })
+
+local nvim_lsp = require "lspconfig"
+local coq = require "coq"
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
+
+require("lspconfig")["null-ls"].setup({
+    on_attach = on_attach
+})
+
+
+-- Setup nvim-cmp.
+-- local cmp = require'cmp'
+local lspkind = require('lspkind')
+
+-- cmp.setup({
+--   snippet = {
+--     expand = function(args)
+--       -- For `vsnip` user.
+--       vim.fn["vsnip#anonymous"](args.body)
+-- 
+--       -- For `luasnip` user.
+--       -- require('luasnip').lsp_expand(args.body)
+-- 
+--       -- For `ultisnips` user.
+--       -- vim.fn["UltiSnips#Anon"](args.body)
+--     end,
+--   },
+--   mapping = {
+--     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+--     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+--     ['<C-Space>'] = cmp.mapping.complete(),
+--     ['<C-e>'] = cmp.mapping.close(),
+--     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+--     ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
+--   },
+--   sources = {
+--     { name = 'nvim_lsp' },
+--     { name = 'vsnip' },
+--     { name = 'buffer' },
+--     { name = 'treesitter' },
+--   },
+--   formatting = {
+--     format = lspkind.cmp_format({with_text = false, maxwidth = 50})
+--   }
+-- })
+
+-- Add additional capabilities supported by nvim-cmp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+nvim_lsp.vuels.setup {
+  -- capabilities = capabilities,
+  on_attach = on_attach,
+  cmd = { "vls" },
+  filetypes = { "vue" },
+  root_dir = nvim_lsp.util.root_pattern("package.json", "vue.config.js"),
+  init_options = {
+    config = {
+      css = {},
+      emmet = {},
+      html = {
+        suggest = {}
+      },
+      javascript = {
+        format = {}
+      },
+      stylusSupremacy = {},
+      typescript = {
+        format = {}
+      },
+      vetur = {
+        completion = {
+          autoImport = true,
+          tagCasing = "kebab",
+          useScaffoldSnippets = false
+        },
+        format = {
+          defaultFormatter = {
+            js = "prettier",
+            ts = "prettier"
+          },
+          defaultFormatterOptions = {},
+          scriptInitialIndent = false,
+          styleInitialIndent = false
+        },
+        useWorkspaceDependencies = false,
+        validation = {
+          script = true,
+          style = true,
+          template = true
+        }
+      }
+    }
+  },
+}
+
+local lsp_installer = require("nvim-lsp-installer")
+lsp_installer.on_server_ready(function(server)
+    print(server.name)
+    local opts = {}
+    -- opts.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    opts.capabilities = capabilities
+    opts.on_attach = on_attach
+    opts.flags = {
+      debounce_text_changes = 150,
+    }
+    if server.name == "elixirls" then
+        opts.settings = {
+          elixirLS = {
+            -- I choose to disable dialyzer for personal reasons, but
+            -- I would suggest you also disable it unless you are well
+            -- aquainted with dialzyer and know how to use it.
+            dialyzerEnabled = true,
+            -- I also choose to turn off the auto dep fetching feature.
+            -- It often get's into a weird state that requires deleting
+            -- the .elixir_ls directory and restarting your editor.
+            fetchDeps = true
+          }
+        }
+    end
+
+    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+    -- server:setup(opts)
+    server:setup(coq.lsp_ensure_capabilities(opts))
+    vim.cmd [[ do User LspAttachBuffers ]]
+end)
+
+-- local saga = require 'lspsaga'
+-- saga.init_lsp_saga()
+
 EOF
+
+set completeopt=menu,menuone,noselect
 
 " Using Lua functions
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
@@ -510,6 +506,26 @@ nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 au MyAutoCmd VimEnter * nested colorscheme neon_latte
+
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
+inoremap <silent> jj <ESC>
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+
+" for elixir
+imap >> \|><Space>
+
+" Go settings
+augroup filetype
+  au! BufRead,BufNewFile *.proto setfiletype proto
+augroup end
+autocmd FileType go setlocal noexpandtab
+autocmd FileType go setlocal tabstop=4
+autocmd FileType go setlocal shiftwidth=4
 
 " Y? the true copy keymap
 nnoremap Y y$
