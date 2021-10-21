@@ -40,14 +40,8 @@ hook_post_update = 'call firenvim#install(0)'
 repo = 'Pocco81/Catppuccino.nvim'
 
 [[plugins]]
-repo = 'windwp/windline.nvim'
-
-[[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
 depends = 'plenary.nvim'
-
-[[plugins]]
-repo = 'nvim-telescope/telescope-fzy-native.nvim'
 
 [[plugins]]
 repo = 'earthly/earthly.vim'
@@ -69,35 +63,11 @@ repo = 'ggandor/lightspeed.nvim'
 repo = 'neovim/nvim-lspconfig'
 
 [[plugins]]
-repo = 'hrsh7th/cmp-vsnip'
-
-[[plugins]]
-repo = 'hrsh7th/vim-vsnip'
-
-[[plugins]]
-repo = 'hrsh7th/cmp-nvim-lsp'
-
-[[plugins]]
-repo = 'hrsh7th/cmp-buffer'
-
-[[plugins]]
-repo = 'hrsh7th/nvim-cmp'
-
-[[plugins]]
 repo = 'williamboman/nvim-lsp-installer'
 
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
 depends = ['plenary.nvim', 'nvim-lspconfig']
-
-[[plugins]]
-repo = 'glepnir/lspsaga.nvim'
-
-[[plugins]]
-repo = 'ray-x/lsp_signature.nvim'
-
-[[plugins]]
-repo = 'onsails/lspkind-nvim'
 
 [[plugins]]
 repo = 'ms-jpq/coq_nvim'
@@ -108,4 +78,4 @@ repo = 'ms-jpq/coq.artifacts'
 rev = 'artifacts'
 
 [[plugins]]
-repo = 'ray-x/cmp-treesitter'
+repo = 'folke/trouble.nvim'
