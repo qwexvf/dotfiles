@@ -62,9 +62,6 @@ end
 --   }
 -- })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require "cmp_nvim_lsp".update_capabilities(capabilities)
-
 nvim_lsp.vuels.setup(coq.lsp_ensure_capabilities({
   -- capabilities = capabilities,
   on_attach = on_attach,
