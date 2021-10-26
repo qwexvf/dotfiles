@@ -22,9 +22,9 @@ alias vf='nvim $(fzf)'
 fpath=(${ASDF_DIR}/completions $fpath)
 
 # Golang
-export GOROOT=/usr/local/src/go
-export GOOS=$OS
-export GOARCH=amd64
+export GOROOT="$(asdf where golang)/go/"
+export GOOS=darwin
+export GOARCH=arm64
 export GOBIN=$GOROOT/bin
 export PATH=$PATH:$GOBIN
 export GOPATH=$HOME/go
@@ -41,5 +41,10 @@ alias dc="docker compose"
 alias ls=exa
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
+. $HOME/.cargo/env
+
+# Added by Amplify CLI binary installer
+export PATH="$HOME/.amplify/bin:$PATH"
 
 autoload -Uz compinit && compinit
+
