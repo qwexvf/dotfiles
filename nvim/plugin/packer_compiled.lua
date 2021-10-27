@@ -73,9 +73,33 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/Catppuccino.nvim"
   },
+  LuaSnip = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/LuaSnip"
+  },
   ["bufferline.nvim"] = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/bufferline.nvim"
+  },
+  ["cmp-buffer"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-buffer"
+  },
+  ["cmp-nvim-lsp"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
+  },
+  ["cmp-path"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-path"
+  },
+  ["cmp-treesitter"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-treesitter"
+  },
+  cmp_luasnip = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp_luasnip"
   },
   ["coq.artifacts"] = {
     loaded = true,
@@ -93,9 +117,17 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
   },
+  ["lspkind-nvim"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/lualine.nvim"
+  },
+  ["nvim-cmp"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-cmp"
   },
   ["nvim-dd.git"] = {
     loaded = true,

@@ -47,11 +47,14 @@ return require('packer').startup(function()
     -- tag = 'release' -- To use the latest release
   }
 
+  use {'onsails/lspkind-nvim'}
+
   -- Add indentation guides even on blank lines
   use('lukas-reineke/indent-blankline.nvim')
 
   -- Highlight
   use('sheerun/vim-polyglot')
+
   -- Highlight, edit, and navigate code using a fast incremental parsing library
   use('nvim-treesitter/nvim-treesitter')
 
@@ -60,6 +63,19 @@ return require('packer').startup(function()
 
   use({'ms-jpq/coq_nvim', branch = 'coq'})
   use({'ms-jpq/coq.artifacts', branch = 'artifacts'}) -- Autocompletion plugin
+
+  -- autocomplete
+  use {'hrsh7th/cmp-nvim-lsp'}
+  use {'hrsh7th/nvim-cmp'}
+
+  -- buffers
+  use {'hrsh7th/cmp-buffer'}
+  use {'hrsh7th/cmp-path'}
+  use {'ray-x/cmp-treesitter'}
+
+  -- snippets
+  use({'L3MON4D3/LuaSnip'})
+  use({'saadparwaiz1/cmp_luasnip'})
 
   -- Utilities
   use('https://gitlab.com/yorickpeterse/nvim-dd.git')

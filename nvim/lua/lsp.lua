@@ -1,5 +1,40 @@
 local nvim_lsp = require('lspconfig')
-local coq = require('coq')
+local cmp = require'cmp'
+local lspkind = require('lspkind')
+
+cmp.setup({
+  completion = {
+    keyword_length = 3
+  },
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+    end,
+  },
+  mapping = {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' }, -- For luasnip users.
+    { name = 'buffer' },
+    { name = 'path' },
+    { name = 'treesitter' }
+  }),
+  formatting = {
+    format = lspkind.cmp_format({with_text = false, maxwidth = 50})
+  }
+})
+
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities = capabilities
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -41,8 +76,22 @@ local on_attach = function(client, bufnr)
   client.resolved_capabilities.document_formatting = false
 end
 
-nvim_lsp.vuels.setup(coq.lsp_ensure_capabilities({
+local path_to_elixirls = vim.fn.expand("~/elixir-ls/language_server.sh")
+nvim_lsp.elixirls.setup {
+  cmd = { path_to_elixirls },
+  capabilities = capabilities,
   on_attach = on_attach,
+  settings = {
+    elixirLS = {
+      dialyzerEnabled = false,
+      fetchDeps = false
+    }
+  }
+}
+
+nvim_lsp.vuels.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
   cmd = {'vls'},
   filetypes = {'vue'},
   root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
@@ -71,13 +120,14 @@ nvim_lsp.vuels.setup(coq.lsp_ensure_capabilities({
       }
     }
   }
-}))
+}
 
 local lsp_installer = require('nvim-lsp-installer')
 lsp_installer.on_server_ready(function(server)
   local opts = {}
 
   opts.on_attach = on_attach
+  opts.capabilities = capabilities
   opts.flags = {debounce_text_changes = 150}
 
   if server.name == 'sumneko_lua' then
@@ -108,9 +158,7 @@ lsp_installer.on_server_ready(function(server)
     }
   end
 
-  local setup = coq.lsp_ensure_capabilities(opts)
-
-  server:setup(setup)
+  server:setup(opts)
   vim.cmd([[ do User LspAttachBuffers ]])
 end)
 
@@ -123,21 +171,38 @@ local eslint = {
   formatStdin = true
 }
 
+local credo = {
+  lintCommand = 'MIX_ENV=test mix credo suggest --format=flycheck --read-from-stdin ${INPUT}',
+  lintIgnoreExitCode = true,
+  lintStdin = true,
+  lintFormats = {'%f:%l:%c: %t: %m', '%f:%l: %t: %m'},
+  lintCategoryMap = {
+    R = 'N',
+    D = 'I',
+    F = 'E',
+    W = 'W'
+  },
+  formatCommand = 'mix format -',
+  formatStdin = true,
+}
+
+local efm_on_attach = function (client)
+  client.resolved_capabilities.document_formatting = true
+  client.resolved_capabilities.goto_definition = false
+end
+
 nvim_lsp.efm.setup {
-  on_attach = function(client)
-    client.resolved_capabilities.document_formatting = true
-    client.resolved_capabilities.goto_definition = false
-  end,
+  on_attach = efm_on_attach,
   init_options = {documentFormatting = true},
   filetypes = {
-    'lua', 'javascript', 'javascriptreact', 'javascript.jsx',
+    'elixir', 'lua', 'javascript', 'javascriptreact', 'javascript.jsx',
     'typescript', 'typescript.tsx', 'typescriptreact'
   },
   settings = {
-    lintDebounce = '100ms',
+    lintDebounce = '50ms',
     rootMarkers = {
       '.git/', 'package.json', '.eslintrc.js', '.eslintrc.yaml',
-      '.eslintrc.yml', '.eslintrc.json'
+      '.eslintrc.yml', '.eslintrc.json', 'mix.exs', 'mix.lock'
     },
     languages = {
       javascript = {eslint},
@@ -145,7 +210,8 @@ nvim_lsp.efm.setup {
       ['javascript.jsx'] = {eslint},
       typescript = {eslint},
       ['typescript.tsx'] = {eslint},
-      typescriptreact = {eslint}
+      typescriptreact = {eslint},
+      elixir = {credo}
     }
   }
 }

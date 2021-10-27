@@ -15,6 +15,7 @@ vim.o.shiftwidth = 2
 vim.o.showtabline = 2
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
+vim.o.pumheight = 5
 
 -- Incremental live completion (note: this is now a default on master)
 vim.o.inccommand = 'nosplit'
