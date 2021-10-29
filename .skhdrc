@@ -1,6 +1,6 @@
 # open terminal
 cmd - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~ &> /dev/null
-
+# cmd - return : Applications/Alacritty.app/Contents/MacOS/alacritty
 # open mpv with url from clipboard
 cmd - m : open -na /Applications/mpv.app $(pbpaste)
 

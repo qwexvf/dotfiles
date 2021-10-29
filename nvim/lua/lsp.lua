@@ -1,15 +1,11 @@
 local nvim_lsp = require('lspconfig')
-local cmp = require'cmp'
+local cmp = require 'cmp'
 local lspkind = require('lspkind')
 
 cmp.setup({
-  completion = {
-    keyword_length = 3
-  },
+  completion = {completeopt = 'menu,menuone,noselect', keyword_length = 3},
   snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-    end,
+    expand = function(args) require('luasnip').lsp_expand(args.body) end
   },
   mapping = {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -17,25 +13,21 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
+    ['<CR>'] = cmp.mapping.confirm({select = true}),
+    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})
   },
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
-    { name = 'buffer' },
-    { name = 'path' },
-    { name = 'treesitter' }
+    {name = 'nvim_lsp'}, {name = 'luasnip'}, -- For luasnip users.
+    {name = 'buffer'}, {name = 'path'}, {name = 'treesitter'}
   }),
-  formatting = {
-    format = lspkind.cmp_format({with_text = false, maxwidth = 50})
-  }
+  formatting = {format = lspkind.cmp_format({with_text = false, maxwidth = 50})},
+  experimental = {native_menu = true, ghost_text = true}
 })
 
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-capabilities = capabilities
-
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp
+                                                                     .protocol
+                                                                     .make_client_capabilities())
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -74,19 +66,24 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   client.resolved_capabilities.document_formatting = false
+
+  vim.lsp.handlers['textDocument/publishDiagnostics'] =
+      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+                   {virtual_text = false, underline = true, signs = true})
 end
 
-local path_to_elixirls = vim.fn.expand("~/elixir-ls/language_server.sh")
+local path_to_elixirls = vim.fn.expand('~/elixir-ls/language_server.sh')
+
 nvim_lsp.elixirls.setup {
   cmd = { path_to_elixirls },
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {
     elixirLS = {
-      dialyzerEnabled = false,
+      dialyzerEnabled = true,
       fetchDeps = false
     }
-  }
+  },
 }
 
 nvim_lsp.vuels.setup {
@@ -162,56 +159,25 @@ lsp_installer.on_server_ready(function(server)
   vim.cmd([[ do User LspAttachBuffers ]])
 end)
 
-local eslint = {
-  lintCommand = 'eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}',
-  lintIgnoreExitCode = true,
-  lintStdin = true,
-  lintFormats = {'%f(%l,%c): %tarning %m', '%f(%l,%c): %rror %m'},
-  formatCommand = 'eslint_d --fix-to-stdout --stdin --stdin-filename ${INPUT}',
-  formatStdin = true
-}
+local efm_on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
-local credo = {
-  lintCommand = 'MIX_ENV=test mix credo suggest --format=flycheck --read-from-stdin ${INPUT}',
-  lintIgnoreExitCode = true,
-  lintStdin = true,
-  lintFormats = {'%f:%l:%c: %t: %m', '%f:%l: %t: %m'},
-  lintCategoryMap = {
-    R = 'N',
-    D = 'I',
-    F = 'E',
-    W = 'W'
-  },
-  formatCommand = 'mix format -',
-  formatStdin = true,
-}
-
-local efm_on_attach = function (client)
   client.resolved_capabilities.document_formatting = true
   client.resolved_capabilities.goto_definition = false
+
+  -- Mappings.
+  local opts = {noremap = true, silent = true}
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+  vim.lsp.handlers['textDocument/publishDiagnostics'] =
+      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+                   {virtual_text = false, underline = true, signs = true})
 end
 
 nvim_lsp.efm.setup {
   on_attach = efm_on_attach,
   init_options = {documentFormatting = true},
-  filetypes = {
-    'elixir', 'lua', 'javascript', 'javascriptreact', 'javascript.jsx',
-    'typescript', 'typescript.tsx', 'typescriptreact'
-  },
-  settings = {
-    lintDebounce = '50ms',
-    rootMarkers = {
-      '.git/', 'package.json', '.eslintrc.js', '.eslintrc.yaml',
-      '.eslintrc.yml', '.eslintrc.json', 'mix.exs', 'mix.lock'
-    },
-    languages = {
-      javascript = {eslint},
-      javascriptreact = {eslint},
-      ['javascript.jsx'] = {eslint},
-      typescript = {eslint},
-      ['typescript.tsx'] = {eslint},
-      typescriptreact = {eslint},
-      elixir = {credo}
-    }
-  }
+  filetypes = {'elixir'}
 }
+
+require('trouble').setup {}

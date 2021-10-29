@@ -4,7 +4,7 @@
 -- Auto install packer.nvim if not exists
 local fn = vim.fn
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local packer_bootstrap
+  local packer_bootstrap
 
 if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({
@@ -60,6 +60,10 @@ return require('packer').startup(function()
 
   use('neovim/nvim-lspconfig') -- Collection of configurations for built-in LSP client
   use('williamboman/nvim-lsp-installer')
+  use({
+      'folke/trouble.nvim',
+      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    })
 
   use({'ms-jpq/coq_nvim', branch = 'coq'})
   use({'ms-jpq/coq.artifacts', branch = 'artifacts'}) -- Autocompletion plugin
@@ -79,6 +83,7 @@ return require('packer').startup(function()
 
   -- Utilities
   use('https://gitlab.com/yorickpeterse/nvim-dd.git')
+  use('windwp/nvim-autopairs')
 
   if packer_bootstrap then require('packer').sync() end
 end)

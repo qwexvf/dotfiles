@@ -1,8 +1,7 @@
 local catppuccino = require("catppuccino")
 
 -- configure it
-catppuccino.setup{}
-local test = {
+catppuccino.setup ({
   colorscheme = "neon_latte",
   transparency = true,
   term_colors = true,
@@ -35,4 +34,4 @@ local test = {
     which_key = true,
     bufferline = true,
   }
-}
+})

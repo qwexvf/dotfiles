@@ -125,6 +125,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-cmp"
@@ -164,6 +168,10 @@ _G.packer_plugins = {
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+  },
+  ["trouble.nvim"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/trouble.nvim"
   },
   ["vim-commentary"] = {
     loaded = true,

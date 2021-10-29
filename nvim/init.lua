@@ -1,8 +1,7 @@
-
 require 'plugins'
-require 'settings'
 require 'autocmds'
 require 'theme'
+require 'settings'
 require 'lsp'
 require 'treesitter'
 require 'utils'

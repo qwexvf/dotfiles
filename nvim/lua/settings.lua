@@ -61,7 +61,6 @@ vim.o.smartcase = true
 
 -- Decrease update time
 -- autocomplete
-opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.shortmess = opt.shortmess + { c = true }
 
 -- perfomance
