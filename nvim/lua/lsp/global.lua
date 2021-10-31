@@ -1,37 +1,6 @@
-local nvim_lsp = require 'lspconfig'
-local cmp = require 'cmp'
-local lspkind = require 'lspkind'
+capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-cmp.setup {
-  completion = { completeopt = 'menu,menuone,noselect', keyword_length = 3 },
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
-    ['<CR>'] = cmp.mapping.confirm { select = true },
-    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
-  },
-  sources = cmp.config.sources {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
-    { name = 'buffer' },
-    { name = 'path' },
-    { name = 'treesitter' },
-  },
-  formatting = { format = lspkind.cmp_format { with_text = false, maxwidth = 50 } },
-  experimental = { native_menu = true, ghost_text = true },
-}
-
--- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local on_attach = function(client, bufnr)
+on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
@@ -71,28 +40,6 @@ local on_attach = function(client, bufnr)
     { virtual_text = false, underline = true, signs = true }
   )
 end
-
-local path_to_elixirls = vim.fn.expand '~/elixir-ls/language_server.sh'
-
-nvim_lsp.elixirls.setup {
-  cmd = { path_to_elixirls },
-  capabilities = capabilities,
-  on_attach = on_attach,
-  settings = {
-    elixirLS = {
-      dialyzerEnabled = true,
-      fetchDeps = false,
-    },
-  },
-}
-
-nvim_lsp.vuels.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  cmd = { 'vls' },
-  filetypes = { 'vue' },
-  root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
-}
 
 local lsp_installer = require 'nvim-lsp-installer'
 lsp_installer.on_server_ready(function(server)
@@ -134,62 +81,5 @@ lsp_installer.on_server_ready(function(server)
   vim.cmd [[ do User LspAttachBuffers ]]
 end)
 
-local eslint = {
-  lintCommand = 'eslint_d -f unix --stdin --stdin-filename ${INPUT}',
-  lintStdin = true,
-  lintFormats = { '%f:%l:%c: %m' },
-  lintIgnoreExitCode = true,
-  formatCommand = 'eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}',
-  formatStdin = true,
-}
-
-nvim_lsp.tsserver.setup {
-  on_attach = function(client, bufnr)
-    if client.config.flags then
-      client.config.flags.allow_incremental_sync = true
-    end
-    client.resolved_capabilities.document_formatting = false
-    on_attach(client, bufnr)
-  end,
-}
-
-nvim_lsp.efm.setup {
-  on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-      vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-
-    client.resolved_capabilities.document_formatting = true
-    client.resolved_capabilities.goto_definition = false
-
-    -- Mappings.
-    local opts = { noremap = true, silent = true }
-    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics,
-      { virtual_text = false, underline = true, signs = true }
-    )
-  end,
-  init_options = { documentFormatting = true },
-  settings = {
-    javascript = { eslint },
-    javascriptreact = { eslint },
-    ['javascript.jsx'] = { eslint },
-    typescript = { eslint },
-    ['typescript.tsx'] = { eslint },
-    typescriptreact = { eslint },
-  },
-  filetypes = {
-    'elixir',
-    'lua',
-    'javascript',
-    'javascriptreact',
-    'javascript.jsx',
-    'typescript',
-    'typescript.tsx',
-    'typescriptreact',
-  },
-}
 
 require('trouble').setup {}
