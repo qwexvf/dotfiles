@@ -1,6 +1,6 @@
 set $mod Mod4
 
-font pango: iosevka, M+ 1m, FontAwesome, Ionicons, 10
+font pango: iosevka, 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -15,7 +15,7 @@ bindsym $mod+minus scratchpad show
 # bindsym $mod+u [title="workflow"] scratchpad show; [title="workflow"] move position center
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty --single-instance -d ~ &> /dev/null
 
 # browser
 bindsym $mod+Shift+Return exec ~/.apps/firefox/firefox-bin

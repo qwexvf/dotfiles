@@ -9,8 +9,8 @@ fpath=(${ASDF_DIR}/completions $fpath)
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
-alias vim='arch -arm64 nvim'
-alias vi='arch -arm64 nvim'
+alias vim='nvim'
+alias vi='nvim'
 alias vf='vi $(fzf)'
 
 # cd ... 
