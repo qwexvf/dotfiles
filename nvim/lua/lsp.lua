@@ -72,7 +72,7 @@ local on_attach = function(client, bufnr)
   )
 end
 
-local path_to_elixirls = vim.fn.expand '~/elixir-ls/language_server.sh'
+local path_to_elixirls = vim.fn.expand '~/elixir-ls/release/language_server.sh'
 
 nvim_lsp.elixirls.setup {
   cmd = { path_to_elixirls },
@@ -80,7 +80,7 @@ nvim_lsp.elixirls.setup {
   on_attach = on_attach,
   settings = {
     elixirLS = {
-      dialyzerEnabled = true,
+      dialyzerEnabled = false,
       fetchDeps = false,
     },
   },
@@ -143,6 +143,15 @@ local eslint = {
   formatStdin = true,
 }
 
+local elixir_format = {
+  lintCommand = 'MIX_ENV=test mix credo suggest --format=flycheck --read-from-stdin ${INPUT}',
+  lintStdin = true,
+  lintFormats = { '%f:%l:%c: %m', '%f:%l %t: %m' },
+  lintIgnoreExitCode = true,
+  formatCommand = 'mix format -',
+  formatStdin = true,
+}
+
 nvim_lsp.tsserver.setup {
   on_attach = function(client, bufnr)
     if client.config.flags then
@@ -171,14 +180,18 @@ nvim_lsp.efm.setup {
       { virtual_text = false, underline = true, signs = true }
     )
   end,
+  capabilities = capabilities,
   init_options = { documentFormatting = true },
   settings = {
-    javascript = { eslint },
-    javascriptreact = { eslint },
-    ['javascript.jsx'] = { eslint },
-    typescript = { eslint },
-    ['typescript.tsx'] = { eslint },
-    typescriptreact = { eslint },
+    languages = {
+      javascript = { eslint },
+      javascriptreact = { eslint },
+      ['javascript.jsx'] = { eslint },
+      typescript = { eslint },
+      ['typescript.tsx'] = { eslint },
+      typescriptreact = { eslint },
+      elixir = { elixir_format }
+    }
   },
   filetypes = {
     'elixir',

@@ -29,7 +29,7 @@ catppuccino.setup ({
         information = "underline",
       }
     },
-    gitsigns = false,
+    gitsigns = true,
     telescope = true,
     which_key = true,
     bufferline = true,
