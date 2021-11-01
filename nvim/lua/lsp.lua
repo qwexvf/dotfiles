@@ -1,36 +1,70 @@
 local nvim_lsp = require 'lspconfig'
 local cmp = require 'cmp'
-local lspkind = require 'lspkind'
 
 cmp.setup {
-  completion = { completeopt = 'menu,menuone,noselect', keyword_length = 3 },
   snippet = {
     expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+      vim.fn['vsnip#anonymous'](args.body)
     end,
   },
   mapping = {
+    ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+    ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+    ['<Down>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
+    ['<Up>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<C-y>'] = cmp.config.disable,
-    ['<CR>'] = cmp.mapping.confirm { select = true },
-    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
   },
   sources = cmp.config.sources {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = 'vsnip' },
     { name = 'buffer' },
-    { name = 'path' },
     { name = 'treesitter' },
+    { name = 'cmp_git' },
   },
-  -- formatting = { format = lspkind.cmp_format { with_text = false, maxwidth = 50 } },
-  experimental = { native_menu = true, ghost_text = true },
 }
 
--- Setup lspconfig.
+-- Use buffer source for `/`.
+cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
+
+-- Use cmdline & path source for ':'.
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+})
+
+require('cmp_git').setup {
+  -- defaults
+  filetypes = { 'gitcommit' },
+  remotes = { 'upstream', 'origin' }, -- in order of most to least prioritized
+  git = { commits = {
+      limit = 100,
+    },
+  },
+  github = {
+    issues = {
+      filter = 'all', -- assigned, created, mentioned, subscribed, all, repos
+      limit = 100,
+      state = 'open', -- open, closed, all
+    },
+    mentions = {
+      limit = 100,
+    },
+    pull_requests = {
+      limit = 100,
+      state = 'open', -- open, closed, merged, all
+    },
+  },
+}
+
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+-- Setup lspconfig.
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -76,14 +110,9 @@ local path_to_elixirls = vim.fn.expand '~/elixir-ls/release/language_server.sh'
 
 nvim_lsp.elixirls.setup {
   cmd = { path_to_elixirls },
-  capabilities = capabilities,
   on_attach = on_attach,
-  settings = {
-    elixirLS = {
-      dialyzerEnabled = false,
-      fetchDeps = false,
-    },
-  },
+  capabilities = capabilities,
+  settings = { elixirLS = { dialyzerEnabled = false, fetchDeps = false } },
 }
 
 nvim_lsp.vuels.setup {
@@ -137,10 +166,7 @@ end)
 local eslint = {
   lintCommand = 'eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}',
   lintIgnoreExitCode = true,
-  lintFormats = {
-    "%f(%l,%c): %tarning %m",
-    "%f(%l,%c): %rror %m"
-  },
+  lintFormats = { '%f(%l,%c): %tarning %m', '%f(%l,%c): %rror %m' },
   lintStdin = true,
   formatCommand = 'eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}',
   formatStdin = true,
@@ -154,6 +180,8 @@ local elixir_format = {
   formatCommand = 'mix format -',
   formatStdin = true,
 }
+
+local lua_format = { formatCommand = 'stylua -', formatStdin = true }
 
 nvim_lsp.efm.setup {
   on_attach = function(client, bufnr)
@@ -173,10 +201,9 @@ nvim_lsp.efm.setup {
       { virtual_text = false, underline = true, signs = true }
     )
   end,
-  capabilities = capabilities,
   init_options = { documentFormatting = true },
   settings = {
-    rootMarkers = {".git/"},
+    rootMarkers = { '.git/' },
     languages = {
       javascript = { eslint },
       javascriptreact = { eslint },
@@ -184,8 +211,9 @@ nvim_lsp.efm.setup {
       typescript = { eslint },
       ['typescript.tsx'] = { eslint },
       typescriptreact = { eslint },
-      elixir = { elixir_format }
-    }
+      elixir = { elixir_format },
+      lua = { lua_format },
+    },
   },
   filetypes = {
     'elixir',

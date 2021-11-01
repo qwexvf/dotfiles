@@ -1,89 +1,88 @@
--- local fn = vim.fn
--- local execute = vim.api.nvim_command
-
--- Auto install packer.nvim if not exists
 local fn = vim.fn
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-  local packer_bootstrap
+local install_path = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local packer_bootstrap
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({
-    'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
-    install_path
-  })
+  packer_bootstrap = fn.system {
+    'git',
+    'clone',
+    '--depth',
+    '1',
+    'https://github.com/wbthomason/packer.nvim',
+    install_path,
+  }
 end
 
-vim.cmd[[packadd packer.nvim]]
+vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function()
-  use('wbthomason/packer.nvim') -- Package manager
-  use('tpope/vim-fugitive') -- Git commands in nvim
-  use('tpope/vim-rhubarb') -- Fugitive-companion to interact with github
-  use('tpope/vim-commentary') -- "gc" to comment visual regions/lines
-  use('tpope/vim-surround')
+  use 'wbthomason/packer.nvim'
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-rhubarb'
+  use 'tpope/vim-commentary'
+  use 'tpope/vim-surround'
 
   -- UI to select things (files, grep results, open buffers...)
-  use({
+  use {
     'nvim-telescope/telescope.nvim',
     requires = {
       'nvim-lua/plenary.nvim',
-      {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
-    }
-  })
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+    },
+  }
 
-  use('Pocco81/Catppuccino.nvim')
-  use({
+  use 'EdenEast/nightfox.nvim'
+  use 'Pocco81/Catppuccino.nvim'
+  use {
     'nvim-lualine/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  })
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+  }
   use {
     'akinsho/bufferline.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
   }
 
   use {
     'lewis6991/gitsigns.nvim',
-    requires = {'nvim-lua/plenary.nvim'}
+    requires = { 'nvim-lua/plenary.nvim' },
     -- tag = 'release' -- To use the latest release
   }
 
-  use {'onsails/lspkind-nvim'}
+  use { 'onsails/lspkind-nvim' }
 
   -- Add indentation guides even on blank lines
-  use('lukas-reineke/indent-blankline.nvim')
+  use 'lukas-reineke/indent-blankline.nvim'
 
   -- Highlight
-  use('sheerun/vim-polyglot')
+  use 'sheerun/vim-polyglot'
 
   -- Highlight, edit, and navigate code using a fast incremental parsing library
-  use('nvim-treesitter/nvim-treesitter')
+  use 'nvim-treesitter/nvim-treesitter'
 
-  use('neovim/nvim-lspconfig') -- Collection of configurations for built-in LSP client
-  use('williamboman/nvim-lsp-installer')
-  use({
-      'folke/trouble.nvim',
-      requires = {'kyazdani42/nvim-web-devicons', opt = true}
-    })
+  use 'neovim/nvim-lspconfig'
+  use 'williamboman/nvim-lsp-installer'
+  use {
+    'folke/trouble.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+  }
 
-  use({'ms-jpq/coq_nvim', branch = 'coq'})
-  use({'ms-jpq/coq.artifacts', branch = 'artifacts'}) -- Autocompletion plugin
+  -- auto complete
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/nvim-cmp'
+  use { 'petertriho/cmp-git', requires = 'nvim-lua/plenary.nvim' }
+  use 'ray-x/cmp-treesitter'
 
-  -- autocomplete
-  use {'hrsh7th/cmp-nvim-lsp'}
-  use {'hrsh7th/nvim-cmp'}
-
-  -- buffers
-  use {'hrsh7th/cmp-buffer'}
-  use {'hrsh7th/cmp-path'}
-  use {'ray-x/cmp-treesitter'}
-
-  -- snippets
-  use({'L3MON4D3/LuaSnip'})
-  use({'saadparwaiz1/cmp_luasnip'})
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/vim-vsnip'
 
   -- Utilities
-  use('https://gitlab.com/yorickpeterse/nvim-dd.git')
-  use('windwp/nvim-autopairs')
+  use 'https://gitlab.com/yorickpeterse/nvim-dd.git'
+  use 'windwp/nvim-autopairs'
 
-  if packer_bootstrap then require('packer').sync() end
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)

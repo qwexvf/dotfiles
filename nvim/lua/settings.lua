@@ -37,6 +37,9 @@ vim.o.mouse = 'a'
 -- Enable break indent
 vim.o.breakindent = true
 
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+
 -- Save undo history
 opt.undofile = true
 opt.swapfile = false
@@ -76,7 +79,7 @@ opt.helpheight = 12
 
 -- Set colorscheme (order is important here)
 opt.termguicolors = true
-cmd([[colorscheme neon_latte]])
+cmd([[colorscheme nightfox]])
 
 -- Remap space as leader key
 vim.api.nvim_set_keymap('', '<,>', '<Nop>', {noremap = true, silent = true})
