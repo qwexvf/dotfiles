@@ -3,13 +3,13 @@ local catppuccino = require("catppuccino")
 -- configure it
 catppuccino.setup ({
   colorscheme = "neon_latte",
-  transparency = true,
-  term_colors = true,
+  transparency = false,
+  term_colors = false,
   styles = {
     comments = "italic",
-    functions = "bold",
+    functions = "italic",
     keywords = "italic",
-    strings = "bold",
+    strings = "italic",
     variables = "italic",
   },
   integrations = {
