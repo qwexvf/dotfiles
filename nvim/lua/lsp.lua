@@ -14,18 +14,18 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
+    ['<C-y>'] = cmp.config.disable,
     ['<CR>'] = cmp.mapping.confirm { select = true },
     ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
   },
   sources = cmp.config.sources {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
+    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
     { name = 'treesitter' },
   },
-  formatting = { format = lspkind.cmp_format { with_text = false, maxwidth = 50 } },
+  -- formatting = { format = lspkind.cmp_format { with_text = false, maxwidth = 50 } },
   experimental = { native_menu = true, ghost_text = true },
 }
 
@@ -135,10 +135,13 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 local eslint = {
-  lintCommand = 'eslint_d -f unix --stdin --stdin-filename ${INPUT}',
-  lintStdin = true,
-  lintFormats = { '%f:%l:%c: %m' },
+  lintCommand = 'eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}',
   lintIgnoreExitCode = true,
+  lintFormats = {
+    "%f(%l,%c): %tarning %m",
+    "%f(%l,%c): %rror %m"
+  },
+  lintStdin = true,
   formatCommand = 'eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}',
   formatStdin = true,
 }
@@ -150,16 +153,6 @@ local elixir_format = {
   lintIgnoreExitCode = true,
   formatCommand = 'mix format -',
   formatStdin = true,
-}
-
-nvim_lsp.tsserver.setup {
-  on_attach = function(client, bufnr)
-    if client.config.flags then
-      client.config.flags.allow_incremental_sync = true
-    end
-    client.resolved_capabilities.document_formatting = false
-    on_attach(client, bufnr)
-  end,
 }
 
 nvim_lsp.efm.setup {
@@ -183,6 +176,7 @@ nvim_lsp.efm.setup {
   capabilities = capabilities,
   init_options = { documentFormatting = true },
   settings = {
+    rootMarkers = {".git/"},
     languages = {
       javascript = { eslint },
       javascriptreact = { eslint },
