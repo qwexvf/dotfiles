@@ -16,6 +16,7 @@ vim.o.showtabline = 2
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.pumheight = 5
+vim.o.termguicolors = true
 
 -- Incremental live completion (note: this is now a default on master)
 vim.o.inccommand = 'nosplit'
@@ -36,9 +37,6 @@ vim.o.mouse = 'a'
 
 -- Enable break indent
 vim.o.breakindent = true
-
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- Save undo history
 opt.undofile = true
@@ -64,6 +62,7 @@ vim.o.smartcase = true
 
 -- Decrease update time
 -- autocomplete
+opt.completeopt = 'menuone,noselect'
 opt.shortmess = opt.shortmess + { c = true }
 
 -- perfomance
@@ -79,16 +78,16 @@ opt.helpheight = 12
 
 -- Set colorscheme (order is important here)
 opt.termguicolors = true
-cmd([[colorscheme nightfox]])
+cmd [[colorscheme nightfox]]
 
 -- Remap space as leader key
-vim.api.nvim_set_keymap('', '<,>', '<Nop>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('', '<,>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
 -- Map blankline
 vim.g.indent_blankline_char = '┊'
-vim.g.indent_blankline_filetype_exclude = {'help', 'packer'}
-vim.g.indent_blankline_buftype_exclude = {'terminal', 'nofile'}
+vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
+vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 vim.g.indent_blankline_char_highlight = 'LineNr'
 vim.g.indent_blankline_show_trailing_blankline_indent = false

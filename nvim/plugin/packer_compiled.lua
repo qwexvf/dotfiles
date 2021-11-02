@@ -44,8 +44,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/Users/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/Users/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/Users/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/Users/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/qwexvf/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -71,131 +71,139 @@ time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
   ["Catppuccino.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/Catppuccino.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/Catppuccino.nvim"
+  },
+  ["animate.vim"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/animate.vim"
   },
   ["bufferline.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/bufferline.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/bufferline.nvim"
   },
   ["cmp-buffer"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-buffer"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-buffer"
   },
   ["cmp-cmdline"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-cmdline"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-cmdline"
   },
   ["cmp-git"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-git"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-git"
   },
   ["cmp-nvim-lsp"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
   },
   ["cmp-path"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-path"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-path"
   },
   ["cmp-treesitter"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-treesitter"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-treesitter"
   },
   ["cmp-vsnip"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-vsnip"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/cmp-vsnip"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
   },
   ["indent-blankline.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
+  },
+  ["lens.vim"] = {
+    loaded = true,
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/lens.vim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
   },
   ["lualine.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/lualine.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
   ["nightfox.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/nightfox.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nightfox.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
   },
   ["nvim-cmp"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-cmp"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-cmp"
   },
   ["nvim-dd.git"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-dd.git"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-dd.git"
   },
   ["nvim-lsp-installer"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
   },
   ["nvim-treesitter"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/plenary.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
   ["trouble.nvim"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/trouble.nvim"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/trouble.nvim"
   },
   ["vim-commentary"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/vim-commentary"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/vim-commentary"
   },
   ["vim-fugitive"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/vim-fugitive"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/vim-fugitive"
   },
   ["vim-polyglot"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/vim-polyglot"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/vim-polyglot"
   },
   ["vim-rhubarb"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/vim-rhubarb"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/vim-rhubarb"
   },
   ["vim-surround"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/vim-surround"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/vim-surround"
   },
   ["vim-vsnip"] = {
     loaded = true,
-    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/vim-vsnip"
+    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/vim-vsnip"
   }
 }
 

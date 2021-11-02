@@ -31,8 +31,8 @@ return require('packer').startup(function()
     },
   }
 
-  use 'EdenEast/nightfox.nvim'
   use 'Pocco81/Catppuccino.nvim'
+  use 'EdenEast/nightfox.nvim'
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -81,6 +81,10 @@ return require('packer').startup(function()
   -- Utilities
   use 'https://gitlab.com/yorickpeterse/nvim-dd.git'
   use 'windwp/nvim-autopairs'
+
+  -- Window & Animations
+  use 'camspiers/animate.vim'
+  use 'camspiers/lens.vim'
 
   if packer_bootstrap then
     require('packer').sync()

@@ -23,10 +23,10 @@ cmp.setup {
   },
   sources = cmp.config.sources {
     { name = 'nvim_lsp' },
+    { name = 'cmp_git' },
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
-    { name = 'cmp_git' },
   },
 }
 
@@ -42,7 +42,8 @@ require('cmp_git').setup {
   -- defaults
   filetypes = { 'gitcommit' },
   remotes = { 'upstream', 'origin' }, -- in order of most to least prioritized
-  git = { commits = {
+  git = {
+    commits = {
       limit = 100,
     },
   },
@@ -168,7 +169,7 @@ local eslint = {
   lintIgnoreExitCode = true,
   lintFormats = { '%f(%l,%c): %tarning %m', '%f(%l,%c): %rror %m' },
   lintStdin = true,
-  formatCommand = 'eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}',
+  formatCommand = 'eslint_d --stdin --fix-to-stdout --stdin-filename=${INPUT}',
   formatStdin = true,
 }
 
@@ -227,4 +228,7 @@ nvim_lsp.efm.setup {
   },
 }
 
-require('trouble').setup {}
+require('lspconfig').tsserver.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
