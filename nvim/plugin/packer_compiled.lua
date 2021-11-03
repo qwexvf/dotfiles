@@ -129,10 +129,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
-  ["nightfox.nvim"] = {
-    loaded = true,
-    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nightfox.nvim"
-  },
   ["nvim-autopairs"] = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
@@ -188,10 +184,6 @@ _G.packer_plugins = {
   ["vim-fugitive"] = {
     loaded = true,
     path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/vim-fugitive"
-  },
-  ["vim-polyglot"] = {
-    loaded = true,
-    path = "/Users/qwexvf/.local/share/nvim/site/pack/packer/start/vim-polyglot"
   },
   ["vim-rhubarb"] = {
     loaded = true,

@@ -4,7 +4,7 @@ require('dd').setup {
 }
 
 -- Cool Statusline bc why not?
-require('lualine').setup { options = { theme = 'nightfox' } }
+require('lualine').setup { options = { theme = 'catppuccino' } }
 
 -- Cool Tabs
 require('bufferline').setup { options = { diagnostics = 'nvim_lsp' } }
@@ -85,3 +85,5 @@ require('nvim-treesitter.configs').setup {
 }
 
 require('trouble').setup {}
+
+require('hop').setup { keys = 'etovxqpdygfblzhckisuran', term_seq_bias = 0.5 }
