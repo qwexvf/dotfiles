@@ -129,6 +129,11 @@ _G.packer_plugins = {
     path = "/home/ssm-user/.local/share/nvim/site/pack/packer/start/go.nvim",
     url = "https://github.com/ray-x/go.nvim"
   },
+  ["hop.nvim"] = {
+    loaded = true,
+    path = "/home/ssm-user/.local/share/nvim/site/pack/packer/start/hop.nvim",
+    url = "https://github.com/phaazon/hop.nvim"
+  },
   ["indent-blankline.nvim"] = {
     loaded = true,
     path = "/home/ssm-user/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
@@ -148,11 +153,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ssm-user/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
-  },
-  ["nightfox.nvim"] = {
-    loaded = true,
-    path = "/home/ssm-user/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
-    url = "https://github.com/EdenEast/nightfox.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = true,

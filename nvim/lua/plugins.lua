@@ -32,7 +32,6 @@ return require('packer').startup(function()
   }
 
   use 'Pocco81/Catppuccino.nvim'
-  use 'EdenEast/nightfox.nvim'
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -45,10 +44,9 @@ return require('packer').startup(function()
   use {
     'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
-    -- tag = 'release' -- To use the latest release
   }
 
-  use { 'onsails/lspkind-nvim' }
+  use 'onsails/lspkind-nvim'
 
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
@@ -83,7 +81,13 @@ return require('packer').startup(function()
 
   -- Window & Animations
   use 'camspiers/animate.vim'
-  use 'camspiers/lens.vim'
+  use { 'camspiers/lens.vim', requires = 'nvim-lua/plenary.nvim' }
+
+  -- Motions
+  use {
+    'phaazon/hop.nvim',
+    branch = 'master', -- optional but strongly recommended
+  }
 
   if packer_bootstrap then
     require('packer').sync()
