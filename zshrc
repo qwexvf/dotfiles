@@ -21,13 +21,14 @@ alias vf='nvim $(fzf)'
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
+export TERM=xterm-256color
+
 # Golang
 export GOROOT="$(asdf where golang)/go/"
-export GOOS=darwin
-export GOARCH=arm64
-export GOBIN=$GOROOT/bin
-export PATH=$PATH:$GOBIN
+export GOOS=linux
+export GOARCH=amd64
 export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 
 # Yarn
 export PATH=$(yarn global bin):$PATH

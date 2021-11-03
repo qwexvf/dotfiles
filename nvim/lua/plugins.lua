@@ -53,9 +53,6 @@ return require('packer').startup(function()
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
 
-  -- Highlight
-  use 'sheerun/vim-polyglot'
-
   -- Highlight, edit, and navigate code using a fast incremental parsing library
   use 'nvim-treesitter/nvim-treesitter'
 
@@ -65,6 +62,8 @@ return require('packer').startup(function()
     'folke/trouble.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
   }
+
+  use 'ray-x/go.nvim'
 
   -- auto complete
   use 'hrsh7th/cmp-nvim-lsp'

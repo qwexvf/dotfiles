@@ -99,8 +99,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-  client.resolved_capabilities.document_formatting = false
-
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     { virtual_text = false, underline = true, signs = true }
@@ -164,71 +162,16 @@ lsp_installer.on_server_ready(function(server)
   vim.cmd [[ do User LspAttachBuffers ]]
 end)
 
-local eslint = {
-  lintCommand = 'eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}',
-  lintIgnoreExitCode = true,
-  lintFormats = { '%f(%l,%c): %tarning %m', '%f(%l,%c): %rror %m' },
-  lintStdin = true,
-  formatCommand = 'eslint_d --stdin --fix-to-stdout --stdin-filename=${INPUT}',
-  formatStdin = true,
-}
-
-local elixir_format = {
-  lintCommand = 'MIX_ENV=test mix credo suggest --format=flycheck --read-from-stdin ${INPUT}',
-  lintStdin = true,
-  lintFormats = { '%f:%l:%c: %m', '%f:%l %t: %m' },
-  lintIgnoreExitCode = true,
-  formatCommand = 'mix format -',
-  formatStdin = true,
-}
-
-local lua_format = { formatCommand = 'stylua -', formatStdin = true }
-
-nvim_lsp.efm.setup {
-  on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-      vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-
-    client.resolved_capabilities.document_formatting = true
-    client.resolved_capabilities.goto_definition = false
-
-    -- Mappings.
-    local opts = { noremap = true, silent = true }
-    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics,
-      { virtual_text = false, underline = true, signs = true }
-    )
-  end,
-  init_options = { documentFormatting = true },
-  settings = {
-    rootMarkers = { '.git/' },
-    languages = {
-      javascript = { eslint },
-      javascriptreact = { eslint },
-      ['javascript.jsx'] = { eslint },
-      typescript = { eslint },
-      ['typescript.tsx'] = { eslint },
-      typescriptreact = { eslint },
-      elixir = { elixir_format },
-      lua = { lua_format },
-    },
-  },
-  filetypes = {
-    'elixir',
-    'lua',
-    'javascript',
-    'javascriptreact',
-    'javascript.jsx',
-    'typescript',
-    'typescript.tsx',
-    'typescriptreact',
-  },
-}
 
 require('lspconfig').tsserver.setup {
   on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require'lspconfig'.gopls.setup{
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = true
+    return on_attach(client, bufnr)
+  end,
   capabilities = capabilities,
 }
