@@ -1,5 +1,7 @@
 local nvim_lsp = require 'lspconfig'
 local cmp = require 'cmp'
+local lspkind = require 'lspkind'
+local lsp_installer = require 'nvim-lsp-installer'
 
 cmp.setup {
   snippet = {
@@ -27,6 +29,9 @@ cmp.setup {
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'treesitter' },
+  },
+  formatting = {
+    format = lspkind.cmp_format { with_text = false, maxwidth = 50 },
   },
 }
 
@@ -105,24 +110,6 @@ local on_attach = function(client, bufnr)
   )
 end
 
-local path_to_elixirls = vim.fn.expand '~/elixir-ls/release/language_server.sh'
-
-nvim_lsp.elixirls.setup {
-  cmd = { path_to_elixirls },
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = { elixirLS = { dialyzerEnabled = false, fetchDeps = false } },
-}
-
-nvim_lsp.vuels.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  cmd = { 'vls' },
-  filetypes = { 'vue' },
-  root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
-}
-
-local lsp_installer = require 'nvim-lsp-installer'
 lsp_installer.on_server_ready(function(server)
   local opts = {}
 
@@ -139,20 +126,15 @@ lsp_installer.on_server_ready(function(server)
     opts.settings = {
       Lua = {
         runtime = {
-          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = 'LuaJIT',
-          -- Setup your lua path
           path = runtime_path,
         },
         diagnostics = {
-          -- Get the language server to recognize the `vim` global
           globals = { 'vim' },
         },
         workspace = {
-          -- Make the server aware of Neovim runtime files
           library = vim.api.nvim_get_runtime_file('', true),
         },
-        -- Do not send telemetry data containing a randomized but unique identifier
         telemetry = { enable = false },
       },
     }
@@ -162,13 +144,32 @@ lsp_installer.on_server_ready(function(server)
   vim.cmd [[ do User LspAttachBuffers ]]
 end)
 
+nvim_lsp.elixirls.setup {
+  cmd = { vim.fn.expand '~/elixir-ls/release/language_server.sh' },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    elixirLS = {
+      dialyzerEnabled = false,
+      fetchDeps = false,
+    },
+  },
+}
 
-require('lspconfig').tsserver.setup {
+nvim_lsp.vuels.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { 'vls' },
+  filetypes = { 'vue' },
+  root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
+}
+
+nvim_lsp.tsserver.setup {
   on_attach = on_attach,
   capabilities = capabilities,
 }
 
-require'lspconfig'.gopls.setup{
+nvim_lsp.gopls.setup {
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = true
     return on_attach(client, bufnr)
