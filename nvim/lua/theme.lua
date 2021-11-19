@@ -1,7 +1,5 @@
 local catppuccino = require 'catppuccino'
 
--- configure it
-
 catppuccino.setup {
   colorscheme = 'dark_catppuccino',
   transparency = false,
@@ -10,8 +8,8 @@ catppuccino.setup {
     comments = 'italic',
     functions = 'italic',
     keywords = 'italic',
-    strings = 'NONE',
-    variables = 'NONE',
+    strings = 'bold',
+    variables = 'bold',
   },
   integrations = {
     treesitter = true,
@@ -30,29 +28,16 @@ catppuccino.setup {
         information = 'underline',
       },
     },
-    lsp_trouble = false,
+    lsp_trouble = true,
     lsp_saga = false,
-    gitgutter = false,
     gitsigns = true,
     telescope = true,
-    nvimtree = {
-      enabled = false,
-      show_root = false,
-    },
     which_key = true,
     indent_blankline = {
       enabled = true,
       colored_indent_levels = true,
     },
-    dashboard = false,
-    neogit = false,
-    vim_sneak = false,
-    fern = false,
-    barbar = false,
-    bufferline = false,
-    markdown = false,
-    lightspeed = false,
-    ts_rainbow = false,
+    bufferline = true,
     hop = true,
   },
 }
