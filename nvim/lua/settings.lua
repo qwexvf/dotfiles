@@ -32,9 +32,6 @@ vim.o.matchtime = 1
 -- Do not save when switching buffers (note: this is now a default on master)
 vim.o.hidden = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
-
 -- Enable break indent
 vim.o.breakindent = true
 
