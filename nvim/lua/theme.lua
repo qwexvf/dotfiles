@@ -1,15 +1,13 @@
-local catppuccino = require 'catppuccino'
+local catppuccin = require 'catppuccin'
 
-catppuccino.setup {
-  colorscheme = 'dark_catppuccino',
-  transparency = false,
-  term_colors = true,
+-- configure it
+catppuccin.setup {
   styles = {
     comments = 'italic',
     functions = 'italic',
     keywords = 'italic',
-    strings = 'bold',
-    variables = 'bold',
+    strings = 'NONE',
+    variables = 'NONE',
   },
   integrations = {
     treesitter = true,
@@ -29,10 +27,8 @@ catppuccino.setup {
       },
     },
     lsp_trouble = true,
-    lsp_saga = false,
     gitsigns = true,
     telescope = true,
-    which_key = true,
     indent_blankline = {
       enabled = true,
       colored_indent_levels = true,

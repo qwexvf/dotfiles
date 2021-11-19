@@ -32,7 +32,7 @@ return require('packer').startup {
       },
     }
 
-    use 'Pocco81/Catppuccino.nvim'
+    use 'catppuccin/nvim'
     use {
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
