@@ -46,3 +46,5 @@ end
 vim.cmd 'autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics{focusable=false}'
 
 -- vim.cmd 'autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()'
+vim.cmd 'autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()'
+vim.cmd 'au FileType go setlocal sw=4 ts=4 sts=4 noet'
