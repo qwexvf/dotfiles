@@ -4,7 +4,7 @@ require('dd').setup {
 }
 
 -- Cool Statusline bc why not?
-require('lualine').setup { options = { theme = 'catppuccino' } }
+require('lualine').setup { options = { theme = 'catppuccin' } }
 
 -- Cool Tabs
 require('bufferline').setup { options = { diagnostics = 'nvim_lsp' } }
@@ -23,8 +23,11 @@ require('telescope').setup {
     },
   },
 }
+
+-- Native extension
 require('telescope').load_extension 'fzf'
 
+-- for {} stuff
 require('nvim-autopairs').setup {}
 
 -- Treesitter configuration
@@ -49,7 +52,7 @@ require('nvim-treesitter.configs').setup {
   textobjects = {
     select = {
       enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
       keymaps = {
         ['af'] = '@function.outer',
         ['if'] = '@function.inner',
@@ -81,6 +84,8 @@ require('nvim-treesitter.configs').setup {
   additional_vim_regex_highlighting = true,
 }
 
+-- Cool trobleshooting
 require('trouble').setup {}
 
+-- Motion
 require('hop').setup { keys = 'etovxqpdygfblzhckisuran', term_seq_bias = 0.5 }
