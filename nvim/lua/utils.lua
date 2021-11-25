@@ -1,7 +1,7 @@
-require('dd').setup {
-  -- The time to wait before displaying newly produced diagnostics.
-  timeout = 300,
-}
+-- require('dd').setup {
+--   -- The time to wait before displaying newly produced diagnostics.
+--   timeout = 300,
+-- }
 
 -- Cool Statusline bc why not?
 require('lualine').setup { options = { theme = 'nightfox' } }

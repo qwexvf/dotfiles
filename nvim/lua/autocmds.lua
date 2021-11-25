@@ -45,7 +45,7 @@ end
 
 -- vim.cmd [[ autocmd CursorHold * lua PrintDiagnostics() ]]
 
-vim.cmd 'autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics{focusable=false}'
+-- vim.cmd 'autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics{focusable=false}'
 
 -- vim.cmd 'autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()'
 vim.cmd 'autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()'
