@@ -32,7 +32,7 @@ return require('packer').startup {
       },
     }
 
-    use 'catppuccin/nvim'
+    use 'EdenEast/nightfox.nvim'
     use {
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },

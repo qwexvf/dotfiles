@@ -4,7 +4,7 @@ require('dd').setup {
 }
 
 -- Cool Statusline bc why not?
-require('lualine').setup { options = { theme = 'catppuccin' } }
+require('lualine').setup { options = { theme = 'nightfox' } }
 
 -- Cool Tabs
 require('bufferline').setup { options = { diagnostics = 'nvim_lsp' } }

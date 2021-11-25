@@ -75,7 +75,7 @@ opt.helpheight = 12
 
 -- Set colorscheme (order is important here)
 opt.termguicolors = true
-cmd [[colorscheme catppuccin]]
+cmd [[colorscheme duskfox]]
 
 -- Remap space as leader key
 vim.api.nvim_set_keymap('', '<,>', '<Nop>', { noremap = true, silent = true })
