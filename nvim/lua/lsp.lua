@@ -145,7 +145,7 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 nvim_lsp.elixirls.setup {
-  cmd = { vim.fn.expand '~/elixir-ls/release/language_server.sh' },
+  cmd = { vim.fn.expand '~/elixir-ls/releases/language_server.sh' },
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
