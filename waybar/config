@@ -2,7 +2,7 @@
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     // "height": 36, // Waybar height (to be removed for auto height)
-    "modules-left": [ "clock", "sway/language", "custom/scratchpad-indicator", "custom/pacman", "sway/mode", "idle_inhibitor", "custom/media"],
+    "modules-left": [ "clock", "sway/language", "custom/pacman", "sway/mode", "idle_inhibitor"],
     "modules-center": ["sway/workspaces"],
     "modules-right": [ "custom/cpugovernor", "cpu", "temperature", "pulseaudio", "bluetooth", "network", "tray"],
     // Modules configuration
@@ -114,11 +114,11 @@
         "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
     },
     "custom/pacman": {
-        "format": "<big>􏆲</big>  {}",
+        "format": "<big></big>  {}",
         "interval": 3600,                     // every hour
         "exec": "checkupdates | wc -l",       // # of updates
         "exec-if": "exit 0",                  // always run; consider advanced run conditions
-        "on-click": "kitty -e 'paru -Syu'; pkill -SIGRTMIN+8 waybar", // update system
+        "on-click": "kitty paru; pkill -SIGRTMIN+8 waybar", // update system
         "signal": 8,
         "max-length": 5,
         "min-length": 3
@@ -135,8 +135,8 @@
       "min-length": 2,
       "max-length": 2,
         "format-icons": {
-            "perf": "",
-            "sched": ""
+            "perf": "",
+            "sched": ""
         },
     },    
     "custom/media": {

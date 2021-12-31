@@ -80,6 +80,7 @@ return require('packer').startup {
     -- Utilities
     use 'https://gitlab.com/yorickpeterse/nvim-dd.git'
     use 'windwp/nvim-autopairs'
+    use 'norcalli/nvim-colorizer.lua'
 
     -- Window & Animations
     use 'camspiers/animate.vim'

@@ -89,3 +89,6 @@ require('trouble').setup {}
 
 -- Motion
 require('hop').setup { keys = 'etovxqpdygfblzhckisuran', term_seq_bias = 0.5 }
+
+-- Colorizer
+require'colorizer'.setup()
