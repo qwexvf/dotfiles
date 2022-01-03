@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["YankAssassin.vim"] = {
+    loaded = true,
+    path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/YankAssassin.vim",
+    url = "https://github.com/svban/YankAssassin.vim"
+  },
   ["animate.vim"] = {
     loaded = true,
     path = "/home/qwexvf/.local/share/nvim/site/pack/packer/start/animate.vim",

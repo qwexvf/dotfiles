@@ -11,7 +11,7 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-HISTFILE=$ZDOTDIR/.zsh-history
+HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=1000000
 
@@ -37,10 +37,6 @@ setopt listpacked
 setopt automenu
 unsetopt BEEP
 setopt vi
-
-## 他のzshと履歴を共有
-setopt inc_append_history
-setopt share_history
 
 ## パスを直接入力してもcdする
 setopt AUTO_CD

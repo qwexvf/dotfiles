@@ -96,6 +96,9 @@ return require('packer').startup {
     use 'lewis6991/impatient.nvim'
     use 'nathom/filetype.nvim'
 
+    -- Yank Assasin
+    use 'svban/YankAssassin.vim'
+
     if packer_bootstrap then
       require('packer').sync()
     end
