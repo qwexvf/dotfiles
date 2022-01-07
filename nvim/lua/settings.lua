@@ -26,7 +26,6 @@ vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
-
 vim.o.matchtime = 1
 
 -- Do not save when switching buffers (note: this is now a default on master)
@@ -53,6 +52,8 @@ opt.history = 100 -- remember n lines in history
 opt.lazyredraw = true -- faster scrolling
 opt.synmaxcol = 240 -- max column for syntax highlight
 
+opt.fillchars:append('fold:•')
+
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -75,7 +76,7 @@ opt.helpheight = 12
 
 -- Set colorscheme (order is important here)
 opt.termguicolors = true
-cmd [[colorscheme nightfox]]
+cmd [[colorscheme catppuccin]]
 
 -- Remap space as leader key
 vim.api.nvim_set_keymap('', '<,>', '<Nop>', { noremap = true, silent = true })

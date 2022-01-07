@@ -32,7 +32,10 @@ return require('packer').startup {
       },
     }
 
-    use 'EdenEast/nightfox.nvim'
+    use {
+      'catppuccin/nvim',
+      as = 'catppuccin',
+    }
     use {
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -95,6 +98,14 @@ return require('packer').startup {
     -- VOODOO
     use 'lewis6991/impatient.nvim'
     use 'nathom/filetype.nvim'
+    use 'jparise/vim-graphql'
+    use {
+      'anuvyklack/pretty-fold.nvim',
+      config = function()
+        require('pretty-fold').setup {}
+        require('pretty-fold.preview').setup_keybinding()
+      end,
+    }
 
     -- Yank Assasin
     use 'svban/YankAssassin.vim'

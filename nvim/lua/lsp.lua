@@ -3,6 +3,51 @@ local cmp = require 'cmp'
 local lspkind = require 'lspkind'
 local lsp_installer = require 'nvim-lsp-installer'
 
+vim.diagnostic.config {
+  virtual_text = false,
+  signs = true,
+  float = {
+    border = 'single',
+    focus = false,
+    scope = 'cursor',
+    source = 'always', -- Or "if_many"
+  },
+}
+
+local function goto_definition(split_cmd)
+  local util = vim.lsp.util
+  local log = require 'vim.lsp.log'
+  local api = vim.api
+
+  -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
+  local handler = function(_, result, ctx)
+    if result == nil or vim.tbl_isempty(result) then
+      local _ = log.info() and log.info(ctx.method, 'No location found')
+      return nil
+    end
+
+    if split_cmd then
+      vim.cmd(split_cmd)
+    end
+
+    if vim.tbl_islist(result) then
+      util.jump_to_location(result[1])
+
+      if #result > 1 then
+        util.set_qflist(util.locations_to_items(result))
+        api.nvim_command 'copen'
+        api.nvim_command 'wincmd p'
+      end
+    else
+      util.jump_to_location(result)
+    end
+  end
+
+  return handler
+end
+
+vim.lsp.handlers['textDocument/definition'] = goto_definition 'split'
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -104,10 +149,10 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    { virtual_text = false, underline = true, signs = true }
-  )
+  -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  --   vim.lsp.diagnostic.on_publish_diagnostics,
+  --   { virtual_text = false, underline = true, signs = true }
+  -- )
 end
 
 lsp_installer.on_server_ready(function(server)

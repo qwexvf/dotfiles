@@ -164,7 +164,9 @@ alias man=batman.sh
 
 . $HOME/.cargo/env
 
-# Added by Amplify CLI binary installer
-export PATH="$HOME/.amplify/bin:$PATH"
+# Add amplify to path
+[ -f ~/.amplify/bin ] && export PATH="$HOME/.amplify/bin:$PATH"
+
+eval "$(starship init zsh)"
 
 autoload -Uz compinit && compinit

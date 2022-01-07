@@ -5,8 +5,7 @@ local cmd = vim.cmd
 -- map Esc to jj
 map('i', 'jj', '<Esc>', { noremap = true })
 
--- Y yank until the end of line  (note: this is now a default on master)
-map('n', 'Y', 'y$', { noremap = true })
+-- Y yank until the end of line  (note: this is now a default on master) map('n', 'Y', 'y$', { noremap = true })
 
 -- Add leader shortcuts
 map('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
@@ -37,3 +36,11 @@ map(
 )
 
 map('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
+
+-- Trouble mappings
+map('n', '<leader>xx', '<cmd>Trouble<cr>', { silent = true, noremap = true })
+map('n', '<leader>xw', '<cmd>Trouble workspace_diagnostics<cr>', { silent = true, noremap = true })
+map('n', '<leader>xd', '<cmd>Trouble document_diagnostics<cr>', { silent = true, noremap = true })
+map('n', '<leader>xl', '<cmd>Trouble loclist<cr>', { silent = true, noremap = true })
+map('n', '<leader>xq', '<cmd>Trouble quickfix<cr>', { silent = true, noremap = true })
+map('n', 'gR', '<cmd>Trouble lsp_references<cr>', { silent = true, noremap = true })
