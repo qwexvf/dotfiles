@@ -1,15 +1,15 @@
+-- The time to wait before displaying newly produced diagnostics.
 require('dd').setup {
-  -- The time to wait before displaying newly produced diagnostics.
   timeout = 300,
 }
 
 -- Cool Statusline bc why not?
-require('lualine').setup { options = { theme = 'catppuccin' } }
+require('lualine').setup { options = { theme = 'nightfox' } }
 
 -- Cool Tabs
 require('bufferline').setup { options = { diagnostics = 'nvim_lsp' } }
 
--- add git signs
+-- Add git signs
 require('gitsigns').setup()
 
 -- Best fzf finder
@@ -138,4 +138,5 @@ require('pretty-fold').setup {
     { 'for%s', 'end' },
   },
 }
+
 require('pretty-fold.preview').setup_keybinding()

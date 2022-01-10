@@ -32,10 +32,12 @@ return require('packer').startup {
       },
     }
 
+    -- Themes
     use {
       'catppuccin/nvim',
       as = 'catppuccin',
     }
+    use 'EdenEast/nightfox.nvim'
     use {
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -84,6 +86,12 @@ return require('packer').startup {
     use 'https://gitlab.com/yorickpeterse/nvim-dd.git'
     use 'windwp/nvim-autopairs'
     use 'norcalli/nvim-colorizer.lua'
+    use({
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      config = function()
+        require("lsp_lines").register_lsp_virtual_lines()
+      end,
+    })
 
     -- Window & Animations
     use 'camspiers/animate.vim'

@@ -5,13 +5,13 @@ local lsp_installer = require 'nvim-lsp-installer'
 
 vim.diagnostic.config {
   virtual_text = false,
-  signs = true,
-  float = {
-    border = 'single',
-    focus = false,
-    scope = 'cursor',
-    source = 'always', -- Or "if_many"
-  },
+  -- signs = true,
+  -- float = {
+  --   border = 'single',
+  --   focus = false,
+  --   scope = 'cursor',
+  --   source = 'always', -- Or "if_many"
+  -- },
 }
 
 local function goto_definition(split_cmd)

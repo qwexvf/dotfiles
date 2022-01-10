@@ -27,7 +27,7 @@ setopt inc_append_history     # add commands to HISTFILE in order of execution
 setopt share_history          # share command history data
 setopt always_to_end          # cursor moved to the end in full completion
 setopt hash_list_all          # hash everything before completion
-# setopt completealiases        # complete alisases
+setopt completealiases        # complete alisases
 setopt always_to_end          # when completing from the middle of a word, move the cursor to the end of the word
 setopt complete_in_word       # allow completion from within a word/phrase
 setopt nocorrect                # spelling correction for commands
@@ -168,5 +168,9 @@ alias man=batman.sh
 [ -f ~/.amplify ] && export PATH="$HOME/.amplify/bin:$PATH"
 
 eval "$(starship init zsh)"
-
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
+  compinit;
+else
+  compinit -C
+fi
