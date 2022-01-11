@@ -99,13 +99,7 @@ return require('packer').startup {
     use 'lewis6991/impatient.nvim'
     use 'nathom/filetype.nvim'
     use 'jparise/vim-graphql'
-    use {
-      'anuvyklack/pretty-fold.nvim',
-      config = function()
-        require('pretty-fold').setup {}
-        require('pretty-fold.preview').setup_keybinding()
-      end,
-    }
+    use 'anuvyklack/pretty-fold.nvim'
 
     -- Yank Assasin
     use 'svban/YankAssassin.vim'
