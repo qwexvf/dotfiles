@@ -210,11 +210,23 @@ nvim_lsp.vuels.setup {
 }
 
 nvim_lsp.tsserver.setup {
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = true
+    return on_attach(client, bufnr)
+  end,
   capabilities = capabilities,
 }
 
 nvim_lsp.gopls.setup {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = true
+    return on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+}
+
+-- elm
+require'lspconfig'.elmls.setup{
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = true
     return on_attach(client, bufnr)
