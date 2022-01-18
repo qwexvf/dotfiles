@@ -14,6 +14,8 @@ vim.diagnostic.config {
   -- },
 }
 
+require('lsp_lines').register_lsp_virtual_lines()
+
 local function goto_definition(split_cmd)
   local util = vim.lsp.util
   local log = require 'vim.lsp.log'
@@ -201,12 +203,24 @@ nvim_lsp.elixirls.setup {
   },
 }
 
-nvim_lsp.vuels.setup {
-  on_attach = on_attach,
+-- nvim_lsp.vuels.setup {
+--   on_attach = function(client, bufnr)
+--     client.resolved_capabilities.document_formatting = true
+--     return on_attach(client, bufnr)
+--   end,
+--   capabilities = capabilities,
+--   cmd = { 'vls' },
+--   filetypes = { 'vue' },
+--   root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
+-- }
+
+nvim_lsp.volar.setup{
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = true
+    return on_attach(client, bufnr)
+  end,
   capabilities = capabilities,
-  cmd = { 'vls' },
-  filetypes = { 'vue' },
-  root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
+  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
 }
 
 nvim_lsp.tsserver.setup {

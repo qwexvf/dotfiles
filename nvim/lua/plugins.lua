@@ -89,7 +89,6 @@ return require('packer').startup {
     use({
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
       config = function()
-        require("lsp_lines").register_lsp_virtual_lines()
       end,
     })
 
@@ -108,7 +107,7 @@ return require('packer').startup {
     use 'nathom/filetype.nvim'
     use 'jparise/vim-graphql'
 
-    -- Yank Assasin
+    -- Yank
     use 'svban/YankAssassin.vim'
 
     if packer_bootstrap then

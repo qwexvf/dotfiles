@@ -81,6 +81,7 @@ zinit light Aloxaf/fzf-tab
 
 # NVM
 export NVM_AUTO_USE=true
+export NVM_LAZY_LOAD=true
 zinit ice wait"1" lucid
 zinit light lukechilds/zsh-nvm
 
@@ -121,9 +122,17 @@ zstyle ':completion:*:default' menu select=1
 
 # Fzf
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
+<<<<<<< HEAD
+=======
+# MacOS Stuff
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+fi	
+
+>>>>>>> 08eb93c (use volar)
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
