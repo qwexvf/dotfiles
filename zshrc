@@ -125,14 +125,11 @@ zstyle ':completion:*:default' menu select=1
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
-<<<<<<< HEAD
-=======
 # MacOS Stuff
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 fi	
 
->>>>>>> 08eb93c (use volar)
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
