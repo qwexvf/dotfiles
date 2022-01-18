@@ -2,6 +2,7 @@ local nvim_lsp = require 'lspconfig'
 local cmp = require 'cmp'
 local lspkind = require 'lspkind'
 local lsp_installer = require 'nvim-lsp-installer'
+local log = require 'vim.lsp.log'
 
 vim.diagnostic.config {
   virtual_text = false,
@@ -14,11 +15,8 @@ vim.diagnostic.config {
   -- },
 }
 
-require('lsp_lines').register_lsp_virtual_lines()
-
 local function goto_definition(split_cmd)
   local util = vim.lsp.util
-  local log = require 'vim.lsp.log'
   local api = vim.api
 
   -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
@@ -78,7 +76,7 @@ cmp.setup {
     { name = 'treesitter' },
   },
   formatting = {
-    format = lspkind.cmp_format { with_text = false, maxwidth = 50 },
+    format = lspkind.cmp_format { with_text = true, maxwidth = 100 },
   },
 }
 
@@ -155,6 +153,7 @@ local on_attach = function(client, bufnr)
   --   vim.lsp.diagnostic.on_publish_diagnostics,
   --   { virtual_text = false, underline = true, signs = true }
   -- )
+  --
 end
 
 lsp_installer.on_server_ready(function(server)
@@ -214,22 +213,29 @@ nvim_lsp.elixirls.setup {
 --   root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
 -- }
 
-nvim_lsp.volar.setup{
+nvim_lsp.volar.setup {
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = true
     return on_attach(client, bufnr)
   end,
   capabilities = capabilities,
-  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+  filetypes = {
+    'typescript',
+    'javascript',
+    'javascriptreact',
+    'typescriptreact',
+    'vue',
+    'json',
+  },
 }
 
-nvim_lsp.tsserver.setup {
-  on_attach = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = true
-    return on_attach(client, bufnr)
-  end,
-  capabilities = capabilities,
-}
+-- nvim_lsp.tsserver.setup {
+--   on_attach = function(client, bufnr)
+--     client.resolved_capabilities.document_formatting = true
+--     return on_attach(client, bufnr)
+--   end,
+--   capabilities = capabilities,
+-- }
 
 nvim_lsp.gopls.setup {
   on_attach = function(client, bufnr)
@@ -240,7 +246,7 @@ nvim_lsp.gopls.setup {
 }
 
 -- elm
-require'lspconfig'.elmls.setup{
+nvim_lsp.elmls.setup {
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = true
     return on_attach(client, bufnr)
@@ -249,4 +255,6 @@ require'lspconfig'.elmls.setup{
 }
 
 -- Svelte
-require'lspconfig'.svelte.setup{}
+nvim_lsp.svelte.setup {}
+
+require('lsp_lines').register_lsp_virtual_lines()
