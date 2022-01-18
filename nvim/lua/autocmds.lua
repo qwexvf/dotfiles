@@ -20,10 +20,12 @@ cmd [[
 ]]
 
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile'
+vim.cmd 'autocmd filetype plugin indent on'
 
 -- vim.cmd 'autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()'
 vim.cmd 'autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()'
 vim.cmd 'au FileType go setlocal sw=4 ts=4 sts=4 noet'
 vim.cmd 'au FileType elm setlocal sw=4 ts=4 sts=4 noet'
+vim.cmd 'au FileType typescript,ts setlocal sw=4 ts=4 sts=4 noet'
 
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]

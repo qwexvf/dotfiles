@@ -233,3 +233,6 @@ require'lspconfig'.elmls.setup{
   end,
   capabilities = capabilities,
 }
+
+-- Svelte
+require'lspconfig'.svelte.setup{}

@@ -1,8 +1,5 @@
 -- local map = vim.api.nvim_set_keymap  -- set global keymap
-local cmd = vim.cmd -- execute Vim commands
--- local exec = vim.api.nvim_exec -- execute Vimscript
--- local fn = vim.fn -- call Vim functions
--- local g = vim.g -- global variables
+local cmd = vim.cmd -- execute Vim commands local exec = vim.api.nvim_exec -- execute Vimscript local fn = vim.fn -- call Vim functions local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 
 vim.o.smartindent = true
@@ -76,7 +73,7 @@ opt.helpheight = 12
 
 -- Set colorscheme (order is important here)
 opt.termguicolors = true
-cmd [[colorscheme nightfox]]
+cmd [[colorscheme catppuccin]]
 
 -- Remap space as leader key
 vim.api.nvim_set_keymap('', '<,>', '<Nop>', { noremap = true, silent = true })

@@ -124,7 +124,7 @@ zstyle ':completion:*:default' menu select=1
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
-. /opt/asdf-vm/asdf.sh
+. $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
 export EDITOR='nvim'
