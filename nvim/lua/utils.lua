@@ -1,6 +1,6 @@
 -- The time to wait before displaying newly produced diagnostics.
 require('dd').setup {
-  timeout = 300,
+  timeout = 100,
 }
 
 -- Cool Statusline bc why not?
@@ -10,7 +10,7 @@ require('lualine').setup { options = { theme = 'catppuccin' } }
 require('bufferline').setup { options = { diagnostics = 'nvim_lsp' } }
 
 -- Add git signs
-require('gitsigns').setup()
+require('gitsigns').setup {}
 
 -- Best fzf finder
 require('telescope').setup {
@@ -27,15 +27,15 @@ require('telescope').setup {
 -- Native extension
 require('telescope').load_extension 'fzf'
 
--- for {} stuff
 require('nvim-autopairs').setup {}
 
--- Treesitter configuration
--- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'javascript', 'typescript', 'lua', 'elixir' },
+  ensure_installed = { 'javascript', 'typescript', 'lua', 'elixir', 'vue', 'svelte' },
   highlight = {
-    enable = true, -- false will disable the whole extension
+    enable = true,
+  },
+  indent = {
+    enable = true,
   },
   incremental_selection = {
     enable = true,
@@ -45,9 +45,6 @@ require('nvim-treesitter.configs').setup {
       scope_incremental = 'grc',
       node_decremental = 'grm',
     },
-  },
-  indent = {
-    enable = true,
   },
   textobjects = {
     select = {
@@ -91,4 +88,6 @@ require('trouble').setup {}
 require('hop').setup { keys = 'etovxqpdygfblzhckisuran', term_seq_bias = 0.5 }
 
 -- Colorizer
-require'colorizer'.setup()
+require('colorizer').setup {}
+
+-- require('lsp_lines').register_lsp_virtual_lines()

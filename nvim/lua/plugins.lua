@@ -26,8 +26,7 @@ return require('packer').startup {
     -- UI to select things (files, grep results, open buffers...)
     use {
       'nvim-telescope/telescope.nvim',
-      requires = {
-        'nvim-lua/plenary.nvim',
+      requires = { 'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
       },
     }
@@ -52,6 +51,7 @@ return require('packer').startup {
       requires = { 'nvim-lua/plenary.nvim' },
     }
 
+    -- lsp icons
     use 'onsails/lspkind-nvim'
 
     -- Add indentation guides even on blank lines
@@ -79,18 +79,14 @@ return require('packer').startup {
     }
     use 'ray-x/cmp-treesitter'
 
-    use 'hrsh7th/cmp-vsnip'
-    use 'hrsh7th/vim-vsnip'
+    use { 'L3MON4D3/LuaSnip', requires = 'rafamadriz/friendly-snippets' }
+    use 'saadparwaiz1/cmp_luasnip'
 
     -- Utilities
     use 'https://gitlab.com/yorickpeterse/nvim-dd.git'
     use 'windwp/nvim-autopairs'
     use 'norcalli/nvim-colorizer.lua'
-    use({
-      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      config = function()
-      end,
-    })
+    use 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 
     -- Window & Animations
     use 'camspiers/animate.vim'
@@ -109,6 +105,9 @@ return require('packer').startup {
 
     -- Yank
     use 'svban/YankAssassin.vim'
+
+    -- extra syntax
+    use 'earthly/earthly.vim'
 
     if packer_bootstrap then
       require('packer').sync()

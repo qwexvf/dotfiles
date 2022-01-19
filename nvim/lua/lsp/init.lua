@@ -6,15 +6,16 @@ local log = require 'vim.lsp.log'
 
 vim.diagnostic.config {
   virtual_text = false,
-  -- signs = true,
-  -- float = {
-  --   border = 'single',
-  --   focus = false,
-  --   scope = 'cursor',
-  --   source = 'always', -- Or "if_many"
-  -- },
+  signs = true,
+  float = {
+    border = 'single',
+    focus = false,
+    scope = 'cursor',
+    source = 'always', -- Or "if_many"
+  },
 }
 
+-- small for to go to definition on new window or split tabs
 local function goto_definition(split_cmd)
   local util = vim.lsp.util
   local api = vim.api
@@ -51,7 +52,7 @@ vim.lsp.handlers['textDocument/definition'] = goto_definition 'split'
 cmp.setup {
   snippet = {
     expand = function(args)
-      vim.fn['vsnip#anonymous'](args.body)
+      require('luasnip').lsp_expand(args.body)
     end,
   },
   mapping = {
@@ -70,10 +71,10 @@ cmp.setup {
   },
   sources = cmp.config.sources {
     { name = 'nvim_lsp' },
-    { name = 'cmp_git' },
-    { name = 'vsnip' },
-    { name = 'buffer' },
+    { name = 'luasnip' },
     { name = 'treesitter' },
+    { name = 'cmp_git' },
+    { name = 'buffer' },
   },
   formatting = {
     format = lspkind.cmp_format { with_text = true, maxwidth = 100 },
@@ -81,7 +82,11 @@ cmp.setup {
 }
 
 -- Use buffer source for `/`.
-cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' },
+  },
+})
 
 -- Use cmdline & path source for ':'.
 cmp.setup.cmdline(':', {
@@ -113,7 +118,16 @@ require('cmp_git').setup {
   },
 }
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local function create_capabilities()
+  local _capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+  -- modify capabilities here
+  _capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  return _capabilities
+end
+
+local capabilities = create_capabilities()
 
 -- Setup lspconfig.
 local on_attach = function(client, bufnr)
@@ -149,11 +163,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-  -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  --   vim.lsp.diagnostic.on_publish_diagnostics,
-  --   { virtual_text = false, underline = true, signs = true }
-  -- )
-  --
+  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    underline = true,
+    signs = true,
+    update_in_insert = true,
+  })
 end
 
 lsp_installer.on_server_ready(function(server)
@@ -191,8 +206,11 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 nvim_lsp.elixirls.setup {
-  cmd = { vim.fn.expand '~/elixir-ls/releases/language_server.sh' },
-  on_attach = on_attach,
+  cmd = { vim.fn.expand '~/Documents/elixir-ls/releases/language_server.sh' },
+  --on_attach = function(client, bufnr)
+  --  client.resolved_capabilities.document_formatting = false
+  --  return on_attach(client, bufnr)
+  --end,
   capabilities = capabilities,
   settings = {
     elixirLS = {
@@ -255,6 +273,10 @@ nvim_lsp.elmls.setup {
 }
 
 -- Svelte
-nvim_lsp.svelte.setup {}
-
-require('lsp_lines').register_lsp_virtual_lines()
+nvim_lsp.svelte.setup {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = true
+    return on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+}

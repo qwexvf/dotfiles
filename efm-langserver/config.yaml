@@ -1,0 +1,24 @@
+version: 2
+root-markers:
+  - .git/
+lint-debounce: 1s
+
+tools:
+  lua-lua-format: &lua-lua-format
+    format-command: 'lua-format -i'
+    format-stdin: true
+  mix_credo: &mix_credo
+    lint-command: "mix credo suggest --format=flycheck --read-from-stdin ${INPUT}"
+    lint-stdin: true
+    lint-formats:
+      - '%f:%l:%c: %t: %m'
+      - '%f:%l: %t: %m'
+    root-markers:
+      - mix.lock
+      - mix.exs
+
+languages:
+  lua:
+    - <<: *lua-lua-format
+  elixir:
+    - <<: *mix_credo

@@ -49,7 +49,7 @@ opt.history = 100 -- remember n lines in history
 opt.lazyredraw = true -- faster scrolling
 opt.synmaxcol = 240 -- max column for syntax highlight
 
-opt.fillchars:append('fold:•')
+opt.fillchars:append 'fold:•'
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true

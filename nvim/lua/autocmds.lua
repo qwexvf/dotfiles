@@ -28,4 +28,4 @@ vim.cmd 'au FileType go setlocal sw=4 ts=4 sts=4 noet'
 vim.cmd 'au FileType elm setlocal sw=4 ts=4 sts=4 noet'
 vim.cmd 'au FileType typescript,ts setlocal sw=4 ts=4 sts=4 noet'
 
--- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
