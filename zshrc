@@ -133,6 +133,7 @@ fi
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
+export AWS_SDK_LOAD_CONFIG=1
 export EDITOR='nvim'
 export VISUAL=$EDITOR
 export PAGER='less'
