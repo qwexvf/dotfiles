@@ -4,6 +4,9 @@ local lspkind = require 'lspkind'
 local lsp_installer = require 'nvim-lsp-installer'
 local log = require 'vim.lsp.log'
 
+-- local t = Json.decode(jsonString)
+-- print(t)
+
 vim.diagnostic.config {
   virtual_text = false,
   signs = true,
@@ -220,32 +223,32 @@ nvim_lsp.elixirls.setup {
   },
 }
 
--- nvim_lsp.vuels.setup {
---   on_attach = function(client, bufnr)
---     client.resolved_capabilities.document_formatting = true
---     return on_attach(client, bufnr)
---   end,
---   capabilities = capabilities,
---   cmd = { 'vls' },
---   filetypes = { 'vue' },
---   root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
--- }
-
-nvim_lsp.volar.setup {
+nvim_lsp.vuels.setup {
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = true
     return on_attach(client, bufnr)
   end,
   capabilities = capabilities,
-  filetypes = {
-    'typescript',
-    'javascript',
-    'javascriptreact',
-    'typescriptreact',
-    'vue',
-    'json',
-  },
+  cmd = { 'vls' },
+  filetypes = { 'vue' },
+  root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
 }
+
+-- nvim_lsp.volar.setup {
+--   on_attach = function(client, bufnr)
+--     client.resolved_capabilities.document_formatting = true
+--     return on_attach(client, bufnr)
+--   end,
+--   capabilities = capabilities,
+--   filetypes = {
+--     'typescript',
+--     'javascript',
+--     'javascriptreact',
+--     'typescriptreact',
+--     'vue',
+--     'json',
+--   },
+-- }
 
 -- nvim_lsp.tsserver.setup {
 --   on_attach = function(client, bufnr)

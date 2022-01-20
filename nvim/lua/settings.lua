@@ -61,7 +61,7 @@ opt.completeopt = 'menuone,noselect'
 opt.shortmess = opt.shortmess + { c = true }
 
 -- perfomance
-opt.updatetime = 100
+opt.updatetime = 0
 opt.timeoutlen = 400
 opt.redrawtime = 1500
 opt.ttimeoutlen = 10
@@ -79,10 +79,3 @@ cmd [[colorscheme catppuccin]]
 vim.api.nvim_set_keymap('', '<,>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
-
--- Map blankline
-vim.g.indent_blankline_char = '┊'
-vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
-vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
-vim.g.indent_blankline_char_highlight = 'LineNr'
-vim.g.indent_blankline_show_trailing_blankline_indent = false

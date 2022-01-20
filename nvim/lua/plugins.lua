@@ -26,8 +26,12 @@ return require('packer').startup {
     -- UI to select things (files, grep results, open buffers...)
     use {
       'nvim-telescope/telescope.nvim',
-      requires = { 'nvim-lua/plenary.nvim',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'nvim-telescope/telescope-frecency.nvim',
+        'nvim-telescope/telescope-github.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+        'tami5/sqlite.lua',
       },
     }
 
@@ -102,12 +106,16 @@ return require('packer').startup {
     use 'lewis6991/impatient.nvim'
     use 'nathom/filetype.nvim'
     use 'jparise/vim-graphql'
+    use 'windwp/windline.nvim'
 
     -- Yank
     use 'svban/YankAssassin.vim'
 
     -- extra syntax
     use 'earthly/earthly.vim'
+
+    -- session manager
+    use 'rmagatti/auto-session'
 
     if packer_bootstrap then
       require('packer').sync()
