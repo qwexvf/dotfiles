@@ -117,6 +117,11 @@ return require('packer').startup {
     -- session manager
     use 'rmagatti/auto-session'
 
+    -- Rust?
+    use 'rust-lang/rust.vim'
+
+    use 'sunjon/shade.nvim'
+
     if packer_bootstrap then
       require('packer').sync()
     end

@@ -4,9 +4,6 @@ local lspkind = require 'lspkind'
 local lsp_installer = require 'nvim-lsp-installer'
 local log = require 'vim.lsp.log'
 
--- local t = Json.decode(jsonString)
--- print(t)
-
 vim.diagnostic.config {
   virtual_text = false,
   signs = true,
@@ -14,7 +11,7 @@ vim.diagnostic.config {
     border = 'single',
     focus = false,
     scope = 'cursor',
-    source = 'always', -- Or "if_many"
+    source = 'always',
   },
 }
 
@@ -122,7 +119,9 @@ require('cmp_git').setup {
 }
 
 local function create_capabilities()
-  local _capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local _capabilities = require('cmp_nvim_lsp').update_capabilities(
+    vim.lsp.protocol.make_client_capabilities()
+  )
 
   -- modify capabilities here
   _capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -282,4 +281,24 @@ nvim_lsp.svelte.setup {
     return on_attach(client, bufnr)
   end,
   capabilities = capabilities,
+}
+
+-- Enable rust_analyzer
+nvim_lsp.rust_analyzer.setup {
+  cmd = {"rustup", "run", "nightly", "rust-analyzer"},
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = true
+    return on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+  settings = {
+    -- to enable rust-analyzer settings visit:
+    -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+    ['rust-analyzer'] = {
+      -- enable clippy diagnostics on save
+      checkOnSave = {
+        command = 'clippy',
+      },
+    },
+  },
 }
