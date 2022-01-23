@@ -23,6 +23,11 @@ return require('packer').startup {
     use 'tpope/vim-commentary'
     use 'tpope/vim-surround'
 
+    -- Extra languages
+    -- use { 'rust-lang/rust.vim', opt = true, ft = { 'rust' } }
+    -- use { 'elixir-editors/vim-elixir', ft = { 'elixir' } }
+--
+
     -- UI to select things (files, grep results, open buffers...)
     use {
       'nvim-telescope/telescope.nvim',
@@ -65,7 +70,6 @@ return require('packer').startup {
     use 'nvim-treesitter/nvim-treesitter'
 
     use 'neovim/nvim-lspconfig'
-    use 'williamboman/nvim-lsp-installer'
     use {
       'folke/trouble.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -81,7 +85,6 @@ return require('packer').startup {
       'petertriho/cmp-git',
       requires = 'nvim-lua/plenary.nvim',
     }
-    use 'ray-x/cmp-treesitter'
 
     use { 'L3MON4D3/LuaSnip', requires = 'rafamadriz/friendly-snippets' }
     use 'saadparwaiz1/cmp_luasnip'
@@ -90,7 +93,6 @@ return require('packer').startup {
     use 'https://gitlab.com/yorickpeterse/nvim-dd.git'
     use 'windwp/nvim-autopairs'
     use 'norcalli/nvim-colorizer.lua'
-    use 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 
     -- Window & Animations
     use 'camspiers/animate.vim'
@@ -107,20 +109,11 @@ return require('packer').startup {
     use 'nathom/filetype.nvim'
     use 'jparise/vim-graphql'
     use 'windwp/windline.nvim'
-
-    -- Yank
     use 'svban/YankAssassin.vim'
-
-    -- extra syntax
     use 'earthly/earthly.vim'
-
-    -- session manager
     use 'rmagatti/auto-session'
-
-    -- Rust?
-    use 'rust-lang/rust.vim'
-
     use 'sunjon/shade.nvim'
+    use 'andweeb/presence.nvim'
 
     if packer_bootstrap then
       require('packer').sync()
@@ -128,6 +121,6 @@ return require('packer').startup {
   end,
   config = {
     -- Move to lua dir so impatient.nvim can cache it
-    compile_path = vim.fn.stdpath 'config' .. '/lua/packer_compiled.lua',
+    compile_path = fn.stdpath 'config' .. '/lua/packer_compiled.lua',
   },
 }

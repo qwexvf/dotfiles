@@ -1,11 +1,7 @@
 local map = vim.api.nvim_set_keymap
-local default_opts = { noremap = true, silent = true }
-local cmd = vim.cmd
 
 -- map Esc to jj
 map('i', 'jj', '<Esc>', { noremap = true })
-
--- Y yank until the end of line  (note: this is now a default on master) map('n', 'Y', 'y$', { noremap = true })
 
 -- Add leader shortcuts
 map('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })

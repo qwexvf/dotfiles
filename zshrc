@@ -125,6 +125,10 @@ zstyle ':completion:*:default' menu select=1
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
+# because starship is beign slow
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
+
 # MacOS Stuff
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -154,7 +158,8 @@ export PATH=$PATH:$GOPATH/bin
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 # GPG
-export GPG_TTY=$(tty)
+GPG_TTY=$(tty)
+export GPG_TTY
 export EDITOR=nvim
 
 # Aliases
@@ -174,7 +179,7 @@ alias man=batman.sh
 # Add amplify to path
 [ -f ~/.amplify ] && export PATH="$HOME/.amplify/bin:$PATH"
 
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
   compinit;

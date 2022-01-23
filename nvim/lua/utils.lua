@@ -203,3 +203,27 @@ require 'wlsample.bubble'
 --     toggle           = '<Leader>s',
 --   }
 -- })
+
+-- Discord
+require('presence'):setup {
+  -- General options
+  auto_update = true,
+  neovim_image_text = 'The One True Text Editor', -- Text displayed when hovered over the Neovim image
+  main_image = 'neovim', -- Main image display (either "neovim" or "file")
+  -- client_id = '150256181439496192', -- Use your own Discord application client id (not recommended)
+  log_level = 'info', -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+  debounce_timeout = 10,
+  enable_line_number = true,
+  blacklist = {},
+  buttons = true,
+  file_assets = {},
+
+  -- Rich Presence text options
+  editing_text = 'Editing %s',
+  file_explorer_text = 'Browsing %s',
+  git_commit_text = 'Committing changes',
+  plugin_manager_text = 'Managing plugins',
+  reading_text = 'Reading %s',
+  workspace_text = 'Working on %s',
+  line_number_text = 'Line %s out of %s',
+}

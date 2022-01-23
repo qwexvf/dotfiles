@@ -1,8 +1,9 @@
 local nvim_lsp = require 'lspconfig'
 local cmp = require 'cmp'
 local lspkind = require 'lspkind'
-local lsp_installer = require 'nvim-lsp-installer'
 local log = require 'vim.lsp.log'
+
+require('luasnip.loaders.from_vscode').load()
 
 vim.diagnostic.config {
   virtual_text = false,
@@ -119,9 +120,7 @@ require('cmp_git').setup {
 }
 
 local function create_capabilities()
-  local _capabilities = require('cmp_nvim_lsp').update_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  )
+  local _capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
   -- modify capabilities here
   _capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -173,46 +172,46 @@ local on_attach = function(client, bufnr)
   })
 end
 
-lsp_installer.on_server_ready(function(server)
-  local opts = {}
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
 
-  opts.on_attach = on_attach
-  opts.capabilities = capabilities
-  opts.flags = { debounce_text_changes = 150 }
-
-  if server.name == 'sumneko_lua' then
-    -- Make runtime files discoverable to the server
-    local runtime_path = vim.split(package.path, ';')
-    table.insert(runtime_path, 'lua/?.lua')
-    table.insert(runtime_path, 'lua/?/init.lua')
-
-    opts.settings = {
-      Lua = {
-        runtime = {
-          version = 'LuaJIT',
-          path = runtime_path,
-        },
-        diagnostics = {
-          globals = { 'vim' },
-        },
-        workspace = {
-          library = vim.api.nvim_get_runtime_file('', true),
-        },
-        telemetry = { enable = false },
-      },
-    }
-  end
-
-  server:setup(opts)
-  vim.cmd [[ do User LspAttachBuffers ]]
-end)
-
-nvim_lsp.elixirls.setup {
-  cmd = { vim.fn.expand '~/Documents/elixir-ls/releases/language_server.sh' },
+nvim_lsp.sumneko_lua.setup {
   --on_attach = function(client, bufnr)
   --  client.resolved_capabilities.document_formatting = false
   --  return on_attach(client, bufnr)
   --end,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file('', true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+
+nvim_lsp.elixirls.setup {
+  cmd = { vim.fn.expand '~/Documents/elixir-ls/releases/language_server.sh' },
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+    return on_attach(client, bufnr)
+  end,
   capabilities = capabilities,
   settings = {
     elixirLS = {
@@ -285,7 +284,7 @@ nvim_lsp.svelte.setup {
 
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup {
-  cmd = {"rustup", "run", "nightly", "rust-analyzer"},
+  cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = true
     return on_attach(client, bufnr)

@@ -1,17 +1,12 @@
--- local map = vim.api.nvim_set_keymap  -- set global keymap
-local cmd = vim.cmd -- execute Vim commands local exec = vim.api.nvim_exec -- execute Vimscript local fn = vim.fn -- call Vim functions local g = vim.g -- global variables
-local opt = vim.opt -- global/buffer/windows-scoped options
+local cmd = vim.cmd
+local opt = vim.opt
 
-vim.o.smartindent = true
-vim.o.expandtab = true
-vim.o.autoindent = true
+vim.o.smartindent = false
+vim.o.expandtab = false
+vim.o.autoindent = false
 vim.o.cursorline = true
 vim.o.laststatus = 2
 vim.o.relativenumber = true
-vim.o.shiftwidth = 2
-vim.o.showtabline = 2
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
 vim.o.pumheight = 5
 vim.o.termguicolors = true
 
@@ -29,7 +24,7 @@ vim.o.matchtime = 1
 vim.o.hidden = true
 
 -- Enable break indent
-vim.o.breakindent = true
+vim.o.breakindent = false
 
 -- Save undo history
 opt.undofile = true
@@ -55,7 +50,6 @@ opt.fillchars:append 'fold:•'
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Decrease update time
 -- autocomplete
 opt.completeopt = 'menuone,noselect'
 opt.shortmess = opt.shortmess + { c = true }
