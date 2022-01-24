@@ -1,12 +1,16 @@
 local cmd = vim.cmd
 local opt = vim.opt
 
-vim.o.smartindent = false
-vim.o.expandtab = false
-vim.o.autoindent = false
+vim.o.smartindent = true
+vim.o.expandtab = true
+vim.o.autoindent = true
 vim.o.cursorline = true
 vim.o.laststatus = 2
 vim.o.relativenumber = true
+vim.o.shiftwidth = 2
+vim.o.showtabline = 2
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
 vim.o.pumheight = 5
 vim.o.termguicolors = true
 
