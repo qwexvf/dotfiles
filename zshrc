@@ -98,10 +98,6 @@ zinit light eth-p/bat-extras
 zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
 zinit light BurntSushi/ripgrep
 
-# NEOVIM
-zinit ice from"gh-r" as"program" bpick"*appimage*" ver"nightly" mv"nvim* -> nvim" pick"nvim"
-zinit light neovim/neovim
-
 # EXA
 zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa"
 zinit light ogham/exa

@@ -24,9 +24,13 @@ return require('packer').startup {
     use 'tpope/vim-surround'
 
     -- Extra languages
-    -- use { 'rust-lang/rust.vim', opt = true, ft = { 'rust' } }
-    -- use { 'elixir-editors/vim-elixir', ft = { 'elixir' } }
---
+    use { 'rust-lang/rust.vim', opt = true, ft = { 'rust' } }
+    use { 'elixir-editors/vim-elixir', opt = true, ft = { 'elixir' } }
+    use { 'earthly/earthly.vim', opt = true }
+    use { 'jparise/vim-graphql', opt = true }
+
+    -- Focus
+    use 'beauwilliams/focus.nvim'
 
     -- UI to select things (files, grep results, open buffers...)
     use {
@@ -68,6 +72,8 @@ return require('packer').startup {
 
     -- Highlight, edit, and navigate code using a fast incremental parsing library
     use 'nvim-treesitter/nvim-treesitter'
+		use 'romgrk/nvim-treesitter-context'
+		use 'nvim-treesitter/nvim-treesitter-textobjects'
 
     use 'neovim/nvim-lspconfig'
     use {
@@ -106,11 +112,8 @@ return require('packer').startup {
 
     -- VOODOO
     use 'lewis6991/impatient.nvim'
-    use 'nathom/filetype.nvim'
-    use 'jparise/vim-graphql'
     use 'windwp/windline.nvim'
     use 'svban/YankAssassin.vim'
-    use 'earthly/earthly.vim'
     use 'rmagatti/auto-session'
     use 'sunjon/shade.nvim'
     use 'andweeb/presence.nvim'

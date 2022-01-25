@@ -49,6 +49,10 @@ opt.lazyredraw = true -- faster scrolling
 opt.synmaxcol = 240 -- max column for syntax highlight
 
 opt.fillchars:append 'fold:•'
+opt.foldlevel = 1
+opt.foldmethod = "expr" -- use treesitter for folding
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true

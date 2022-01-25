@@ -81,84 +81,7 @@ require('gitsigns').setup {
   },
 }
 
-local telescope = require 'telescope'
-
--- Native extension
-telescope.load_extension 'fzf'
-telescope.load_extension 'frecency'
-telescope.load_extension 'gh'
-
--- Best fzf finder
-telescope.setup {
-  extensions = {
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = 'smart_case',
-    },
-    frecency = {
-      show_scores = true,
-      show_unindexed = true,
-      ignore_patterns = { '*.git/*', '*/tmp/*' },
-      disable_devicons = false,
-    },
-  },
-}
-
 require('nvim-autopairs').setup {}
-
-require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'javascript', 'typescript', 'lua', 'elixir', 'vue', 'svelte' },
-  highlight = {
-    enable = true,
-  },
-  indent = {
-    enable = true,
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
-    },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true,
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
-  },
-  additional_vim_regex_highlighting = true,
-}
 
 -- Cool trobleshooting
 require('trouble').setup {}
@@ -180,16 +103,8 @@ require('indent_blankline').setup {
 -- session manager
 require('auto-session').setup {
   log_level = 'info',
-  auto_session_suppress_dirs = { '~/', '~/Projects' },
+  auto_session_suppress_dirs = { '~/' },
 }
-
--- YEET
--- local windline = require 'windline'
--- windline.setup {
---   statuslines = {
---     --- you need to define your status lines here
---   },
--- }
 
 require 'wlsample.bubble'
 
@@ -226,4 +141,29 @@ require('presence'):setup {
   reading_text = 'Reading %s',
   workspace_text = 'Working on %s',
   line_number_text = 'Line %s out of %s',
+}
+
+local telescope = require 'telescope'
+
+-- Native extension
+telescope.load_extension 'fzf'
+telescope.load_extension 'frecency'
+telescope.load_extension 'gh'
+
+-- Best fzf finder
+telescope.setup {
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = 'smart_case',
+    },
+    frecency = {
+      show_scores = true,
+      show_unindexed = true,
+      ignore_patterns = { '*.git/*', '*/tmp/*' },
+      disable_devicons = false,
+    },
+  },
 }
