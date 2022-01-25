@@ -82,3 +82,5 @@ require('nvim-treesitter.configs').setup {
   },
   additional_vim_regex_highlighting = true,
 }
+
+require("nvim-gps").setup()

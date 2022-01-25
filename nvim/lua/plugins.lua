@@ -72,10 +72,15 @@ return require('packer').startup {
 
     -- Highlight, edit, and navigate code using a fast incremental parsing library
     use 'nvim-treesitter/nvim-treesitter'
-		use 'romgrk/nvim-treesitter-context'
-		use 'nvim-treesitter/nvim-treesitter-textobjects'
+    use 'nvim-treesitter/nvim-treesitter-textobjects'
+    use 'romgrk/nvim-treesitter-context'
+    use {
+      'SmiteshP/nvim-gps',
+      requires = 'nvim-treesitter/nvim-treesitter',
+    }
 
     use 'neovim/nvim-lspconfig'
+
     use {
       'folke/trouble.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -87,6 +92,7 @@ return require('packer').startup {
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
+
     use {
       'petertriho/cmp-git',
       requires = 'nvim-lua/plenary.nvim',
