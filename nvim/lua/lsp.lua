@@ -228,7 +228,7 @@ nvim_lsp.vuels.setup {
   end,
   capabilities = capabilities,
   cmd = { 'vls' },
-  filetypes = { 'vue' },
+  filetypes = { 'vue', 'typescript' },
   root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
 }
 
