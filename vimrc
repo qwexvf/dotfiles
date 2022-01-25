@@ -10,6 +10,9 @@ set number
 set showmatch
 set matchtime=1
 set ignorecase
+set nohlsearch
+set hidden
+set nowrap
 set smartcase
 set incsearch
 set wrapscan
@@ -25,6 +28,8 @@ set cursorline
 set laststatus=2
 set noswapfile
 set relativenumber
+set scrolloff=8
+" set colorcolumn=80
 
 set updatetime=100
 set cmdheight=2
@@ -69,208 +74,31 @@ if dein#check_install()
   call dein#install()
 endif
 
-nmap <Esc><Esc> :nohlsearch<CR><Esc>
-inoremap <silent> jj <ESC>
-
-set statusline=%<     " 行が長すぎるときに切り詰める位置
-set statusline+=[%n]  " バッファ番号
-set statusline+=%m    " %m 修正フラグ
-set statusline+=%r    " %r 読み込み専用フラグ
-set statusline+=%h    " %h ヘルプバッファフラグ
-set statusline+=%w    " %w プレビューウィンドウフラグ
-set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
-set statusline+=%y    " バッファ内のファイルのタイプ
-set statusline+=\     " 空白スペース
-if winwidth(0) >= 130
-  set statusline+=%F    " バッファ内のファイルのフルパス
-else
-  set statusline+=%t    " ファイル名のみ
-endif
-set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
-set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
-set statusline+=\ \   " 空白スペース2個
-set statusline+=%1l   " 何行目にカーソルがあるか
-set statusline+=/
-set statusline+=%L    " バッファ内の総行数
-set statusline+=,
-set statusline+=%c    " 何列目にカーソルがあるか
-set statusline+=%V    " 画面上の何列目にカーソルがあるか
-set statusline+=\ \   " 空白スペース2個
-set statusline+=%P    " ファイル内の何％の位置にあるか
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 let mapleader = ","
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-" for elixir
-imap >> \|><Space>
-
-nnoremap <silent> ,f :Files<CR>
-nnoremap <silent> ,F :GFiles?<CR>
-nnoremap <silent> ,b :Buffers<CR>
-nnoremap <silent> ,l :BLines<CR>
-nnoremap <silent> ,h :History<CR>
-nnoremap <silent> ,m :Mark<CR>
-nnoremap <silent> ,g :GFiles<CR>
-nnoremap <silent> ,G :GFiles?<CR>
-nnoremap <silent> ,r :Rg<CR>
-
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
-
-" Go settings
-augroup filetype
-  au! BufRead,BufNewFile *.proto setfiletype proto
-augroup end
-autocmd FileType go setlocal noexpandtab
-autocmd FileType go setlocal tabstop=4
-autocmd FileType go setlocal shiftwidth=4
-
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-nmap <silent> <space>fmt <Plug>(coc-format)
-nmap <silent> <space><space> :<C-u>CocList<cr>
-nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
-nmap <silent> <space>df <Plug>(coc-definition)
-nmap <silent> <space>rf <Plug>(coc-references)
-nmap <silent> <space>rn <Plug>(coc-rename)
-
 lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+require "maruchan"
+
+require"nvim-treesitter.configs".setup {
+  ensure_installed = {'javascript', 'vue', 'typescript', 'elixir'},
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = false
   },
   indent = {
-    enable = true
+    enable = false
   },
-  throttle = true, -- Throttles plugin updates (may improve performance)
+  throttle = true,
 }
 
-require('lualine').setup {
+require("treesitter-context").setup{
+  enable = true,
+  throttle = true,
+}
+
+require("lualine").setup {
   options = {
-    theme = 'spaceduck',
+    theme = 'catppuccino',
     section_separators = {'', ''},
     component_separators = {'', ''},
     icons_enabled = true,
@@ -300,9 +128,69 @@ require('lualine').setup {
   extensions = {'fzf'}
 }
 
-require('treesitter-context').setup{
-  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-  throttle = true, -- Throttles plugin updates (may improve performance)
+require('gitsigns').setup {
+  signs = {
+    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  },
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  keymaps = {
+    -- Default keymap options
+    noremap = true,
+
+    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
+    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
+
+    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+    ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+    ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
+    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
+    ['n <leader>hS'] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
+    ['n <leader>hU'] = '<cmd>lua require"gitsigns".reset_buffer_index()<CR>',
+
+    -- Text objects
+    ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
+    ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>'
+  },
+  watch_gitdir = {
+    interval = 1000,
+    follow_files = true
+  },
+  attach_to_untracked = true,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+  },
+  current_line_blame_formatter_opts = {
+    relative_time = false
+  },
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000,
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  yadm = {
+    enable = false
+  },
 }
 
 require("bufferline").setup{
@@ -333,12 +221,172 @@ require("bufferline").setup{
     end,
   }
 }
+
+local catppuccino = require("catppuccino")
+catppuccino.setup(
+    {
+		colorscheme = "neon_latte",
+		transparency = true,
+		term_colors = true,
+		styles = {
+			comments = "italic",
+			functions = "italic",
+			keywords = "italic",
+			strings = "bold",
+			variables = "bold",
+		},
+		integrations = {
+			-- treesitter = true,
+			native_lsp = {
+				enabled = true,
+				virtual_text = {
+					errors = "italic",
+					hints = "italic",
+					warnings = "italic",
+					information = "italic",
+				},
+				underlines = {
+					errors = "underline",
+					hints = "underline",
+					warnings = "underline",
+					information = "underline",
+				}
+			},
+			lsp_trouble = true,
+			lsp_saga = true,
+			gitgutter = false,
+			gitsigns = true,
+			telescope = true,
+			nvimtree = {
+				enabled = false,
+				show_root = false,
+			},
+			which_key = true,
+			indent_blankline = {
+				enabled = true,
+				colored_indent_levels = true,
+			},
+			dashboard = false,
+			neogit = false,
+			vim_sneak = false,
+			fern = false,
+			barbar = false,
+			bufferline = false,
+			markdown = false,
+			lightspeed = true,
+			ts_rainbow = true,
+			hop = false,
+		}
+	}
+)
+
+require('gitsigns').setup {
+  signs = {
+    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  },
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  keymaps = {
+    -- Default keymap options
+    noremap = true,
+
+    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
+    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
+
+    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+    ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+    ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
+    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
+    ['n <leader>hS'] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
+    ['n <leader>hU'] = '<cmd>lua require"gitsigns".reset_buffer_index()<CR>',
+
+    -- Text objects
+    ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
+    ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>'
+  },
+  watch_gitdir = {
+    interval = 1000,
+    follow_files = true
+  },
+  attach_to_untracked = true,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+  },
+  current_line_blame_formatter_opts = {
+    relative_time = false
+  },
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000,
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  yadm = {
+    enable = false
+  },
+}
+
+require("trouble").setup()
+require("stabilize").setup()
+
 EOF
 
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set completeopt=menu,menuone,noselect
 
-au MyAutoCmd VimEnter * nested colorscheme spaceduck
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+
+" troubles
+nnoremap <leader>xx <cmd>TroubleToggle<cr>
+nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
+nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
+nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
+
+au MyAutoCmd VimEnter * nested colorscheme neon_latte
+
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
+inoremap <silent> jj <ESC>
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+
+" for elixir
+imap >> \|><Space>
+
+" Go settings
+augroup filetype
+  au! BufRead,BufNewFile *.proto setfiletype proto
+augroup end
+autocmd FileType go setlocal noexpandtab
+autocmd FileType go setlocal tabstop=4
+autocmd FileType go setlocal shiftwidth=4
 
 " Y? the true copy keymap
 nnoremap Y y$

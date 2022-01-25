@@ -1,9 +1,0 @@
-[[plugins]]
-repo = 'dense-analysis/ale'
-
-[[plugins]]
-repo = 'kristijanhusak/vim-carbon-now-sh'
-hook_add = '''
-vnoremap <F5> :CarbonNowSh<CR>
-'''
-
