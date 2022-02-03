@@ -1,11 +1,12 @@
 local nvim_lsp = require 'lspconfig'
 
 local eslint = {
-  lintCommand = 'eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}',
-  lintIgnoreExitCode = true,
-  lintFormats = { '%f(%l,%c): %tarning %m', '%f(%l,%c): %rror %m' },
-  lintStdin = true,
   formatCommand = 'eslint_d --stdin --fix-to-stdout --stdin-filename=${INPUT}',
+  formatStdin = true,
+}
+
+local prettier = {
+  formatCommand = 'prettierd "${INPUT}"',
   formatStdin = true,
 }
 
@@ -32,22 +33,16 @@ nvim_lsp.efm.setup {
     -- Mappings.
     local opts = { noremap = true, silent = true }
     buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = false,
-      underline = true,
-      signs = true,
-      update_in_insert = true,
-    })
   end,
   init_options = { documentFormatting = true },
   settings = {
     rootMarkers = { '.git/' },
     languages = {
+      vue = { eslint },
       javascript = { eslint },
       javascriptreact = { eslint },
       ['javascript.jsx'] = { eslint },
-      typescript = { eslint },
+      typescript = { prettier },
       ['typescript.tsx'] = { eslint },
       typescriptreact = { eslint },
       elixir = { elixir_format },
@@ -55,6 +50,7 @@ nvim_lsp.efm.setup {
     },
   },
   filetypes = {
+    'vue',
     'elixir',
     'lua',
     'javascript',

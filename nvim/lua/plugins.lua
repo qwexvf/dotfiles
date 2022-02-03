@@ -24,10 +24,10 @@ return require('packer').startup {
     use 'tpope/vim-surround'
 
     -- Extra languages
-    use { 'rust-lang/rust.vim', opt = true, ft = { 'rust' } }
-    use { 'elixir-editors/vim-elixir', opt = true, ft = { 'elixir' } }
-    use { 'earthly/earthly.vim', opt = true }
-    use { 'jparise/vim-graphql', opt = true }
+    use { 'rust-lang/rust.vim', ft = { 'rust' } }
+    use { 'elixir-editors/vim-elixir', ft = { 'elixir' } }
+    use 'earthly/earthly.vim'
+    use 'jparise/vim-graphql'
 
     -- Focus
     use 'beauwilliams/focus.nvim'

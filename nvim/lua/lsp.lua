@@ -223,12 +223,51 @@ nvim_lsp.elixirls.setup {
 
 nvim_lsp.vuels.setup {
   on_attach = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = true
+    client.resolved_capabilities.document_formatting = false
     return on_attach(client, bufnr)
   end,
   capabilities = capabilities,
   cmd = { 'vls' },
-  filetypes = { 'vue', 'typescript' },
+  filetypes = { 'vue' },
+  init_options = {
+    config = {
+      css = {},
+      emmet = {},
+      html = {
+        suggest = {},
+      },
+      javascript = {
+        format = { 'prettier' },
+      },
+      stylusSupremacy = {},
+      typescript = {
+        format = { 'prettier' },
+      },
+      vetur = {
+        completion = {
+          autoImport = true,
+          tagCasing = 'kebab',
+          useScaffoldSnippets = false,
+        },
+        format = {
+          enable = false,
+          defaultFormatter = {
+            js = 'prettier',
+            ts = 'prettier',
+          },
+          defaultFormatterOptions = {},
+          scriptInitialIndent = false,
+          styleInitialIndent = false,
+        },
+        useWorkspaceDependencies = false,
+        validation = {
+          script = true,
+          style = true,
+          template = true,
+        },
+      },
+    },
+  },
   root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
 }
 
@@ -248,13 +287,13 @@ nvim_lsp.vuels.setup {
 --   },
 -- }
 
--- nvim_lsp.tsserver.setup {
---   on_attach = function(client, bufnr)
---     client.resolved_capabilities.document_formatting = true
---     return on_attach(client, bufnr)
---   end,
---   capabilities = capabilities,
--- }
+nvim_lsp.tsserver.setup {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+    return on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+}
 
 nvim_lsp.gopls.setup {
   on_attach = function(client, bufnr)
@@ -281,6 +320,8 @@ nvim_lsp.svelte.setup {
   end,
   capabilities = capabilities,
 }
+
+nvim_lsp.eslint.setup {}
 
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup {

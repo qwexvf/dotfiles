@@ -5,9 +5,9 @@ catppuccin.setup {
   transparent_background = false,
   term_colors = true,
   styles = {
-    comments = 'italic',
-    functions = 'italic',
-    keywords = 'italic',
+    comments = 'bold',
+    functions = 'bold',
+    keywords = 'bold',
     strings = 'bold',
     variables = 'italic',
   },
