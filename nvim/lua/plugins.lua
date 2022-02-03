@@ -80,6 +80,7 @@ return require('packer').startup {
     }
 
     use 'neovim/nvim-lspconfig'
+    use 'j-hui/fidget.nvim'
 
     use {
       'folke/trouble.nvim',
@@ -122,6 +123,13 @@ return require('packer').startup {
     use 'svban/YankAssassin.vim'
     use 'rmagatti/auto-session'
     use 'sunjon/shade.nvim'
+    use {
+      'startup-nvim/startup.nvim',
+      requires = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+      config = function()
+        require('startup').setup()
+      end,
+    }
     use 'andweeb/presence.nvim'
 
     if packer_bootstrap then

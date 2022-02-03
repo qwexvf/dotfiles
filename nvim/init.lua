@@ -1,3 +1,6 @@
+-- VOODOO
+require 'impatient'
+
 require 'autocmds'
 require 'plugins'
 require 'settings'
