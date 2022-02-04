@@ -141,7 +141,7 @@ export PAGER='less'
 autoload colors && colors
 
 # Golang
-alias go-reshim='asdf reshim golang && export GOROOT="$(asdf where golang)/go/"'
+alias go-reshim="asdf reshim golang && export GOROOT='$(asdf where golang)/go/'"
 export GOROOT="$(asdf where golang)/go/"
 export GOOS=$OS
 export GOARCH=amd64
@@ -161,12 +161,11 @@ export GPG_TTY
 export EDITOR=nvim
 
 # Aliases
-alias vimdiff='nvim -d '
+alias vimdiff="nvim -d "
 alias dc="docker compose"
 alias ls=exa
 alias vim=nvim
 alias vi=nvim
-alias vf='nvim $(fzf)'
 
 alias rg=batgrep.sh
 alias bd=batdiff.sh

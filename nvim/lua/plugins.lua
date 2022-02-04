@@ -24,8 +24,8 @@ return require('packer').startup {
     use 'tpope/vim-surround'
 
     -- Extra languages
-    use { 'rust-lang/rust.vim', ft = { 'rust' } }
-    use { 'elixir-editors/vim-elixir', ft = { 'elixir' } }
+    use 'rust-lang/rust.vim'
+    use 'elixir-editors/vim-elixir'
     use 'earthly/earthly.vim'
     use 'jparise/vim-graphql'
 
@@ -118,6 +118,9 @@ return require('packer').startup {
     }
 
     -- VOODOO
+    -- faster filetype
+    use 'nathom/filetype.nvim'
+    use 'kevinhwang91/nvim-hlslens'
     use 'lewis6991/impatient.nvim'
     use 'windwp/windline.nvim'
     use 'svban/YankAssassin.vim'

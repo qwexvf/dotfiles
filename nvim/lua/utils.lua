@@ -4,12 +4,12 @@ require('dd').setup {
 }
 
 -- Cool Statusline bc why not?
-require('lualine').setup {
-  options = { theme = 'catppuccin' },
-  sections = {
-    lualine_c = { require('auto-session-library').current_session_name },
-  },
-}
+-- require('lualine').setup {
+--   options = { theme = 'catppuccin' },
+--   sections = {
+--     lualine_c = { require('auto-session-library').current_session_name },
+--   },
+-- }
 
 -- Cool Tabs
 require('bufferline').setup { options = { diagnostics = 'nvim_lsp' } }
@@ -98,6 +98,8 @@ require('indent_blankline').setup {
   -- for example, context is off by default, use this to turn it on
   show_current_context = true,
   show_current_context_start = true,
+  buftype_exclude = { 'terminal' },
+  filetype_exclude = { 'startup' },
 }
 
 -- session manager
@@ -172,4 +174,13 @@ telescope.load_extension 'frecency'
 telescope.load_extension 'gh'
 
 require('fidget').setup {}
-require('startup').setup { theme = 'dashboard' }
+
+-- Dashboard
+require('startup').setup {
+  theme = 'dashboard',
+}
+
+-- In init.lua or filetype.nvim's config file
+require('filetype').setup {}
+
+require('nvim-gps').setup {}

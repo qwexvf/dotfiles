@@ -2,11 +2,11 @@
 require 'impatient'
 
 require 'autocmds'
-require 'plugins'
 require 'settings'
 require 'mappings'
 
 -- plugin configs
+require 'plugins'
 require 'treesitter_config'
 require 'theme'
 require 'lsp'

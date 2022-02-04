@@ -1,6 +1,8 @@
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
 
+vim.g.did_load_filetypes = 1
+
 exec(
   [[
 	if !exists("g:os")
@@ -14,8 +16,6 @@ exec(
   false
 )
 
-cmd 'filetype plugin indent on'
-
 --Highlight on yank
 exec(
   [[
@@ -27,19 +27,7 @@ exec(
   false
 )
 
-cmd [[
-	au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
-]]
-
 cmd 'autocmd BufWritePost plugins.lua PackerCompile'
-
--- vim.cmd 'autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()'
-cmd 'autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()'
-cmd 'au FileType go setlocal sw=4 ts=4 sts=4 noet'
-cmd 'au FileType elm setlocal sw=4 ts=4 sts=4 noet'
-cmd 'au FileType typescript,ts setlocal sw=4 ts=4 sts=4 noet'
-cmd 'au FileType lua setlocal sw=2 ts=2 sts=2 noet'
-cmd 'au FileType elixir setlocal sw=2 ts=2 sts=2 noet'
 
 cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
 
