@@ -32,7 +32,7 @@ require('treesitter-context').setup {
 }
 
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'javascript', 'typescript', 'lua', 'elixir', 'vue', 'svelte' },
+  ensure_installed = { 'javascript', 'typescript', 'lua', 'vue', 'svelte' },
   highlight = {
     enable = true,
   },
@@ -80,7 +80,6 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
-  additional_vim_regex_highlighting = true,
+  additional_vim_regex_highlighting = true
 }
 
-require("nvim-gps").setup()

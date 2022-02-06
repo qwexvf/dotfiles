@@ -4,12 +4,12 @@ require('dd').setup {
 }
 
 -- Cool Statusline bc why not?
-require('lualine').setup {
-  options = { theme = 'catppuccin' },
-  sections = {
-    lualine_c = { require('auto-session-library').current_session_name },
-  },
-}
+-- require('lualine').setup {
+--   options = { theme = 'catppuccin' },
+--   sections = {
+--     lualine_c = { require('auto-session-library').current_session_name },
+--   },
+-- }
 
 -- Cool Tabs
 require('bufferline').setup { options = { diagnostics = 'nvim_lsp' } }
@@ -98,6 +98,8 @@ require('indent_blankline').setup {
   -- for example, context is off by default, use this to turn it on
   show_current_context = true,
   show_current_context_start = true,
+  buftype_exclude = { 'terminal' },
+  filetype_exclude = { 'startup' },
 }
 
 -- session manager
@@ -119,36 +121,34 @@ require 'wlsample.bubble'
 --   }
 -- })
 
--- Discord
-require('presence'):setup {
-  -- General options
-  auto_update = true,
-  neovim_image_text = 'The One True Text Editor', -- Text displayed when hovered over the Neovim image
-  main_image = 'neovim', -- Main image display (either "neovim" or "file")
-  -- client_id = '150256181439496192', -- Use your own Discord application client id (not recommended)
-  log_level = 'info', -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
-  debounce_timeout = 10,
-  enable_line_number = true,
-  blacklist = {},
-  buttons = true,
-  file_assets = {},
+-- Don't run these plugisn on macos
+if not vim.g.os == 'Darwin' then
+  -- Discord
+  require('presence'):setup {
+    -- General options
+    auto_update = true,
+    neovim_image_text = 'The One True Text Editor', -- Text displayed when hovered over the Neovim image
+    main_image = 'neovim', -- Main image display (either "neovim" or "file")
+    -- client_id = '150256181439496192', -- Use your own Discord application client id (not recommended)
+    log_level = 'info', -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+    debounce_timeout = 10,
+    enable_line_number = true,
+    blacklist = {},
+    buttons = true,
+    file_assets = {},
 
-  -- Rich Presence text options
-  editing_text = 'Editing %s',
-  file_explorer_text = 'Browsing %s',
-  git_commit_text = 'Committing changes',
-  plugin_manager_text = 'Managing plugins',
-  reading_text = 'Reading %s',
-  workspace_text = 'Working on %s',
-  line_number_text = 'Line %s out of %s',
-}
+    -- Rich Presence text options
+    editing_text = 'Editing %s',
+    file_explorer_text = 'Browsing %s',
+    git_commit_text = 'Committing changes',
+    plugin_manager_text = 'Managing plugins',
+    reading_text = 'Reading %s',
+    workspace_text = 'Working on %s',
+    line_number_text = 'Line %s out of %s',
+  }
+end
 
 local telescope = require 'telescope'
-
--- Native extension
-telescope.load_extension 'fzf'
-telescope.load_extension 'frecency'
-telescope.load_extension 'gh'
 
 -- Best fzf finder
 telescope.setup {
@@ -167,3 +167,20 @@ telescope.setup {
     },
   },
 }
+
+-- Native extension
+telescope.load_extension 'fzf'
+telescope.load_extension 'frecency'
+telescope.load_extension 'gh'
+
+require('fidget').setup {}
+
+-- Dashboard
+require('startup').setup {
+  theme = 'dashboard',
+}
+
+-- In init.lua or filetype.nvim's config file
+require('filetype').setup {}
+
+require('nvim-gps').setup {}

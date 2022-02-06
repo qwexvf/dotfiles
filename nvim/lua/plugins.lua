@@ -24,10 +24,10 @@ return require('packer').startup {
     use 'tpope/vim-surround'
 
     -- Extra languages
-    use { 'rust-lang/rust.vim', opt = true, ft = { 'rust' } }
-    use { 'elixir-editors/vim-elixir', opt = true, ft = { 'elixir' } }
-    use { 'earthly/earthly.vim', opt = true }
-    use { 'jparise/vim-graphql', opt = true }
+    use 'rust-lang/rust.vim'
+    use 'elixir-editors/vim-elixir'
+    use 'earthly/earthly.vim'
+    use 'jparise/vim-graphql'
 
     -- Focus
     use 'beauwilliams/focus.nvim'
@@ -80,6 +80,7 @@ return require('packer').startup {
     }
 
     use 'neovim/nvim-lspconfig'
+    use 'j-hui/fidget.nvim'
 
     use {
       'folke/trouble.nvim',
@@ -117,11 +118,21 @@ return require('packer').startup {
     }
 
     -- VOODOO
+    -- faster filetype
+    use 'nathom/filetype.nvim'
+    use 'kevinhwang91/nvim-hlslens'
     use 'lewis6991/impatient.nvim'
     use 'windwp/windline.nvim'
     use 'svban/YankAssassin.vim'
     use 'rmagatti/auto-session'
     use 'sunjon/shade.nvim'
+    use {
+      'startup-nvim/startup.nvim',
+      requires = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+      config = function()
+        require('startup').setup()
+      end,
+    }
     use 'andweeb/presence.nvim'
 
     if packer_bootstrap then
