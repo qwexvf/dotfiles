@@ -68,8 +68,8 @@ zinit ice from"gh-r" as"command"
 zinit light junegunn/fzf
 
 # FZF BYNARY AND TMUX HELPER SCRIPT
-zinit ice lucid wait'0c' as"command" id-as"junegunn/fzf-tmux" pick"bin/fzf-tmux"
-zinit light junegunn/fzf
+#zinit ice lucid wait'0c' as"command" id-as"junegunn/fzf-tmux" pick"bin/fzf-tmux"
+#zinit light junegunn/fzf
 
 # BIND MULTIPLE WIDGETS USING FZF
 zinit ice lucid wait'0c' multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" pick"/dev/null"
@@ -127,7 +127,15 @@ zinit light sindresorhus/pure
 
 # MacOS Stuff
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+  if [ -d "/opt/homebrew" ]; then
+    # for arm only
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+
+  if type brew &> /dev/null; then
+    # use gnubin
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  fi
 fi	
 
 . $HOME/.asdf/asdf.sh
@@ -156,8 +164,7 @@ export PATH=$PATH:$GOPATH/bin
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 # GPG
-GPG_TTY=$(tty)
-export GPG_TTY
+export GPG_TTY=$(tty)
 export EDITOR=nvim
 
 # Aliases

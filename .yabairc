@@ -7,7 +7,7 @@ yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # global settings
 yabai -m config external_bar                 off:45:0
-yabai -m config mouse_follows_focus          on
+yabai -m config mouse_follows_focus          off
 yabai -m config focus_follows_mouse          autoraise
 yabai -m config window_placement             second_child
 yabai -m config window_topmost               on
@@ -44,10 +44,6 @@ yabai -m space 5 --label re
 yabai -m space 6 --label media
 yabai -m space 7 --label social
 yabai -m space 8 --label games
-
-# specific space settings
-yabai -m config --space mail  layout        stack
-yabai -m config --space games layout        float
 
 # window rules
 yabai -m rule --add app="^Mail$" space=mail
