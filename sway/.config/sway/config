@@ -7,8 +7,9 @@ set $term kitty
 set $uifont "Ubuntu 14"
 set $highlight #3daee9
 set $prompt #18b218
-set $menu bemenu-run --fn $uifont -b -p "▶" --tf "$prompt" --hf "$highlight" --sf "$highlight" --scf "$highlight" | xargs swaymsg exec
-set $wallpaper ~/.wallpaper/wallpaper.png
+# set $menu bemenu-run --fn $uifont -b -p "▶" --tf "$prompt" --hf "$highlight" --sf "$highlight" --scf "$highlight" | xargs swaymsg exec
+set $menu wofi --show=drun --lines=5 --prompt=""
+set $wallpaper ~/.wallpaper/wallpaper.jpg
 set $lock swaylock -f -i $wallpaper -s fill
 
 # borders

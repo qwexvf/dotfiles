@@ -1,49 +1,36 @@
-local catppuccin = require 'catppuccin'
 local cmd = vim.cmd
 
-catppuccin.setup {
-  transparent_background = false,
-  term_colors = true,
-  styles = {
-    comments = 'bold',
-    functions = 'bold',
-    keywords = 'bold',
-    strings = 'bold',
-    variables = 'italic',
-  },
-  integrations = {
-    treesitter = true,
-    native_lsp = {
-      enabled = true,
-      virtual_text = {
-        errors = 'italic',
-        hints = 'italic',
-        warnings = 'italic',
-        information = 'italic',
-      },
-      underlines = {
-        errors = 'underline',
-        hints = 'underline',
-        warnings = 'underline',
-        information = 'underline',
-      },
+-- Default options
+require('nightfox').setup({
+  options = {
+    -- Compiled file's destination location
+    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+    compile_file_suffix = "_compiled", -- Compiled file suffix
+    transparent = false,    -- Disable setting background
+    terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+    dim_inactive = false,   -- Non focused panes set to alternative background
+    styles = {              -- Style to be applied to different syntax groups
+      comments = "NONE",    -- Value is any valid attr-list value `:help attr-list`
+      conditionals = "NONE",
+      constants = "NONE",
+      functions = "NONE",
+      keywords = "NONE",
+      numbers = "NONE",
+      operators = "NONE",
+      strings = "NONE",
+      types = "NONE",
+      variables = "NONE",
     },
-    lsp_trouble = true,
-    cmp = true,
-    gitsigns = true,
-    telescope = true,
-    indent_blankline = {
-      enabled = true,
-      colored_indent_levels = true,
+    inverse = {             -- Inverse highlight for different types
+      match_paren = false,
+      visual = false,
+      search = false,
     },
-    dashboard = true,
-    bufferline = true,
-    markdown = true,
-    ts_rainbow = true,
-    hop = true,
-    notify = true,
-    telekasten = true,
-  },
-}
+    modules = {             -- List of various plugins and additional options
+      -- ...
+    },
+  }
+})
 
-cmd [[colorscheme catppuccin]]
+-- setup must be called before loading
+cmd [[colorscheme nightfox]]
