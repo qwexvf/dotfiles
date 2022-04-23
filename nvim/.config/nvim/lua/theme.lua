@@ -10,24 +10,49 @@ require('nightfox').setup({
     terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
     dim_inactive = false,   -- Non focused panes set to alternative background
     styles = {              -- Style to be applied to different syntax groups
-      comments = "NONE",    -- Value is any valid attr-list value `:help attr-list`
-      conditionals = "NONE",
-      constants = "NONE",
-      functions = "NONE",
-      keywords = "NONE",
+      comments = "italic",    -- Value is any valid attr-list value `:help attr-list`
+      conditionals = "bold",
+      constants = "bold",
+      functions = "italic",
+      keywords = "bold",
       numbers = "NONE",
       operators = "NONE",
-      strings = "NONE",
-      types = "NONE",
-      variables = "NONE",
+      strings = "bold",
+      types = "bold",
+      variables = "bold",
     },
-    inverse = {             -- Inverse highlight for different types
+    inverse = {
       match_paren = false,
       visual = false,
       search = false,
     },
-    modules = {             -- List of various plugins and additional options
-      -- ...
+    modules = {
+       barbar = true,
+       cmp = true,
+       dashboard = true,
+       diagnostic = true,
+       fern = true,
+       fidget = true,
+       gitsigns = true,
+       glyph_palette = true,
+       hop = true,
+       illuminate = true,
+       lightspeed = true,
+       lsp_saga = true,
+       lsp_trouble = true,
+       modes = true,
+       native_lsp = true,
+       neogit = true,
+       neotree = true,
+       notify = true,
+       nvimtree = true,
+       pounce = true,
+       sneak = true,
+       symbol_outline = true,
+       telescope = true,
+       treesitter = true,
+       tsrainbow = true,
+       whichkey = true
     },
   }
 })
