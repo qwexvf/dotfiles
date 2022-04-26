@@ -39,8 +39,8 @@ return require('packer').startup {
         'nvim-lua/plenary.nvim',
         'nvim-telescope/telescope-frecency.nvim',
         'nvim-telescope/telescope-github.nvim',
-        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         'tami5/sqlite.lua',
+        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
       },
     }
 
@@ -117,23 +117,15 @@ return require('packer').startup {
       branch = 'master', -- optional but strongly recommended
     }
 
-    -- VOODOO
     -- faster filetype
     use 'nathom/filetype.nvim'
     use 'kevinhwang91/nvim-hlslens'
     use 'lewis6991/impatient.nvim'
     use 'windwp/windline.nvim'
     use 'svban/YankAssassin.vim'
-    use 'rmagatti/auto-session'
     use 'sunjon/shade.nvim'
-    use {
-      'startup-nvim/startup.nvim',
-      requires = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-      config = function()
-        require('startup').setup()
-      end,
-    }
     use 'andweeb/presence.nvim'
+    use 'editorconfig/editorconfig-vim'
 
     if packer_bootstrap then
       require('packer').sync()

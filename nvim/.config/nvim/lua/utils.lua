@@ -1,18 +1,14 @@
 -- The time to wait before displaying newly produced diagnostics.
 require('dd').setup {
-  timeout = 100,
+  timeout = 100
 }
 
--- Cool Statusline bc why not?
--- require('lualine').setup {
---   options = { theme = 'catppuccin' },
---   sections = {
---     lualine_c = { require('auto-session-library').current_session_name },
---   },
--- }
-
 -- Cool Tabs
-require('bufferline').setup { options = { diagnostics = 'nvim_lsp' } }
+require('bufferline').setup {
+  options = {
+    diagnostics = 'nvim_lsp'
+  }
+}
 
 -- Add git signs
 require('gitsigns').setup {
@@ -99,27 +95,7 @@ require('indent_blankline').setup {
   show_current_context = true,
   show_current_context_start = true,
   buftype_exclude = { 'terminal' },
-  filetype_exclude = { 'startup' },
 }
-
--- session manager
-require('auto-session').setup {
-  log_level = 'info',
-  auto_session_suppress_dirs = { '~/' },
-}
-
-require 'wlsample.bubble'
-
--- Dim brightness when splitting window
--- require'shade'.setup({
---   overlay_opacity = 50,
---   opacity_step = 1,
---   keys = {
---     brightness_up    = '<C-Up>',
---     brightness_down  = '<C-Down>',
---     toggle           = '<Leader>s',
---   }
--- })
 
 -- Don't run these plugisn on macos
 if not vim.g.os == 'Darwin' then
@@ -175,12 +151,5 @@ telescope.load_extension 'gh'
 
 require('fidget').setup {}
 
--- Dashboard
-require('startup').setup {
-  theme = 'dashboard',
-}
-
 -- In init.lua or filetype.nvim's config file
 require('filetype').setup {}
-
-require('nvim-gps').setup {}
