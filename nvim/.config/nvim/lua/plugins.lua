@@ -40,10 +40,9 @@ return require('packer').startup {
         'nvim-telescope/telescope-frecency.nvim',
         'nvim-telescope/telescope-github.nvim',
         'tami5/sqlite.lua',
-        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
       },
     }
-
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     -- Themes
     use {
       'catppuccin/nvim',

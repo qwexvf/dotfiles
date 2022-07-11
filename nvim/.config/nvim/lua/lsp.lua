@@ -207,7 +207,7 @@ nvim_lsp.sumneko_lua.setup {
 }
 
 nvim_lsp.elixirls.setup {
-  cmd = { vim.fn.expand '~/Documents/elixir-ls/releases/language_server.sh' },
+  cmd = { vim.fn.expand '~/Documents/elixir-ls/language_server.sh' },
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = false
     return on_attach(client, bufnr)

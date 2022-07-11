@@ -151,8 +151,16 @@ autoload colors && colors
 # Golang
 alias go-reshim="asdf reshim golang && export GOROOT='$(asdf where golang)/go/'"
 export GOROOT="$(asdf where golang)/go/"
-export GOOS=$OS
-export GOARCH=amd64
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [ -d "/opt/homebrew" ]; then
+    # for arm only
+    export GOOS=darwin
+    export GOARCH=arm64
+  else
+    export GOOS=linux
+    export GOARCH=amd64
+  fi
+fi
 export GOBIN=$GOROOT/bin
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin

@@ -20,6 +20,7 @@ local elixir_format = {
 }
 
 local lua_format = { formatCommand = 'stylua -', formatStdin = true }
+local rust_format = { formatCommand = 'rustfmt -', formatStdin = true }
 
 nvim_lsp.efm.setup {
   on_attach = function(client, bufnr)
