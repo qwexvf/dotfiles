@@ -28,12 +28,12 @@ nvim_lsp.efm.setup {
       vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
 
-    client.resolved_capabilities.document_formatting = true
-    client.resolved_capabilities.goto_definition = false
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.definitionProvider = false
 
     -- Mappings.
     local opts = { noremap = true, silent = true }
-    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
   end,
   init_options = { documentFormatting = true },
   settings = {

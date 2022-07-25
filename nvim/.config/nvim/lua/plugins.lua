@@ -25,7 +25,7 @@ return require('packer').startup {
 
     -- Extra languages
     use 'rust-lang/rust.vim'
-    use 'elixir-editors/vim-elixir'
+    use({ "mhanberg/elixir.nvim", requires = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" }})
     use 'earthly/earthly.vim'
     use 'jparise/vim-graphql'
 

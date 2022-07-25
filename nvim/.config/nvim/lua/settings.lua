@@ -66,7 +66,6 @@ opt.clipboard = 'unnamed,unnamedplus'
 opt.previewheight = 8
 opt.helpheight = 12
 
-
 -- Remap space as leader key
 vim.api.nvim_set_keymap('', '<,>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ','
