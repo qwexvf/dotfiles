@@ -1,3 +1,7 @@
+require'nvim-web-devicons'.setup {
+  default = true;
+}
+
 -- The time to wait before displaying newly produced diagnostics.
 require('dd').setup {
   timeout = 100
@@ -154,4 +158,9 @@ require('fidget').setup {}
 -- In init.lua or filetype.nvim's config file
 require('filetype').setup {}
 
-require("elixir").setup()
+-- saga configuration
+local saga = require("lspsaga")
+
+saga.init_lsp_saga({
+  -- your configuration
+})

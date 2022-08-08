@@ -1,61 +1,95 @@
-local cmd = vim.cmd
+vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 
--- Default options
-require('nightfox').setup({
-  options = {
-    -- Compiled file's destination location
-    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
-    compile_file_suffix = "_compiled", -- Compiled file suffix
-    transparent = false,    -- Disable setting background
-    terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
-    dim_inactive = false,   -- Non focused panes set to alternative background
-    styles = {              -- Style to be applied to different syntax groups
-      comments = "italic",    -- Value is any valid attr-list value `:help attr-list`
-      conditionals = "bold",
-      constants = "bold",
-      functions = "italic",
-      keywords = "bold",
-      numbers = "NONE",
-      operators = "NONE",
-      strings = "bold",
-      types = "bold",
-      variables = "bold",
+require("catppuccin").setup({
+  dim_inactive = {
+    enabled = true,
+    shade = "dark",
+    percentage = 0.15,
+  },
+  transparent_background = false,
+  term_colors = false,
+  compile = {
+    enabled = false,
+    path = vim.fn.stdpath "cache" .. "/catppuccin",
+  },
+  styles = {
+    comments = { "italic" },
+    conditionals = { "italic" },
+    loops = {},
+    functions = {},
+    keywords = {},
+    strings = {},
+    variables = {},
+    numbers = {},
+    booleans = {},
+    properties = {},
+    types = {},
+    operators = {},
+  },
+  integrations = {
+    treesitter = true,
+    native_lsp = {
+      enabled = true,
+      virtual_text = {
+        errors = { "italic" },
+        hints = { "italic" },
+        warnings = { "italic" },
+        information = { "italic" },
+      },
+      underlines = {
+        errors = { "underline" },
+        hints = { "underline" },
+        warnings = { "underline" },
+        information = { "underline" },
+      },
     },
-    inverse = {
-      match_paren = false,
-      visual = false,
-      search = false,
+    coc_nvim = false,
+    lsp_trouble = false,
+    cmp = true,
+    lsp_saga = false,
+    gitgutter = false,
+    gitsigns = true,
+    leap = false,
+    telescope = true,
+    nvimtree = {
+      enabled = true,
+      show_root = true,
+      transparent_panel = false,
     },
-    modules = {
-       barbar = true,
-       cmp = true,
-       dashboard = true,
-       diagnostic = true,
-       fern = true,
-       fidget = true,
-       gitsigns = true,
-       glyph_palette = true,
-       hop = true,
-       illuminate = true,
-       lightspeed = true,
-       lsp_saga = true,
-       lsp_trouble = true,
-       modes = true,
-       native_lsp = true,
-       neogit = true,
-       neotree = true,
-       notify = true,
-       nvimtree = true,
-       pounce = true,
-       sneak = true,
-       symbol_outline = true,
-       telescope = true,
-       treesitter = true,
-       tsrainbow = true,
-       whichkey = true
+    neotree = {
+      enabled = false,
+      show_root = true,
+      transparent_panel = false,
     },
-  }
+    dap = {
+      enabled = false,
+      enable_ui = false,
+    },
+    which_key = false,
+    indent_blankline = {
+      enabled = true,
+      colored_indent_levels = false,
+    },
+    dashboard = true,
+    neogit = false,
+    vim_sneak = false,
+    fern = false,
+    barbar = false,
+    bufferline = true,
+    markdown = true,
+    lightspeed = false,
+    ts_rainbow = true,
+    hop = false,
+    notify = true,
+    telekasten = true,
+    symbols_outline = true,
+    mini = false,
+    aerial = false,
+    vimwiki = true,
+    beacon = true,
+  },
+  color_overrides = {},
+  highlight_overrides = {},
 })
 
--- setup must be called before loading
-cmd [[colorscheme nightfox]]
+vim.cmd [[colorscheme catppuccin]]

@@ -1,5 +1,5 @@
 -- VOODOO
--- require 'impatient'
+require 'impatient'
 
 require 'autocmds'
 require 'settings'

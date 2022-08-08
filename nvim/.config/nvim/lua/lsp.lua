@@ -2,9 +2,14 @@ local nvim_lsp = require 'lspconfig'
 local cmp = require 'cmp'
 local lspkind = require 'lspkind'
 local log = require 'vim.lsp.log'
-local elixir = require 'elixir'
 
 require('luasnip.loaders.from_vscode').load()
+
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 vim.diagnostic.config {
   virtual_text = false,
@@ -133,38 +138,22 @@ local capabilities = create_capabilities()
 
 -- Setup lspconfig.
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
-
-  -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap = true, silent = true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', vim.lsp.buf.format, bufopts)
 
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
@@ -179,28 +168,29 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 nvim_lsp.sumneko_lua.setup {
-  --on_attach = function(client, bufnr)
-  --  client.resolved_capabilities:lua =vim.lsp.get_active_clients()[1].server_capabilities.document_formatting = false
-  --  return on_attach(client, bufnr)
-  --end,
   capabilities = capabilities,
   settings = {
     Lua = {
+      format = {
+        enable = true,
+        -- Put format options here
+        -- NOTE: the value should be STRING!!
+        defaultConfig = {
+          indent_style = "space",
+          indent_size = "4",
+        }
+      },
       runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
         version = 'LuaJIT',
-        -- Setup your lua path
         path = runtime_path,
       },
       diagnostics = {
-        -- Get the language server to recognize the `vim` global
+        enable = true,
         globals = { 'vim' },
       },
       workspace = {
-        -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file('', true),
       },
-      -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
         enable = false,
       },
@@ -290,15 +280,6 @@ nvim_lsp.gopls.setup {
   capabilities = capabilities,
 }
 
--- elm
-nvim_lsp.elmls.setup {
-  on_attach = function(client, bufnr)
-    client.server_capabilities.documentFormattingProvider = false
-    return on_attach(client, bufnr)
-  end,
-  capabilities = capabilities,
-}
-
 -- Svelte
 nvim_lsp.svelte.setup {
   on_attach = function(client, bufnr)
@@ -307,8 +288,6 @@ nvim_lsp.svelte.setup {
   end,
   capabilities = capabilities,
 }
-
-nvim_lsp.eslint.setup {}
 
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup {
@@ -330,7 +309,7 @@ nvim_lsp.rust_analyzer.setup {
   },
 }
 
-
+local elixir = require("elixir")
 elixir.setup({
   -- specify a repository and branch
   repo = "mhanberg/elixir-ls", -- defaults to elixir-lsp/elixir-ls
@@ -346,10 +325,10 @@ elixir.setup({
   }),
 
   on_attach = function(client, bufnr)
-    local map_opts = { buffer = true, noremap = true }
+    local map_opts = { buffer = true, noremap = true}
 
     -- run the codelens under the cursor
-    vim.keymap.set("n", "<space>r", vim.lsp.codelens.run, map_opts)
+    vim.keymap.set("n", "<space>r",  vim.lsp.codelens.run, map_opts)
     -- remove the pipe operator
     vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", map_opts)
     -- add the pipe operator
@@ -361,8 +340,8 @@ elixir.setup({
     vim.keymap.set("n", "gd", "<cmd>lua vim.diagnostic.open_float()<cr>", map_opts)
     vim.keymap.set("n", "dt", "<cmd>lua vim.lsp.buf.definition()<cr>", map_opts)
     vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", map_opts)
-    vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
-    vim.keymap.set("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<cr>", map_opts)
+    vim.keymap.set("n", "gD","<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
+    vim.keymap.set("n", "1gD","<cmd>lua vim.lsp.buf.type_definition()<cr>", map_opts)
     -- keybinds for fzf-lsp.nvim: https://github.com/gfanto/fzf-lsp.nvim
     -- you could also use telescope.nvim: https://github.com/nvim-telescope/telescope.nvim
     -- there are also core vim.lsp functions that put the same data in the loclist

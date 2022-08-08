@@ -17,6 +17,7 @@ vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup {
   function(use)
+    use 'kyazdani42/nvim-web-devicons'
     use 'wbthomason/packer.nvim'
     use 'tpope/vim-fugitive'
     use 'tpope/vim-rhubarb'
@@ -51,11 +52,9 @@ return require('packer').startup {
     use 'EdenEast/nightfox.nvim'
     use {
       'nvim-lualine/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     }
     use {
       'akinsho/bufferline.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     }
 
     use {
@@ -83,7 +82,6 @@ return require('packer').startup {
 
     use {
       'folke/trouble.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     }
 
     -- auto complete
@@ -105,6 +103,10 @@ return require('packer').startup {
     use 'https://gitlab.com/yorickpeterse/nvim-dd.git'
     use 'windwp/nvim-autopairs'
     use 'norcalli/nvim-colorizer.lua'
+    use({
+      "glepnir/lspsaga.nvim",
+      branch = "main",
+    })
 
     -- Window & Animations
     use 'camspiers/animate.vim'
@@ -131,7 +133,6 @@ return require('packer').startup {
     end
   end,
   config = {
-    -- Move to lua dir so impatient.nvim can cache it
     compile_path = fn.stdpath 'config' .. '/lua/packer_compiled.lua',
   },
 }
