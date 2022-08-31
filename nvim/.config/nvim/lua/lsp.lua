@@ -1,24 +1,24 @@
-local nvim_lsp = require 'lspconfig'
-local cmp = require 'cmp'
-local lspkind = require 'lspkind'
-local log = require 'vim.lsp.log'
+local nvim_lsp = require "lspconfig"
+local cmp = require "cmp"
+local lspkind = require "lspkind"
+local log = require "vim.lsp.log"
 
-require('luasnip.loaders.from_vscode').load()
+require("luasnip.loaders.from_vscode").load()
 
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
 vim.diagnostic.config {
   virtual_text = false,
   signs = true,
   float = {
-    border = 'single',
+    border = "single",
     focus = false,
-    scope = 'cursor',
-    source = 'always',
+    scope = "cursor",
+    source = "always",
   },
 }
 
@@ -29,8 +29,10 @@ local function goto_definition(split_cmd)
 
   -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
   local handler = function(_, result, ctx)
+    print(result)
+    print("asdf")
     if result == nil or vim.tbl_isempty(result) then
-      local _ = log.info() and log.info(ctx.method, 'No location found')
+      local _ = log.info() and log.info(ctx.method, "No location found")
       return nil
     end
 
@@ -43,8 +45,8 @@ local function goto_definition(split_cmd)
 
       if #result > 1 then
         util.set_qflist(util.locations_to_items(result))
-        api.nvim_command 'copen'
-        api.nvim_command 'wincmd p'
+        api.nvim_command "copen"
+        api.nvim_command "wincmd p"
       end
     else
       util.jump_to_location(result)
@@ -54,34 +56,35 @@ local function goto_definition(split_cmd)
   return handler
 end
 
-vim.lsp.handlers['textDocument/definition'] = goto_definition 'split'
+vim.lsp.handlers["textDocument/definition"] = goto_definition "split"
 
 cmp.setup {
   snippet = {
     expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+      require("luasnip").lsp_expand(args.body)
     end,
   },
   mapping = {
-    ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-    ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-    ['<Down>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
-    ['<Up>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
+    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+    ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+    ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
+    ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<CR>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
   },
   sources = cmp.config.sources {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'treesitter' },
-    { name = 'cmp_git' },
-    { name = 'buffer' },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "treesitter" },
+    { name = "cmp_git" },
+    { name = "buffer" },
+    { name = "path" },
   },
   formatting = {
     format = lspkind.cmp_format { with_text = true, maxwidth = 100 },
@@ -89,21 +92,21 @@ cmp.setup {
 }
 
 -- Use buffer source for `/`.
-cmp.setup.cmdline('/', {
+cmp.setup.cmdline("/", {
   sources = {
-    { name = 'buffer' },
+    { name = "buffer" },
   },
 })
 
 -- Use cmdline & path source for ':'.
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+cmp.setup.cmdline(":", {
+  sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
 })
 
-require('cmp_git').setup {
+require("cmp_git").setup {
   -- defaults
-  filetypes = { 'gitcommit' },
-  remotes = { 'upstream', 'origin' }, -- in order of most to least prioritized
+  filetypes = { "gitcommit" },
+  remotes = { "upstream", "origin" }, -- in order of most to least prioritized
   git = {
     commits = {
       limit = 100,
@@ -111,22 +114,22 @@ require('cmp_git').setup {
   },
   github = {
     issues = {
-      filter = 'all', -- assigned, created, mentioned, subscribed, all, repos
+      filter = "all", -- assigned, created, mentioned, subscribed, all, repos
       limit = 100,
-      state = 'open', -- open, closed, all
+      state = "open", -- open, closed, all
     },
     mentions = {
       limit = 100,
     },
     pull_requests = {
       limit = 100,
-      state = 'open', -- open, closed, merged, all
+      state = "open", -- open, closed, merged, all
     },
   },
 }
 
 local function create_capabilities()
-  local _capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local _capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
   -- modify capabilities here
   _capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -138,24 +141,24 @@ local capabilities = create_capabilities()
 
 -- Setup lspconfig.
 local on_attach = function(client, bufnr)
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set("n", "<space>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.format, bufopts)
+  vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
+  vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+  vim.keymap.set("n", "<space>f", vim.lsp.buf.format, bufopts)
 
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
     underline = true,
     signs = true,
@@ -163,9 +166,9 @@ local on_attach = function(client, bufnr)
   })
 end
 
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
+local runtime_path = vim.split(package.path, ";")
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
 
 nvim_lsp.sumneko_lua.setup {
   capabilities = capabilities,
@@ -178,18 +181,19 @@ nvim_lsp.sumneko_lua.setup {
         defaultConfig = {
           indent_style = "space",
           indent_size = "4",
+          quote_style = "double"
         }
       },
       runtime = {
-        version = 'LuaJIT',
+        version = "LuaJIT",
         path = runtime_path,
       },
       diagnostics = {
         enable = true,
-        globals = { 'vim' },
+        globals = { "vim" },
       },
       workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
+        library = vim.api.nvim_get_runtime_file("", true),
       },
       telemetry = {
         enable = false,
@@ -204,8 +208,8 @@ nvim_lsp.vuels.setup {
     return on_attach(client, bufnr)
   end,
   capabilities = capabilities,
-  cmd = { 'vls' },
-  filetypes = { 'vue' },
+  cmd = { "vls" },
+  filetypes = { "vue" },
   init_options = {
     config = {
       css = {},
@@ -214,23 +218,23 @@ nvim_lsp.vuels.setup {
         suggest = {},
       },
       javascript = {
-        format = { 'prettier' },
+        format = { "prettier" },
       },
       stylusSupremacy = {},
       typescript = {
-        format = { 'prettier' },
+        format = { "prettier" },
       },
       vetur = {
         completion = {
           autoImport = true,
-          tagCasing = 'kebab',
+          tagCasing = "kebab",
           useScaffoldSnippets = false,
         },
         format = {
           enable = false,
           defaultFormatter = {
-            js = 'prettier',
-            ts = 'prettier',
+            js = "prettier",
+            ts = "prettier",
           },
           defaultFormatterOptions = {},
           scriptInitialIndent = false,
@@ -245,7 +249,7 @@ nvim_lsp.vuels.setup {
       },
     },
   },
-  root_dir = nvim_lsp.util.root_pattern('package.json', 'vue.config.js'),
+  root_dir = nvim_lsp.util.root_pattern("package.json", "vue.config.js"),
 }
 
 -- nvim_lsp.volar.setup {
@@ -291,7 +295,7 @@ nvim_lsp.svelte.setup {
 
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup {
-  cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
+  cmd = { "rustup", "run", "nightly", "rust-analyzer" },
   on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
     return on_attach(client, bufnr)
@@ -300,10 +304,10 @@ nvim_lsp.rust_analyzer.setup {
   settings = {
     -- to enable rust-analyzer settings visit:
     -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-    ['rust-analyzer'] = {
+    ["rust-analyzer"] = {
       -- enable clippy diagnostics on save
       checkOnSave = {
-        command = 'clippy',
+        command = "clippy",
       },
     },
   },
@@ -323,12 +327,11 @@ elixir.setup({
     enableTestLenses = false,
     suggestSpecs = false,
   }),
-
   on_attach = function(client, bufnr)
-    local map_opts = { buffer = true, noremap = true}
+    local map_opts = { buffer = true, noremap = true }
 
     -- run the codelens under the cursor
-    vim.keymap.set("n", "<space>r",  vim.lsp.codelens.run, map_opts)
+    vim.keymap.set("n", "<space>r", vim.lsp.codelens.run, map_opts)
     -- remove the pipe operator
     vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", map_opts)
     -- add the pipe operator
@@ -336,12 +339,12 @@ elixir.setup({
     vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", map_opts)
 
     -- standard lsp keybinds
-    vim.keymap.set("n", "df", "<cmd>lua vim.lsp.buf.formatting_seq_sync()<cr>", map_opts)
+    vim.keymap.set("n", "df", "<cmd>lua vim.lsp.buf.format()<cr>", map_opts)
     vim.keymap.set("n", "gd", "<cmd>lua vim.diagnostic.open_float()<cr>", map_opts)
     vim.keymap.set("n", "dt", "<cmd>lua vim.lsp.buf.definition()<cr>", map_opts)
     vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", map_opts)
-    vim.keymap.set("n", "gD","<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
-    vim.keymap.set("n", "1gD","<cmd>lua vim.lsp.buf.type_definition()<cr>", map_opts)
+    vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
+    vim.keymap.set("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<cr>", map_opts)
     -- keybinds for fzf-lsp.nvim: https://github.com/gfanto/fzf-lsp.nvim
     -- you could also use telescope.nvim: https://github.com/nvim-telescope/telescope.nvim
     -- there are also core vim.lsp functions that put the same data in the loclist

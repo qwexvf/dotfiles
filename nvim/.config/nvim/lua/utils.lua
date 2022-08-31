@@ -1,84 +1,80 @@
-require'nvim-web-devicons'.setup {
-  default = true;
+require 'nvim-web-devicons'.setup {
+    default = true;
 }
 
 -- The time to wait before displaying newly produced diagnostics.
 require('dd').setup {
-  timeout = 100
+    timeout = 100
 }
 
 -- Cool Tabs
-require('bufferline').setup {
-  options = {
-    diagnostics = 'nvim_lsp'
-  }
-}
+require('bufferline').setup {}
 
 -- Add git signs
 require('gitsigns').setup {
-  signs = {
-    add = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-    change = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-    delete = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-    topdelete = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-    changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-  },
-  signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-  numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-  linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
-  word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
-  keymaps = {
-    -- Default keymap options
-    noremap = true,
+    signs = {
+        add = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+        change = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+        delete = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+        topdelete = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+        changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+    },
+    signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
+    numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+    linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+    word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
+    keymaps = {
+        -- Default keymap options
+        noremap = true,
 
-    ['n ]c'] = { expr = true, '&diff ? \']c\' : \'<cmd>Gitsigns next_hunk<CR>\'' },
-    ['n [c'] = { expr = true, '&diff ? \'[c\' : \'<cmd>Gitsigns prev_hunk<CR>\'' },
+        ['n ]c'] = { expr = true, '&diff ? \']c\' : \'<cmd>Gitsigns next_hunk<CR>\'' },
+        ['n [c'] = { expr = true, '&diff ? \'[c\' : \'<cmd>Gitsigns prev_hunk<CR>\'' },
 
-    ['n <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
-    ['v <leader>hs'] = ':Gitsigns stage_hunk<CR>',
-    ['n <leader>hu'] = '<cmd>Gitsigns undo_stage_hunk<CR>',
-    ['n <leader>hr'] = '<cmd>Gitsigns reset_hunk<CR>',
-    ['v <leader>hr'] = ':Gitsigns reset_hunk<CR>',
-    ['n <leader>hR'] = '<cmd>Gitsigns reset_buffer<CR>',
-    ['n <leader>hp'] = '<cmd>Gitsigns preview_hunk<CR>',
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
-    ['n <leader>hS'] = '<cmd>Gitsigns stage_buffer<CR>',
-    ['n <leader>hU'] = '<cmd>Gitsigns reset_buffer_index<CR>',
+        ['n <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
+        ['v <leader>hs'] = ':Gitsigns stage_hunk<CR>',
+        ['n <leader>hu'] = '<cmd>Gitsigns undo_stage_hunk<CR>',
+        ['n <leader>hr'] = '<cmd>Gitsigns reset_hunk<CR>',
+        ['v <leader>hr'] = ':Gitsigns reset_hunk<CR>',
+        ['n <leader>hR'] = '<cmd>Gitsigns reset_buffer<CR>',
+        ['n <leader>hp'] = '<cmd>Gitsigns preview_hunk<CR>',
+        ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
+        ['n <leader>hS'] = '<cmd>Gitsigns stage_buffer<CR>',
+        ['n <leader>hU'] = '<cmd>Gitsigns reset_buffer_index<CR>',
 
-    -- Text objects
-    ['o ih'] = ':<C-U>Gitsigns select_hunk<CR>',
-    ['x ih'] = ':<C-U>Gitsigns select_hunk<CR>',
-  },
-  watch_gitdir = {
-    interval = 1000,
-    follow_files = true,
-  },
-  attach_to_untracked = true,
-  current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-  current_line_blame_opts = {
-    virt_text = true,
-    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-    delay = 300,
-    ignore_whitespace = false,
-  },
-  current_line_blame_formatter_opts = {
-    relative_time = false,
-  },
-  sign_priority = 6,
-  update_debounce = 5,
-  status_formatter = nil, -- Use default
-  max_file_length = 40000,
-  preview_config = {
-    -- Options passed to nvim_open_win
-    border = 'single',
-    style = 'minimal',
-    relative = 'cursor',
-    row = 0,
-    col = 1,
-  },
-  yadm = {
-    enable = false,
-  },
+        -- Text objects
+        ['o ih'] = ':<C-U>Gitsigns select_hunk<CR>',
+        ['x ih'] = ':<C-U>Gitsigns select_hunk<CR>',
+    },
+    watch_gitdir = {
+        interval = 1000,
+        follow_files = true,
+    },
+    attach_to_untracked = true,
+    current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+    current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+        delay = 300,
+        ignore_whitespace = false,
+    },
+    current_line_blame_formatter_opts = {
+        relative_time = false,
+    },
+    sign_priority = 6,
+    update_debounce = 5,
+    status_formatter = nil, -- Use default
+    max_file_length = 40000,
+    preview_config = {
+        -- Options passed to nvim_open_win
+        border = 'single',
+        style = 'minimal',
+        relative = 'cursor',
+        row = 0,
+        col = 1,
+    },
+    yadm = {
+        enable = false,
+    },
 }
 
 require('nvim-autopairs').setup {}
@@ -95,64 +91,45 @@ require('colorizer').setup {}
 -- require('lsp_lines').register_lsp_virtual_lines()
 
 require('indent_blankline').setup {
-  -- for example, context is off by default, use this to turn it on
-  show_current_context = true,
-  show_current_context_start = true,
-  buftype_exclude = { 'terminal' },
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = true,
+    show_current_context_start = true,
+    buftype_exclude = { 'terminal' },
 }
 
 -- Don't run these plugisn on macos
 if not vim.g.os == 'Darwin' then
-  -- Discord
-  require('presence'):setup {
-    -- General options
-    auto_update = true,
-    neovim_image_text = 'The One True Text Editor', -- Text displayed when hovered over the Neovim image
-    main_image = 'neovim', -- Main image display (either "neovim" or "file")
-    -- client_id = '150256181439496192', -- Use your own Discord application client id (not recommended)
-    log_level = 'info', -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
-    debounce_timeout = 10,
-    enable_line_number = true,
-    blacklist = {},
-    buttons = true,
-    file_assets = {},
+    -- Discord
+    require('presence'):setup {
+        -- General options
+        auto_update = true,
+        neovim_image_text = 'The One True Text Editor', -- Text displayed when hovered over the Neovim image
+        main_image = 'neovim', -- Main image display (either "neovim" or "file")
+        -- client_id = '150256181439496192', -- Use your own Discord application client id (not recommended)
+        log_level = 'info', -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+        debounce_timeout = 10,
+        enable_line_number = true,
+        blacklist = {},
+        buttons = true,
+        file_assets = {},
 
-    -- Rich Presence text options
-    editing_text = 'Editing %s',
-    file_explorer_text = 'Browsing %s',
-    git_commit_text = 'Committing changes',
-    plugin_manager_text = 'Managing plugins',
-    reading_text = 'Reading %s',
-    workspace_text = 'Working on %s',
-    line_number_text = 'Line %s out of %s',
-  }
+        -- Rich Presence text options
+        editing_text = 'Editing %s',
+        file_explorer_text = 'Browsing %s',
+        git_commit_text = 'Committing changes',
+        plugin_manager_text = 'Managing plugins',
+        reading_text = 'Reading %s',
+        workspace_text = 'Working on %s',
+        line_number_text = 'Line %s out of %s',
+    }
 end
 
 local telescope = require 'telescope'
 
 -- Best fzf finder
-telescope.setup {
-  extensions = {
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = 'smart_case',
-    },
-    frecency = {
-      show_scores = true,
-      show_unindexed = true,
-      ignore_patterns = { '*.git/*', '*/tmp/*' },
-      disable_devicons = false,
-    },
-  },
-}
+telescope.setup {}
 
--- Native extension
-telescope.load_extension 'fzf'
-telescope.load_extension 'frecency'
-telescope.load_extension 'gh'
-
+-- indicator
 require('fidget').setup {}
 
 -- In init.lua or filetype.nvim's config file
@@ -160,7 +137,30 @@ require('filetype').setup {}
 
 -- saga configuration
 local saga = require("lspsaga")
+local action = require("lspsaga.codeaction")
 
-saga.init_lsp_saga({
-  -- your configuration
-})
+saga.init_lsp_saga()
+
+-- Keymaps for saga
+vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+
+-- code action
+vim.keymap.set("n", "<leader>ca", action.code_action, { silent = true })
+vim.keymap.set("v", "<leader>ca", function()
+    vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-U>", true, false, true))
+    action.range_code_action()
+end, { silent = true })
+
+-- or use command
+vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
+
+-- scroll down hover doc or scroll in definition preview
+vim.keymap.set("n", "<C-f>", function()
+    action.smart_scroll_with_saga(1)
+end, { silent = true })
+-- scroll up hover doc
+vim.keymap.set("n", "<C-b>", function()
+    action.smart_scroll_with_saga(-1)
+end, { silent = true })
+
+require('focus').setup()

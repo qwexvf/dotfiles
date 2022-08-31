@@ -70,3 +70,6 @@ opt.helpheight = 12
 vim.api.nvim_set_keymap('', '<,>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
+
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
