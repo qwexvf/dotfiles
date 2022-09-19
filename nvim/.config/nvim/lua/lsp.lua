@@ -231,7 +231,7 @@ nvim_lsp.vuels.setup {
           useScaffoldSnippets = false,
         },
         format = {
-          enable = false,
+          enable = true,
           defaultFormatter = {
             js = "prettier",
             ts = "prettier",
@@ -316,11 +316,8 @@ nvim_lsp.rust_analyzer.setup {
 local elixir = require("elixir")
 elixir.setup({
   -- specify a repository and branch
-  repo = "mhanberg/elixir-ls", -- defaults to elixir-lsp/elixir-ls
-  branch = "mh/all-workspace-symbols", -- defaults to nil, just checkouts out the default branch, mutually exclusive with the `tag` option
-  tag = "v0.9.0", -- defaults to nil, mutually exclusive with the `branch` option
-
-  -- default settings, use the `settings` function to override settings
+  repo = "elixir-lsp/elixir-ls", -- defaults to elixir-lsp/elixir-ls
+  tag = "v0.11.0", -- defaults to nil, mutually exclusive with the `branch` option
   settings = elixir.settings({
     dialyzerEnabled = true,
     fetchDeps = false,
@@ -339,7 +336,7 @@ elixir.setup({
     vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", map_opts)
 
     -- standard lsp keybinds
-    vim.keymap.set("n", "df", "<cmd>lua vim.lsp.buf.format()<cr>", map_opts)
+    vim.keymap.set("n", "df", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", map_opts)
     vim.keymap.set("n", "gd", "<cmd>lua vim.diagnostic.open_float()<cr>", map_opts)
     vim.keymap.set("n", "dt", "<cmd>lua vim.lsp.buf.definition()<cr>", map_opts)
     vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", map_opts)
