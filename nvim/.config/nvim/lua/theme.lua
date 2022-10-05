@@ -1,43 +1,49 @@
-require("nightfox").setup({
-  options = {
-    -- Compiled file's destination location
-    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
-    compile_file_suffix = "_compiled", -- Compiled file suffix
-    transparent = false, -- Disable setting background
-    terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
-    dim_inactive = true, -- Non focused panes set to alternative background
-    styles = { -- Style to be applied to different syntax groups
-      comments = "italic,bold", -- Value is any valid attr-list value `:help attr-list`
-      conditionals = "NONE",
-      constants = "bold",
-      functions = "bold",
-      keywords = "NONE",
-      numbers = "italic",
-      operators = "bold",
-      strings = "bold",
-      types = "NONE",
-      variables = "italic",
-    },
-    inverse = { -- Inverse highlight for different types
-      match_paren = false,
-      visual = false,
-      search = false,
-    },
-    modules = { -- List of various plugins and additional options
-      -- ...
-      gitgutter = true,
-      gitsigns = true,
-      lsp_saga = true,
-      lsp_trouble = true,
-      telescope = true,
-      treesitter = true,
-      tsrainbow = true,
-      fidget = true,
-      cmp = true,
-      diagnostic = true
-    },
-  },
-})
+vim.g.catppuccin_flavour = "mocha"
+
+require("catppuccin").setup {
+	transparent_background = true,
+	term_colors = true,
+	compile = {
+		enabled = false,
+		path = vim.fn.stdpath "cache" .. "/catppuccin",
+	},
+	dim_inactive = {
+		enabled = true,
+		shade = "dark",
+		percentage = 0.15,
+	},
+	styles = {
+		comments = { "italic" },
+		conditionals = { "italic" },
+		loops = {},
+		functions = {},
+		keywords = {},
+		strings = {},
+		variables = {},
+		numbers = {},
+		booleans = {},
+		properties = {},
+		types = {},
+		operators = {},
+	},
+	integrations = {
+		treesitter = true,
+		treesitter_context = true,
+		ts_rainbow = true,
+		lsp_trouble = true,
+		gitgutter = true,
+		cmp = true,
+		gitsigns = true,
+		telescope = true,
+		nvimtree = true,
+		aerial = true,
+		illuminate = true,
+		-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+	},
+	color_overrides = {},
+	highlight_overrides = {},
+}
 
 -- setup must be called before loading
-vim.cmd("colorscheme carbonfox")
+vim.cmd "colorscheme catppuccin"
+
