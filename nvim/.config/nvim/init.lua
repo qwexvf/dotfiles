@@ -1,16 +1,16 @@
 -- VOODOO
-require 'impatient'
+require "impatient"
 
-require 'autocmds'
-require 'settings'
-require 'mappings'
+require "settings"
+require "mappings"
+require "autocmds"
 
 -- plugin configs
-require 'plugins'
-require 'telescope'
-require 'treesitter_config'
-require 'theme'
-require 'utils'
-require 'lsp'
-require 'efm'
-require 'saga'
+require "plugins"
+require "telescope"
+require "treesitter_config"
+require "lsp"
+require "efm"
+require "saga"
+require "utils"
+require "theme"

@@ -1,9 +1,9 @@
+require("neodev").setup {}
+
 local nvim_lsp = require "lspconfig"
 local cmp = require "cmp"
 local lspkind = require "lspkind"
 local log = require "vim.lsp.log"
-
-require("luasnip.loaders.from_vscode").load()
 
 local noremap = { noremap = true, silent = true }
 
@@ -59,9 +59,42 @@ local function goto_definition(split_cmd)
 	return handler
 end
 
+lspkind.init {
+	mode = "symbol_text",
+	preset = "codicons",
+	symbol_map = {
+		Text = "",
+		Method = "",
+		Function = "",
+		Constructor = "",
+		Field = "ﰠ",
+		Variable = "",
+		Class = "ﴯ",
+		Interface = "",
+		Module = "",
+		Property = "ﰠ",
+		Unit = "塞",
+		Value = "",
+		Enum = "",
+		Keyword = "",
+		Snippet = "",
+		Color = "",
+		File = "",
+		Reference = "",
+		Folder = "",
+		EnumMember = "",
+		Constant = "",
+		Struct = "פּ",
+		Event = "",
+		Operator = "",
+		TypeParameter = "",
+	},
+}
+
 cmp.setup {
 	snippet = {
 		expand = function(args)
+			require("luasnip.loaders.from_vscode").load()
 			require("luasnip").lsp_expand(args.body)
 		end,
 	},
@@ -88,7 +121,7 @@ cmp.setup {
 		{ name = "path" },
 	},
 	formatting = {
-		format = lspkind.cmp_format { with_text = true, maxwidth = 100 },
+		format = lspkind.cmp_format { mode = "symbol", with_text = true, maxwidth = 100 },
 	},
 }
 
@@ -130,7 +163,7 @@ require("cmp_git").setup {
 }
 
 local function create_capabilities()
-	local _capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+	local _capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 	-- modify capabilities here
 	_capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -142,6 +175,7 @@ local capabilities = create_capabilities()
 
 -- Setup lspconfig.
 local on_attach = function(client, bufnr)
+	-- We'll use efm for formatting
 	client.server_capabilities.documentFormattingProvider = false
 
 	local function buf_set_keymap(...)
@@ -161,7 +195,7 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", bufopts)
 	buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", bufopts)
 	buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", bufopts)
-	buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format({ async = true})<CR>", bufopts)
+	buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", bufopts)
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 		virtual_text = false,
@@ -171,32 +205,7 @@ local on_attach = function(client, bufnr)
 	})
 
 	vim.lsp.handlers["textDocument/definition"] = goto_definition "split"
-
-	require("aerial").on_attach(client, bufnr)
 end
-
-nvim_lsp.sumneko_lua.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		Lua = {
-			runtime = {
-				version = "LuaJIT",
-				path = runtime_path,
-			},
-			diagnostics = {
-				enable = true,
-				globals = { "vim" },
-			},
-			workspace = {
-				library = vim.api.nvim_get_runtime_file("", true),
-			},
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
-}
 
 nvim_lsp.vuels.setup {
 	on_attach = on_attach,
@@ -245,23 +254,34 @@ nvim_lsp.vuels.setup {
 	root_dir = nvim_lsp.util.root_pattern("package.json", "vue.config.js"),
 }
 
--- nvim_lsp.volar.setup {
---   on_attach = function(client, bufnr)
---     client.resolved_capabilities.document_formatting = true
---     return on_attach(client, bufnr)
---   end,
---   capabilities = capabilities,
---   filetypes = {
---     'typescript',
---     'javascript',
---     'javascriptreact',
---     'typescriptreact',
---     'vue',
---     'json',
---   },
--- }
+nvim_lsp.sumneko_lua.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT",
+				path = runtime_path,
+			},
+			diagnostics = {
+				enable = true,
+				globals = { "vim" },
+			},
+			workspace = {
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			telemetry = {
+				enable = false,
+			},
+			completion = {
+				callSnippet = "Replace",
+			},
+		},
+	},
+}
 
 nvim_lsp.tsserver.setup {
+	cmd = { "bun", "run", "typescript-language-server", "--stdio" },
 	on_attach = on_attach,
 	capabilities = capabilities,
 }
@@ -296,15 +316,13 @@ nvim_lsp.rust_analyzer.setup {
 
 local elixir = require "elixir"
 elixir.setup {
-	-- specify a repository and branch
-	repo = "elixir-lsp/elixir-ls", -- defaults to elixir-lsp/elixir-ls
-	tag = "v0.11.0", -- defaults to nil, mutually exclusive with the `branch` option
 	settings = elixir.settings {
 		dialyzerEnabled = true,
 		fetchDeps = false,
 		enableTestLenses = false,
 		suggestSpecs = false,
 	},
+	cmd = { "/Users/qwexvf/Documents/elixir-ls/language_server.sh" },
 	on_attach = function(client, bufnr)
 		local map_opts = { buffer = true, noremap = true }
 
@@ -340,4 +358,70 @@ elixir.setup {
 
 		return on_attach(client, bufnr)
 	end,
+}
+
+require("symbols-outline").setup {
+	highlight_hovered_item = true,
+	show_guides = true,
+	auto_preview = true,
+	position = "right",
+	relative_width = true,
+	width = 10,
+	auto_close = false,
+	show_numbers = true,
+	show_relative_numbers = true,
+	show_symbol_details = true,
+	preview_bg_highlight = "Pmenu",
+	autofold_depth = nil,
+	auto_unfold_hover = true,
+	fold_markers = { "", "" },
+	wrap = false,
+	keymaps = { -- These keymaps can be a string or a table for multiple keys
+		close = { "<Esc>", "q" },
+		goto_location = "<Cr>",
+		focus_location = "o",
+		hover_symbol = "<C-space>",
+		toggle_preview = "K",
+		rename_symbol = "r",
+		code_actions = "a",
+		fold = "h",
+		unfold = "l",
+		fold_all = "W",
+		unfold_all = "E",
+		fold_reset = "R",
+	},
+	lsp_blacklist = {},
+	symbol_blacklist = {},
+	symbols = {
+		File = { icon = "", hl = "TSURI" },
+		Module = { icon = "", hl = "TSNamespace" },
+		Namespace = { icon = "", hl = "TSNamespace" },
+		Package = { icon = "", hl = "TSNamespace" },
+		Class = { icon = "𝓒", hl = "TSType" },
+		Method = { icon = "ƒ", hl = "TSMethod" },
+		Property = { icon = "", hl = "TSMethod" },
+		Field = { icon = "", hl = "TSField" },
+		Constructor = { icon = "", hl = "TSConstructor" },
+		Enum = { icon = "ℰ", hl = "TSType" },
+		Interface = { icon = "ﰮ", hl = "TSType" },
+		Function = { icon = "", hl = "TSFunction" },
+		Variable = { icon = "", hl = "TSConstant" },
+		Constant = { icon = "", hl = "TSConstant" },
+		String = { icon = "𝓐", hl = "TSString" },
+		Number = { icon = "#", hl = "TSNumber" },
+		Boolean = { icon = "⊨", hl = "TSBoolean" },
+		Array = { icon = "", hl = "TSConstant" },
+		Object = { icon = "⦿", hl = "TSType" },
+		Key = { icon = "🔐", hl = "TSType" },
+		Null = { icon = "NULL", hl = "TSType" },
+		EnumMember = { icon = "", hl = "TSField" },
+		Struct = { icon = "𝓢", hl = "TSType" },
+		Event = { icon = "🗲", hl = "TSType" },
+		Operator = { icon = "+", hl = "TSOperator" },
+		TypeParameter = { icon = "𝙏", hl = "TSParameter" },
+	},
+}
+
+require("lspconfig").astro.setup {
+	cmd = { "bun", "run", "astro-ls", "--stdio" },
 }

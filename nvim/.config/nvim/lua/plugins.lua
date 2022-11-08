@@ -74,9 +74,9 @@ return require("packer").startup {
 		use "neovim/nvim-lspconfig"
 		use "j-hui/fidget.nvim"
 
-		use {
-			"folke/trouble.nvim",
-		}
+		use "folke/trouble.nvim"
+
+		use "folke/neodev.nvim"
 
 		-- auto complete
 		use "hrsh7th/nvim-cmp"
@@ -109,12 +109,6 @@ return require("packer").startup {
 		use "camspiers/animate.vim"
 		use { "camspiers/lens.vim", requires = "nvim-lua/plenary.nvim" }
 
-		-- Motions
-		use {
-			"phaazon/hop.nvim",
-			branch = "master", -- optional but strongly recommended
-		}
-
 		-- faster filetype
 		use "nathom/filetype.nvim"
 		use "kevinhwang91/nvim-hlslens"
@@ -125,6 +119,7 @@ return require("packer").startup {
 		use "andweeb/presence.nvim"
 		use "editorconfig/editorconfig-vim"
 		use "RRethy/vim-illuminate"
+		use "simrat39/symbols-outline.nvim"
 
 		if packer_bootstrap then
 			require("packer").sync()

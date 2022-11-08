@@ -1,7 +1,7 @@
 local nvim_lsp = require "lspconfig"
 
 local prettierd = {
-	formatCommand = "prettierd \"${INPUT}\"",
+	formatCommand = "bun run prettierd \"${INPUT}\"",
 	formatStdin = true,
 }
 

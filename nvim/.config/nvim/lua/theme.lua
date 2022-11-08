@@ -1,7 +1,11 @@
 vim.g.catppuccin_flavour = "mocha"
 
+local colors = require("catppuccin.palettes").get_palette()
+
+colors.none = "NONE"
+
 require("catppuccin").setup {
-	transparent_background = true,
+	transparent_background = false,
 	term_colors = true,
 	compile = {
 		enabled = false,
@@ -18,12 +22,12 @@ require("catppuccin").setup {
 		loops = {},
 		functions = {},
 		keywords = {},
-		strings = {},
+		strings = { "bold" },
 		variables = {},
 		numbers = {},
 		booleans = {},
 		properties = {},
-		types = {},
+		types = { "bold" },
 		operators = {},
 	},
 	integrations = {
@@ -38,12 +42,43 @@ require("catppuccin").setup {
 		nvimtree = true,
 		aerial = true,
 		illuminate = true,
-		-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+		fidget = true,
+		native_lsp = {
+			enabled = true,
+			virtual_text = {
+				errors = { "italic" },
+				hints = { "italic" },
+				warnings = { "italic" },
+				information = { "italic" },
+			},
+			underlines = {
+				errors = { "underline" },
+				hints = { "underline" },
+				warnings = { "underline" },
+				information = { "underline" },
+			},
+		},
 	},
-	color_overrides = {},
-	highlight_overrides = {},
+	custom_highlights = {
+		Comment = { fg = colors.flamingo },
+		TSConstBuiltin = { fg = colors.peach, style = {} },
+		TSConstant = { fg = colors.sky },
+		TSComment = { fg = colors.surface2, style = { "italic" } },
+
+		-- Comment = { fg = colors.overlay1 },
+		LineNr = { fg = colors.overlay1 },
+		CursorLine = { bg = colors.none },
+		CursorLineNr = { fg = colors.lavender },
+		DiagnosticVirtualTextError = { bg = colors.none },
+		DiagnosticVirtualTextWarn = { bg = colors.none },
+		DiagnosticVirtualTextInfo = { bg = colors.none },
+		DiagnosticVirtualTextHint = { bg = colors.none },
+	},
 }
 
 -- setup must be called before loading
 vim.cmd "colorscheme catppuccin"
 
+require("bufferline").setup {
+	highlights = require("catppuccin.groups.integrations.bufferline").get(),
+}
