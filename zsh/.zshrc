@@ -141,7 +141,9 @@ fi
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
+# AWS
 export AWS_SDK_LOAD_CONFIG=1
+
 export EDITOR='nvim'
 export VISUAL=$EDITOR
 export PAGER='less'
@@ -151,6 +153,7 @@ autoload colors && colors
 # Golang
 alias go-reshim="asdf reshim golang && export GOROOT='$(asdf where golang)/go/'"
 export GOROOT="$(asdf where golang)/go/"
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -d "/opt/homebrew" ]; then
     # for arm only
@@ -161,6 +164,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export GOARCH=amd64
   fi
 fi
+
 export GOBIN=$GOROOT/bin
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
@@ -191,6 +195,15 @@ alias man=batman.sh
 # Add amplify to path
 [ -f ~/.amplify ] && export PATH="$HOME/.amplify/bin:$PATH"
 
+# bun completions
+[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+eval "$(zoxide init zsh)"
+
 # eval "$(starship init zsh)"
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
@@ -198,10 +211,3 @@ if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-
-# bun completions
-[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
