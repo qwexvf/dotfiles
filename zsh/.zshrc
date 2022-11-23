@@ -204,6 +204,10 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 eval "$(zoxide init zsh)"
 
+# HELPFUL commands
+alias yeet='git push'
+alias yoink='git pull'
+
 # eval "$(starship init zsh)"
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
