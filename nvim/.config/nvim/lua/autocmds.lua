@@ -27,7 +27,6 @@ exec(
 	false
 )
 
-cmd "autocmd BufWritePost plugins.lua PackerCompile"
 cmd "highlight WinSeparator guibg=None"
 
 cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]

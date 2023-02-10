@@ -1,131 +1,122 @@
-local fn = vim.fn
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-local packer_bootstrap
-
-if fn.empty(fn.glob(install_path)) > 0 then
-	packer_bootstrap = fn.system {
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system {
 		"git",
 		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
 	}
 end
+vim.opt.rtp:prepend(lazypath)
 
-vim.cmd [[packadd packer.nvim]]
+require("lazy").setup {
+	"kyazdani42/nvim-web-devicons",
+	"wbthomason/packer.nvim",
+	"tpope/vim-fugitive",
+	"tpope/vim-rhubarb",
+	"tpope/vim-commentary",
+	"tpope/vim-surround",
 
-return require("packer").startup {
-	function(use)
-		use "kyazdani42/nvim-web-devicons"
-		use "wbthomason/packer.nvim"
-		use "tpope/vim-fugitive"
-		use "tpope/vim-rhubarb"
-		use "tpope/vim-commentary"
-		use "tpope/vim-surround"
+	-- Extra languages
+	"rust-lang/rust.vim",
+	{ "mhanberg/elixir.nvim", dependencies = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" } },
+	"earthly/earthly.vim",
+	"jparise/vim-graphql",
+	"ray-x/go.nvim",
+	"ray-x/guihua.lua", -- recommanded if need floating window support
 
-		-- Extra languages
-		use "rust-lang/rust.vim"
-		use { "mhanberg/elixir.nvim", requires = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" } }
-		use "earthly/earthly.vim"
-		use "jparise/vim-graphql"
+	-- Focus
+	"beauwilliams/focus.nvim",
 
-		-- Focus
-		use "beauwilliams/focus.nvim"
-
-		-- UI to select things (files, grep results, open buffers...)
-		use {
-			"nvim-telescope/telescope.nvim",
-			requires = {
-				"nvim-lua/plenary.nvim",
-			},
-		}
-		use { "catppuccin/nvim", as = "catppuccin" }
-		use { "EdenEast/nightfox.nvim" } -- Packer
-		use { "Everblush/everblush.nvim", as = "everblush" }
-		use {
-			"nvim-lualine/lualine.nvim",
-			requires = { "kyazdani42/nvim-web-devicons", opt = true },
-		}
-		use {
-			"akinsho/bufferline.nvim",
-		}
-
-		use {
-			"lewis6991/gitsigns.nvim",
-			requires = { "nvim-lua/plenary.nvim" },
-		}
-
-		-- lsp icons
-		use "onsails/lspkind-nvim"
-
-		-- Add indentation guides even on blank lines
-		use "lukas-reineke/indent-blankline.nvim"
-
-		-- Highlight, edit, and navigate code using a fast incremental parsing library
-		use "nvim-treesitter/nvim-treesitter"
-		use "nvim-treesitter/nvim-treesitter-textobjects"
-		use "nvim-treesitter/nvim-treesitter-context"
-		use {
-			"SmiteshP/nvim-navic",
-			requires = "neovim/nvim-lspconfig",
-		}
-
-		use "neovim/nvim-lspconfig"
-		use "j-hui/fidget.nvim"
-
-		use "folke/trouble.nvim"
-
-		use "folke/neodev.nvim"
-
-		-- auto complete
-		use "hrsh7th/nvim-cmp"
-		use "hrsh7th/cmp-nvim-lsp"
-		use "hrsh7th/cmp-buffer"
-		use "hrsh7th/cmp-path"
-		use "hrsh7th/cmp-cmdline"
-
-		use {
-			"petertriho/cmp-git",
-			requires = "nvim-lua/plenary.nvim",
-		}
-
-		use { "L3MON4D3/LuaSnip", requires = "rafamadriz/friendly-snippets" }
-		use "saadparwaiz1/cmp_luasnip"
-
-		-- Utilities
-		use "https://gitlab.com/yorickpeterse/nvim-dd.git"
-		use "windwp/nvim-autopairs"
-		use "norcalli/nvim-colorizer.lua"
-		use {
-			"glepnir/lspsaga.nvim",
-			branch = "main",
-		}
-		use {
-			"stevearc/aerial.nvim",
-		}
-
-		-- Window & Animations
-		use "camspiers/animate.vim"
-		use { "camspiers/lens.vim", requires = "nvim-lua/plenary.nvim" }
-
-		-- faster filetype
-		use "nathom/filetype.nvim"
-		use "kevinhwang91/nvim-hlslens"
-		use "lewis6991/impatient.nvim"
-		use "windwp/windline.nvim"
-		use "svban/YankAssassin.vim"
-		use "sunjon/shade.nvim"
-		use "andweeb/presence.nvim"
-		use "editorconfig/editorconfig-vim"
-		use "RRethy/vim-illuminate"
-		use "simrat39/symbols-outline.nvim"
-
-		if packer_bootstrap then
-			require("packer").sync()
-		end
-	end,
-	config = {
-		compile_path = fn.stdpath "config" .. "/lua/packer_compiled.lua",
+	-- UI to select things (files, grep results, open buffers...)
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
 	},
+	{ "catppuccin/nvim", as = "catppuccin" },
+	"EdenEast/nightfox.nvim",
+	{ "Everblush/everblush.nvim", as = "everblush" },
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
+	},
+	"akinsho/bufferline.nvim",
+
+	{
+		"lewis6991/gitsigns.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+
+	-- lsp icons
+	"onsails/lspkind-nvim",
+
+	-- Add indentation guides even on blank lines
+	"lukas-reineke/indent-blankline.nvim",
+
+	-- Highlight, edit, and navigate code using a fast incremental parsing library
+	{
+		"nvim-treesitter/nvim-treesitter",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			"nvim-treesitter/nvim-treesitter-context",
+		},
+	},
+
+	{
+		"SmiteshP/nvim-navic",
+		dependencies = "neovim/nvim-lspconfig",
+	},
+
+	"neovim/nvim-lspconfig",
+	"j-hui/fidget.nvim",
+	"folke/trouble.nvim",
+	"folke/neodev.nvim",
+
+	-- auto complete
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-cmdline",
+
+	{
+		"petertriho/cmp-git",
+		dependencies = "nvim-lua/plenary.nvim",
+	},
+
+	{ "L3MON4D3/LuaSnip", dependencies = "rafamadriz/friendly-snippets" },
+	"saadparwaiz1/cmp_luasnip",
+
+	-- Utilities
+	"windwp/nvim-autopairs",
+	"norcalli/nvim-colorizer.lua",
+	{
+		"glepnir/lspsaga.nvim",
+		event = "BufRead",
+		config = function()
+			require("lspsaga").setup {}
+		end,
+	},
+	"stevearc/aerial.nvim",
+
+	-- Window & Animations
+	"camspiers/animate.vim",
+	{ "camspiers/lens.vim", dependencies = "nvim-lua/plenary.nvim" },
+
+	-- faster filetype
+	"nathom/filetype.nvim",
+
+	"kevinhwang91/nvim-hlslens",
+	"lewis6991/impatient.nvim",
+	"windwp/windline.nvim",
+	"svban/YankAssassin.vim",
+	"sunjon/shade.nvim",
+	"andweeb/presence.nvim",
+	"editorconfig/editorconfig-vim",
+	"RRethy/vim-illuminate",
+	"simrat39/symbols-outline.nvim",
 }

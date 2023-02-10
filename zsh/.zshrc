@@ -195,20 +195,19 @@ alias man=batman.sh
 # Add amplify to path
 [ -f ~/.amplify ] && export PATH="$HOME/.amplify/bin:$PATH"
 
-# bun completions
-[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"
+# HELPFUL commands
+alias yeet='git push'
+alias yoink='git pull'
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && . "$HOME/.bun/_bun"
+
 eval "$(zoxide init zsh)"
 
-# HELPFUL commands
-alias yeet='git push'
-alias yoink='git pull'
-
-# eval "$(starship init zsh)"
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
   compinit;
@@ -216,9 +215,6 @@ else
   compinit -C
 fi
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # bun completions
-[ -s "$HOME/.bun/_bun" ] && source "/home/qwexvf/.bun/_bun"
+[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"

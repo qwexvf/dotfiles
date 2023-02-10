@@ -2,10 +2,6 @@ require("nvim-web-devicons").setup {
 	default = true,
 }
 
-require("dd").setup {
-	timeout = 100,
-}
-
 require("gitsigns").setup {
 	signs = {
 		add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },

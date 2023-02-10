@@ -354,7 +354,7 @@ elixir.setup {
 		vim.cmd [[smap <expr> <C-l> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']]
 
 		-- update capabilities for nvim-cmp: https://github.com/hrsh7th/nvim-cmp
-		require("cmp_nvim_lsp").update_capabilities(capabilities)
+		require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 		return on_attach(client, bufnr)
 	end,
@@ -425,3 +425,5 @@ require("symbols-outline").setup {
 require("lspconfig").astro.setup {
 	cmd = { "bun", "run", "astro-ls", "--stdio" },
 }
+
+require("go").setup()
