@@ -116,7 +116,6 @@ require("lazy").setup {
 	"svban/YankAssassin.vim",
 	"sunjon/shade.nvim",
 	"andweeb/presence.nvim",
-	"editorconfig/editorconfig-vim",
 	"RRethy/vim-illuminate",
 	"simrat39/symbols-outline.nvim",
 }

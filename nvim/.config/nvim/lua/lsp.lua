@@ -254,7 +254,7 @@ nvim_lsp.vuels.setup {
 	root_dir = nvim_lsp.util.root_pattern("package.json", "vue.config.js"),
 }
 
-nvim_lsp.sumneko_lua.setup {
+nvim_lsp.lua_ls.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
