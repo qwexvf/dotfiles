@@ -38,10 +38,7 @@ setopt automenu
 unsetopt BEEP
 setopt vi
 
-## パスを直接入力してもcdする
 setopt AUTO_CD
-
-## 環境変数を補完
 setopt AUTO_PARAM_KEYS
 
 zinit light bobsoppe/zsh-ssh-agent
@@ -110,10 +107,7 @@ zinit light sharkdp/fd
 zinit ice wait'0'
 zinit light zsh-users/zsh-completions
 
-## 補完で小文字でも大文字にマッチさせる
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-## 補完候補を一覧表示したとき、Tabや矢印で選択できるようにする
 zstyle ':completion:*:default' menu select=1
 
 # Fzf
@@ -124,19 +118,6 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 # because starship is beign slow
 zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 zinit light sindresorhus/pure
-
-# MacOS Stuff
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  if [ -d "/opt/homebrew" ]; then
-    # for arm only
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  fi
-
-  if type brew &> /dev/null; then
-    # use gnubin
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  fi
-fi	
 
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
@@ -150,30 +131,32 @@ export PAGER='less'
 
 autoload colors && colors
 
-# Golang
-alias go-reshim="asdf reshim golang && export GOROOT='$(asdf where golang)/go/'"
-export GOROOT="$(asdf where golang)/go/"
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -d "/opt/homebrew" ]; then
-    # for arm only
+    # for macos only
     export GOOS=darwin
     export GOARCH=arm64
+
+    # :thinking:
+    export PATH="/usr/local/opt/libpq/bin:$PATH"
+
+    if [ -d "/opt/homebrew" ]; then
+      # for arm only
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+
+    if type brew &> /dev/null; then
+      # use gnubin
+      export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    fi
   else
     export GOOS=linux
     export GOARCH=amd64
   fi
 fi
 
-export GOBIN=$GOROOT/bin
-export GOPATH=$HOME/.go
-export PATH=$PATH:$GOPATH/bin
-
-# Yarn
-# export PATH=$(yarn global bin):$PATH
-
-# :thinking:
-export PATH="/usr/local/opt/libpq/bin:$PATH"
+# Golang
+alias go-reshim="asdf reshim golang"
 
 # GPG
 export GPG_TTY=$(tty)
@@ -190,8 +173,6 @@ alias rg=batgrep.sh
 alias bd=batdiff.sh
 alias man=batman.sh
 
-. $HOME/.cargo/env
-
 # Add amplify to path
 [ -f ~/.amplify ] && export PATH="$HOME/.amplify/bin:$PATH"
 
@@ -203,10 +184,11 @@ alias yoink='git pull'
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && . "$HOME/.bun/_bun"
-
+# zoxide
 eval "$(zoxide init zsh)"
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
@@ -214,7 +196,3 @@ if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-
-
-# bun completions
-[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"
