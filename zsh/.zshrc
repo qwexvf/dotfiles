@@ -114,9 +114,6 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 zinit light sindresorhus/pure
 
-. $HOME/.asdf/asdf.sh
-fpath=(${ASDF_DIR}/completions $fpath)
-
 # AWS
 export AWS_SDK_LOAD_CONFIG=1
 
@@ -151,7 +148,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # Golang
-alias go-reshim="asdf reshim golang"
+alias go-reshim="rtx reshim golang"
 
 # GPG
 export GPG_TTY=$(tty)
@@ -191,3 +188,5 @@ if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
+
+eval "$(/home/qwexvf/.local/share/rtx/bin/rtx activate -s zsh)"
