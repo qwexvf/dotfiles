@@ -95,11 +95,6 @@ zinit light eth-p/bat-extras
 zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
 zinit light BurntSushi/ripgrep
 
-# EXA
-zinit ice wait"2" lucid from"gh-r" as"program" mv"bin/exa* -> exa"
-zinit light ogham/exa
-zinit ice wait blockf atpull'zinit creinstall -q .'
-
 # FD
 zinit ice as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
 zinit light sharkdp/fd
