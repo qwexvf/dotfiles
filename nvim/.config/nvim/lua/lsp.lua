@@ -280,10 +280,25 @@ nvim_lsp.lua_ls.setup {
 	},
 }
 
+local function organize_imports()
+    local params = {
+        command = "_typescript.organizeImports",
+        arguments = {vim.api.nvim_buf_get_name(0)},
+        title = ""
+    }
+    vim.lsp.buf.execute_command(params)
+end
+
 nvim_lsp.tsserver.setup {
 	cmd = { "bun", "run", "typescript-language-server", "--stdio" },
 	on_attach = on_attach,
 	capabilities = capabilities,
+    commands = {
+        OrganizeImports = {
+            organize_imports,
+            description = "Organize Imports"
+        }
+    }
 }
 
 nvim_lsp.gopls.setup {

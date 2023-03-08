@@ -180,11 +180,15 @@ alias yoink='git pull'
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
 # zoxide
 eval "$(zoxide init zsh)"
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# rtx
+eval "$($HOME/.local/share/zinit/plugins/jdxcode---rtx/rtx activate -s zsh)"
+
 
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
@@ -192,5 +196,3 @@ if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-
-eval "$($HOME/.local/share/zinit/plugins/jdxcode---rtx/rtx activate -s zsh)"

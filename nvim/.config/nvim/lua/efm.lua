@@ -21,7 +21,7 @@ local elixir_format = {
 
 local go = {
     formatCommand = "goimports",
-    formatStdin = true 
+    formatStdin = true
 }
 
 nvim_lsp.efm.setup {

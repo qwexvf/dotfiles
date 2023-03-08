@@ -40,6 +40,8 @@ require("lazy").setup {
 	{ "catppuccin/nvim", as = "catppuccin" },
 	"EdenEast/nightfox.nvim",
 	{ "Everblush/everblush.nvim", as = "everblush" },
+    { "sainnhe/everforest" },
+    {"rebelot/kanagawa.nvim"},
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
