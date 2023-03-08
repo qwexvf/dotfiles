@@ -190,3 +190,6 @@ else
 fi
 
 eval "$(/home/qwexvf/.local/share/rtx/bin/rtx activate -s zsh)"
+
+# bun completions
+[ -s "/home/qwexvf/.bun/_bun" ] && source "/home/qwexvf/.bun/_bun"
