@@ -86,6 +86,10 @@ zinit light lukechilds/zsh-nvm
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
 zinit light sharkdp/bat
 
+# rtx
+zinit ice from"gh-r" as"program" mv"rtx* -> rtx"
+zinit light jdxcode/rtx
+
 # BAT-EXTRAS
 zinit ice wait"1" as"program" pick"src/batgrep.sh" lucid
 zinit ice wait"1" as"program" pick"src/batdiff.sh" lucid
@@ -102,6 +106,10 @@ zinit light sharkdp/fd
 zinit ice wait'0'
 zinit light zsh-users/zsh-completions
 
+# because starship is beign slow
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
+
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:default' menu select=1
 
@@ -109,10 +117,6 @@ zstyle ':completion:*:default' menu select=1
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
-
-# because starship is beign slow
-zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
 
 # AWS
 export AWS_SDK_LOAD_CONFIG=1
@@ -189,4 +193,4 @@ else
   compinit -C
 fi
 
-eval "$(/home/qwexvf/.local/share/rtx/bin/rtx activate -s zsh)"
+eval "$($HOME/.local/share/zinit/plugins/jdxcode---rtx/rtx activate -s zsh)"
