@@ -15,5 +15,3 @@ require "efm"
 require "saga"
 require "utils"
 require "theme"
-
-vim.cmd "colorscheme everblush"

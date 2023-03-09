@@ -44,6 +44,7 @@ require("lazy").setup {
         dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
     },
     { 'Everblush/nvim', name = 'everblush', priority = 1000, },
+    {"rebelot/kanagawa.nvim", name= 'kanagawa', priority = 1000},
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
