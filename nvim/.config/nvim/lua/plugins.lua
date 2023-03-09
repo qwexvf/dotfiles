@@ -9,6 +9,7 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	}
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup {
@@ -29,6 +30,7 @@ require("lazy").setup {
 
 	-- Focus
 	"beauwilliams/focus.nvim",
+	"akinsho/bufferline.nvim",
 
 	-- UI to select things (files, grep results, open buffers...)
 	{
@@ -37,17 +39,15 @@ require("lazy").setup {
 			"nvim-lua/plenary.nvim",
 		},
 	},
-	{ "catppuccin/nvim", as = "catppuccin" },
-	"EdenEast/nightfox.nvim",
-	{ "Everblush/everblush.nvim", as = "everblush" },
-    { "sainnhe/everforest" },
-    {"rebelot/kanagawa.nvim"},
+    {
+        "nvim-telescope/telescope-file-browser.nvim",
+        dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+    },
+    { 'Everblush/nvim', name = 'everblush', priority = 1000, },
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
 	},
-	"akinsho/bufferline.nvim",
-
 	{
 		"lewis6991/gitsigns.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },

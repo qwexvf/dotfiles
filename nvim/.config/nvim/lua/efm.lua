@@ -5,11 +5,6 @@ local prettierd = {
     formatStdin = true,
 }
 
-local stylua = {
-    formatCommand = "stylua -s -",
-    formatStdin = true,
-}
-
 local elixir_format = {
     lintCommand = "MIX_ENV=test mix credo suggest --format=flycheck --read-from-stdin ${INPUT}",
     lintStdin = true,
@@ -37,7 +32,6 @@ nvim_lsp.efm.setup {
             typescriptreact = { prettierd },
             ["typescript.tsx"] = { prettierd },
             elixir = { elixir_format },
-            lua = { stylua },
             go = { go }
         },
     },

@@ -76,12 +76,6 @@ require("trouble").setup {}
 -- Colorizer
 require("colorizer").setup {}
 
-require("indent_blankline").setup {
-	show_current_context = true,
-	show_current_context_start = true,
-	buftype_exclude = { "terminal" },
-}
-
 require("fidget").setup {
 	window = {
 		blend = 0,
@@ -89,11 +83,6 @@ require("fidget").setup {
 }
 require("filetype").setup {}
 require("focus").setup()
-require("lualine").setup {
-	options = {
-		theme = "catppuccin",
-	},
-}
 
 require("aerial").setup {
 	backends = { "treesitter", "lsp", "markdown" },
@@ -194,3 +183,7 @@ require("illuminate").configure {
 }
 
 require("hlslens").setup {}
+
+require("bufferline").setup{}
+
+require("telescope").load_extension "file_browser"

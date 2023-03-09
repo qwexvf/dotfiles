@@ -442,3 +442,5 @@ require("lspconfig").astro.setup {
 }
 
 require("go").setup()
+
+require("telescope").load_extension "file_browser"
