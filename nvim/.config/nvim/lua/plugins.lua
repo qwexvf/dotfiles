@@ -39,12 +39,11 @@ require("lazy").setup {
 			"nvim-lua/plenary.nvim",
 		},
 	},
-    {
-        "nvim-telescope/telescope-file-browser.nvim",
-        dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-    },
-    { 'Everblush/nvim', name = 'everblush', priority = 1000, },
-    {"rebelot/kanagawa.nvim", name= 'kanagawa', priority = 1000},
+	{
+		"nvim-telescope/telescope-file-browser.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+	},
+	{ "projekt0n/github-nvim-theme", priority = 1000 },
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },

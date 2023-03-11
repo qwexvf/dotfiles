@@ -1,40 +1,20 @@
 require("indent_blankline").setup {
-    -- for example, context is off by default, use this to turn it on
-    show_current_context = true,
-    show_current_context_start = true,
+	-- for example, context is off by default, use this to turn it on
+	show_current_context = true,
+	show_current_context_start = true,
 }
 
+require("github-theme").setup {
+	theme_style = "dark_default",
+	sidebars = { "qf", "vista_kind", "terminal", "packer" },
+}
 
--- Default options:
-require('kanagawa').setup({
-    compile = false,             -- enable compiling the colorscheme
-    undercurl = true,            -- enable undercurls
-    commentStyle = { italic = true },
-    functionStyle = {},
-    keywordStyle = { italic = true},
-    statementStyle = { bold = true },
-    typeStyle = {},
-    transparent = false,         -- do not set background color
-    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
-    terminalColors = true,       -- define vim.g.terminal_color_{0,17}
-    colors = {                   -- add/modify theme and palette colors
-        palette = {},
-        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-    },
-    overrides = function(colors) -- add/modify highlights
-        return {}
-    end,
-    theme = "wave",              -- Load "wave" theme when 'background' option is not set
-    background = {               -- map the value of 'background' option to a theme
-        dark = "wave",           -- try "dragon" !
-        light = "lotus"
-    },
-})
-
-require('lualine').setup({
-    options = { theme = 'kanagawa' }
-})
+require("lualine").setup {
+	options = {
+		theme = "auto", -- or you can assign github_* themes individually.
+		-- ... your lualine config
+	},
+}
 
 -- setup must be called before loading
-vim.cmd("colorscheme kanagawa")
-
+vim.cmd "colorscheme github_dark_default"

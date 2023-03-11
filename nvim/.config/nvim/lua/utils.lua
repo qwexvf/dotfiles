@@ -184,6 +184,6 @@ require("illuminate").configure {
 
 require("hlslens").setup {}
 
-require("bufferline").setup{}
+require("bufferline").setup {}
 
 require("telescope").load_extension "file_browser"
