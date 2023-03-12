@@ -5,7 +5,7 @@ require("indent_blankline").setup {
 }
 
 require("github-theme").setup {
-	theme_style = "dark_default",
+	theme_style = "dark",
 	sidebars = { "qf", "vista_kind", "terminal", "packer" },
 }
 
@@ -17,4 +17,4 @@ require("lualine").setup {
 }
 
 -- setup must be called before loading
-vim.cmd "colorscheme github_dark_default"
+vim.cmd "colorscheme github_dark"

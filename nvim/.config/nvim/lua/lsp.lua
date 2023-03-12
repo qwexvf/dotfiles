@@ -214,15 +214,12 @@ nvim_lsp.vuels.setup {
 	filetypes = { "vue" },
 	init_options = {
 		config = {
-			css = {},
-			emmet = {},
 			html = {
 				suggest = {},
 			},
 			javascript = {
 				format = { "prettier" },
 			},
-			stylusSupremacy = {},
 			typescript = {
 				format = { "prettier" },
 			},
@@ -279,31 +276,21 @@ nvim_lsp.lua_ls.setup {
 		},
 	},
 }
-
 local function organize_imports()
-    local params = {
-        command = "_typescript.organizeImports",
-        arguments = {vim.api.nvim_buf_get_name(0)},
-        title = ""
-    }
-    vim.lsp.buf.execute_command(params)
+	local params = { command = "_typescript.organizeImports", arguments = { vim.api.nvim_buf_get_name(0) }, title = "" }
+	vim.lsp.buf.execute_command(params)
 end
 
 nvim_lsp.tsserver.setup {
 	cmd = { "bun", "run", "typescript-language-server", "--stdio" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-    commands = {
-        OrganizeImports = {
-            organize_imports,
-            description = "Organize Imports"
-        }
-    }
-}
-
-nvim_lsp.gopls.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
+	commands = {
+		OrganizeImports = {
+			organize_imports,
+			description = "Organize Imports",
+		},
+	},
 }
 
 -- Svelte
@@ -442,5 +429,7 @@ require("lspconfig").astro.setup {
 }
 
 require("go").setup()
+
+require("lspconfig").gleam.setup {}
 
 require("telescope").load_extension "file_browser"

@@ -43,7 +43,7 @@ require("lazy").setup {
 		"nvim-telescope/telescope-file-browser.nvim",
 		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 	},
-	{ "projekt0n/github-nvim-theme", priority = 1000 },
+	{ "projekt0n/github-nvim-theme", lazy = false, priority = 1000 },
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
