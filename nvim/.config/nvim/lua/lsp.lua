@@ -337,7 +337,7 @@ elixir.setup {
 		enableTestLenses = false,
 		suggestSpecs = false,
 	},
-	cmd = { "/Users/qwexvf/Documents/elixir-ls/language_server.sh" },
+	cmd = { "/Users/qwexvf/Documents/elixir-ls/release/language_server.sh" },
 	on_attach = function(client, bufnr)
 		local map_opts = { buffer = true, noremap = true }
 
