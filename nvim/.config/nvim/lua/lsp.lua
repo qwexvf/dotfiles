@@ -428,8 +428,6 @@ require("lspconfig").astro.setup {
 	cmd = { "bun", "run", "astro-ls", "--stdio" },
 }
 
-require("go").setup()
-
 require("lspconfig").gleam.setup {}
 
 require("telescope").load_extension "file_browser"

@@ -14,7 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup {
 	"kyazdani42/nvim-web-devicons",
-	"wbthomason/packer.nvim",
 	"tpope/vim-fugitive",
 	"tpope/vim-rhubarb",
 	"tpope/vim-commentary",
@@ -25,13 +24,26 @@ require("lazy").setup {
 	{ "mhanberg/elixir.nvim", dependencies = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" } },
 	"earthly/earthly.vim",
 	"jparise/vim-graphql",
-	"ray-x/go.nvim",
-	"ray-x/guihua.lua", -- recommanded if need floating window support
 
 	-- Focus
 	"beauwilliams/focus.nvim",
 	"akinsho/bufferline.nvim",
 
+	-- Go
+	{
+		"ray-x/go.nvim",
+		dependencies = { -- optional packages
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("go").setup()
+		end,
+		event = { "CmdlineEnter" },
+		ft = { "go", "gomod" },
+		build = ":lua require(\"go.install\").update_all_sync()", -- if you need to install/update all binaries
+	},
 	-- UI to select things (files, grep results, open buffers...)
 	{
 		"nvim-telescope/telescope.nvim",
@@ -44,10 +56,6 @@ require("lazy").setup {
 		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 	},
 	{ "projekt0n/github-nvim-theme", lazy = false, priority = 1000 },
-	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
-	},
 	{
 		"lewis6991/gitsigns.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -104,6 +112,7 @@ require("lazy").setup {
 		end,
 	},
 	"stevearc/aerial.nvim",
+	"nvim-lualine/lualine.nvim",
 
 	-- Window & Animations
 	"camspiers/animate.vim",

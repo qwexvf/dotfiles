@@ -189,6 +189,8 @@ eval "$(zoxide init zsh)"
 # rtx
 eval "$($HOME/.local/share/zinit/plugins/jdxcode---rtx/rtx activate -s zsh)"
 
+# bun completions
+[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"
 
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
@@ -196,6 +198,3 @@ if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-
-# bun completions
-[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"
