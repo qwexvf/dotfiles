@@ -5,7 +5,7 @@ require("indent_blankline").setup {
 }
 
 require("github-theme").setup {
-	theme_style = "dark_default",
+	theme_style = "dark",
 	sidebars = { "qf", "vista_kind", "terminal", "packer" },
 }
 

@@ -301,7 +301,7 @@ nvim_lsp.svelte.setup {
 
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup {
-	cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+	cmd = { "rustup", "run", "stable", "rust-analyzer" },
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -322,9 +322,8 @@ elixir.setup {
 		dialyzerEnabled = true,
 		fetchDeps = false,
 		enableTestLenses = false,
-		suggestSpecs = false,
+		suggestSpecs = true,
 	},
-	cmd = { "/Users/qwexvf/Documents/elixir-ls/release/language_server.sh" },
 	on_attach = function(client, bufnr)
 		local map_opts = { buffer = true, noremap = true }
 
@@ -431,3 +430,12 @@ require("lspconfig").astro.setup {
 require("lspconfig").gleam.setup {}
 
 require("telescope").load_extension "file_browser"
+
+
+require('go').setup{
+  lsp_cfg = false
+}
+
+local cfg = require'go.lsp'.config() -- config() return the go.nvim gopls setup
+
+require('lspconfig').gopls.setup(cfg)

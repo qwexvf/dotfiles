@@ -5,7 +5,6 @@ require "settings"
 require "mappings"
 require "autocmds"
 
-
 -- plugin configs
 require "plugins"
 require "theme"
