@@ -4,7 +4,7 @@ local exec = vim.api.nvim_exec -- execute Vimscript
 vim.g.did_load_filetypes = 1
 
 exec(
-	[[
+    [[
 	if !exists("g:os")
 			if has("win64") || has("win32") || has("win16")
 					let g:os = "Windows"
@@ -13,18 +13,18 @@ exec(
 			endif
 	endif
 	]],
-	false
+    false
 )
 
 --Highlight on yank
 exec(
-	[[
+    [[
 	augroup YankHighlight
 	autocmd!
 	autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 	augroup end
 	]],
-	false
+    false
 )
 
 cmd "highlight WinSeparator guibg=None"
