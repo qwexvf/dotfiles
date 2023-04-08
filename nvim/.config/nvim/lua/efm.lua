@@ -1,14 +1,11 @@
 local nvim_lsp = require "lspconfig"
 
 local eslint = {
-    lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
+    lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT} -f visualstudio",
     lintStdin = true,
-    lintFormats = {
-        "%f(%l,%c): %tarning %m",
-        "%f(%l,%c): %rror %m",
-    },
+    lintFormats = { "%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m" }, -- {"%f:%l:%c: %m"},
     lintIgnoreExitCode = true,
-    formatCommand = "eslint_d --stdin --fix-to-stdout --stdin-filename=${INPUT}",
+    formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
     formatStdin = true,
 }
 

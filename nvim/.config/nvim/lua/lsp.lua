@@ -123,7 +123,7 @@ cmp.setup.cmdline(":", {
 require("cmp_git").setup {
     -- defaults
     filetypes = { "gitcommit" },
-    remotes = { "upstream", "origin" }, -- in order of most to least prioritized
+    remotes = { "upstream", "origin" },
     git = {
         commits = {
             limit = 100,
@@ -131,24 +131,22 @@ require("cmp_git").setup {
     },
     github = {
         issues = {
-            filter = "all", -- assigned, created, mentioned, subscribed, all, repos
+            filter = "all",
             limit = 100,
-            state = "open", -- open, closed, all
+            state = "open",
         },
         mentions = {
             limit = 100,
         },
         pull_requests = {
             limit = 100,
-            state = "open", -- open, closed, merged, all
+            state = "open",
         },
     },
 }
 
--- Setup lspconfig.
-local on_attach = function(_client, bufnr)
-    -- We'll use efm for formatting
-    -- client.server_capabilities.documentFormattingProvider = false
+local on_attach = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider = false
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
@@ -217,7 +215,7 @@ local function organize_imports()
 end
 
 nvim_lsp.tsserver.setup {
-    cmd = { "bunx", "typescript-language-server", "--stdio" },
+    cmd = { "typescript-language-server", "--stdio" },
     on_attach = on_attach,
     capabilities = capabilities,
     commands = {
@@ -255,6 +253,8 @@ elixir.setup {
     },
     on_attach = function(client, bufnr)
         local map_opts = { buffer = true, noremap = true }
+
+        client.server_capabilities.documentFormattingProvider = true
 
         -- run the codelens under the cursor
         vim.keymap.set("n", "<space>r", vim.lsp.codelens.run, map_opts)
@@ -354,29 +354,8 @@ require("lspconfig").astro.setup {
     cmd = { "npm", "run", "astro-ls", "--stdio" },
 }
 
-require("lspconfig").gleam.setup {}
-
 require("go").setup {
     lsp_cfg = false,
 }
-
 local cfg = require("go.lsp").config() -- config() return the go.nvim gopls setup
-
 require("lspconfig").gopls.setup(cfg)
-
-local null_ls = require "null-ls"
-
-null_ls.setup {
-    sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.completion.spell,
-        null_ls.builtins.code_actions.eslint_d,
-        null_ls.builtins.diagnostics.eslint_d,
-        null_ls.builtins.formatting.eslint_d,
-        null_ls.builtins.formatting.prettierd.with {
-            env = {
-                PRETTIERD_LOCAL_PRETTIER_ONLY = 1,
-            },
-        },
-    },
-}
