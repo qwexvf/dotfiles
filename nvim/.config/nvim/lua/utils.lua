@@ -1,8 +1,8 @@
-require("nvim-web-devicons").setup {
+require("nvim-web-devicons").setup({
     default = true,
-}
+})
 
-require("gitsigns").setup {
+require("gitsigns").setup({
     signs = {
         add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
         change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
@@ -28,7 +28,7 @@ require("gitsigns").setup {
         ["v <leader>hr"] = ":Gitsigns reset_hunk<CR>",
         ["n <leader>hR"] = "<cmd>Gitsigns reset_buffer<CR>",
         ["n <leader>hp"] = "<cmd>Gitsigns preview_hunk<CR>",
-        ["n <leader>hb"] = "<cmd>lua require\"gitsigns\".blame_line{full=true}<CR>",
+        ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
         ["n <leader>hS"] = "<cmd>Gitsigns stage_buffer<CR>",
         ["n <leader>hU"] = "<cmd>Gitsigns reset_buffer_index<CR>",
 
@@ -66,25 +66,37 @@ require("gitsigns").setup {
     yadm = {
         enable = false,
     },
-}
+})
 
-require("nvim-autopairs").setup {}
+require("nvim-autopairs").setup({})
 
 -- Cool trobleshooting
-require("trouble").setup {}
+require("trouble").setup({})
 
 -- Colorizer
-require("colorizer").setup {}
+require("colorizer").setup({})
 
-require("fidget").setup {
+require("fidget").setup({
     window = {
         blend = 0,
     },
-}
-require("filetype").setup {}
+    fmt = {
+        task = function(task_name, message, percentage)
+            if task_name == "Validate documents" then
+                return nil
+            end
+            return string.format(
+                "%s%s [%s]",
+                message,
+                percentage and string.format(" (%s%%)", percentage) or "",
+                task_name
+            )
+        end,
+    },
+})
 require("focus").setup()
 
-require("aerial").setup {
+require("aerial").setup({
     backends = { "treesitter", "lsp", "markdown" },
     layout = {
         max_width = { 40, 0.2 },
@@ -142,7 +154,9 @@ require("aerial").setup {
         max_height = 0.9,
         height = nil,
         min_height = { 8, 0.1 },
-        override = function(conf) return conf end,
+        override = function(conf)
+            return conf
+        end,
     },
     lsp = {
         diagnostics_trigger_update = true,
@@ -155,10 +169,10 @@ require("aerial").setup {
     markdown = {
         update_delay = 300,
     },
-}
+})
 
 -- default configuration
-require("illuminate").configure {
+require("illuminate").configure({
     providers = {
         "lsp",
         "treesitter",
@@ -178,15 +192,15 @@ require("illuminate").configure {
     under_cursor = true,
     large_file_cutoff = nil,
     large_file_overrides = nil,
-}
+})
 
-require("hlslens").setup {}
+require("hlslens").setup({})
 
-require("bufferline").setup {}
+require("bufferline").setup({})
 
-local actions = require "telescope.actions"
+local actions = require("telescope.actions")
 
-require("telescope").setup {
+require("telescope").setup({
     defaults = {
         path_display = { "truncate" },
         sorting_strategy = "ascending",
@@ -222,7 +236,24 @@ require("telescope").setup {
             -- the default case_mode is "smart_case"
         },
     },
-}
+})
 
-require("telescope").load_extension "fzf"
-require("telescope").load_extension "file_browser"
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("file_browser")
+
+local Path = require("plenary.path")
+require("session_manager").setup({
+    sessions_dir = Path:new(vim.fn.stdpath("data"), "sessions"), -- The directory where the session files will be saved.
+    path_replacer = "__", -- The character to which the path separator will be replaced for session files.
+    colon_replacer = "++", -- The character to which the colon symbol will be replaced for session files.
+    autoload_mode = require("session_manager.config").AutoloadMode.CurrentDir, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
+    autosave_last_session = true, -- Automatically save last session on exit and on session switch.
+    autosave_ignore_not_normal = true, -- Plugin kwill not save a session when no buffers are opened, or all of them aren't writable or listed.
+    autosave_ignore_dirs = {}, -- A list of directories where the session will not be autosaved.
+    autosave_ignore_filetypes = { -- All buffers of these file types will be closed before the session is saved.
+        "gitcommit",
+    },
+    autosave_ignore_buftypes = {}, -- All buffers of these bufer types will be closed before the session is saved.
+    autosave_only_in_session = true, -- Always autosaves session. If true, only autosaves after a session is active.
+    max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+})

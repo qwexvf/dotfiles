@@ -1,8 +1,8 @@
-require("neodev").setup {}
+require("neodev").setup({})
 
-local nvim_lsp = require "lspconfig"
-local cmp = require "cmp"
-local lspkind = require "lspkind"
+local nvim_lsp = require("lspconfig")
+local cmp = require("cmp")
+local lspkind = require("lspkind")
 
 local noremap = { noremap = true, silent = true }
 
@@ -15,61 +15,54 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-vim.diagnostic.config {
+vim.diagnostic.config({
     virtual_text = false,
-    signs = true,
+    signs = false,
     float = {
         border = "single",
         focus = false,
         scope = "cursor",
         source = "always",
     },
-}
+})
 
 local border_opts = {
     border = "single",
     winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
 }
 
-cmp.setup {
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
     mapping = {
-        ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-        ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-        ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
-        ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
+        ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+        ["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm {
+        ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
-        },
-    },
-    duplicates = {
-        nvim_lsp = 1,
-        luasnip = 1,
-        cmp_tabnine = 1,
-        buffer = 1,
-        path = 1,
-    },
-    confirm_opts = {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = false,
+        }),
     },
     window = {
         completion = cmp.config.window.bordered(border_opts),
         documentation = cmp.config.window.bordered(border_opts),
     },
-    sources = cmp.config.sources {
+    sources = {
         { name = "nvim_lsp", priority = 1000 },
+        { name = "copilot", priority = 800, group_index = 2 },
         { name = "luasnip", priority = 750 },
-        { name = "buffer", priority = 500 },
-        { name = "path", priority = 250 },
     },
     formatting = {
         fields = { "kind", "abbr", "menu" },
-        format = lspkind.cmp_format {
+        format = lspkind.cmp_format({
             mode = "symbol",
             symbol_map = {
                 Text = "",
@@ -97,16 +90,31 @@ cmp.setup {
                 Event = "",
                 Operator = "",
                 TypeParameter = "",
+                Copilot = "",
             },
-        },
-        snippet = {
-            expand = function(args)
-                require("luasnip.loaders.from_vscode").load()
-                require("luasnip").lsp_expand(args.body)
-            end,
+        }),
+    },
+    sorting = {
+        priority_weight = 2,
+        comparators = {
+            require("copilot_cmp.comparators").prioritize,
+
+            -- Below is the default comparitor list and order for nvim-cmp
+            cmp.config.compare.offset,
+            -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.locality,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
         },
     },
-}
+})
+
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
 -- Use buffer source for `/`.
 cmp.setup.cmdline("/", {
@@ -120,7 +128,7 @@ cmp.setup.cmdline(":", {
     sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
 })
 
-require("cmp_git").setup {
+require("cmp_git").setup({
     -- defaults
     filetypes = { "gitcommit" },
     remotes = { "upstream", "origin" },
@@ -143,12 +151,14 @@ require("cmp_git").setup {
             state = "open",
         },
     },
-}
+})
 
 local on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
 
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_keymap(...)
+        vim.api.nvim_buf_set_keymap(bufnr, ...)
+    end
 
     local bufopts = { noremap = true, silent = true }
 
@@ -165,26 +175,23 @@ local on_attach = function(client, bufnr)
     buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", bufopts)
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", bufopts)
 
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = false,
-        underline = true,
-        signs = true,
-        update_in_insert = true,
-    })
+    -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    --     virtual_text = false,
+    --     underline = true,
+    --     signs = true,
+    --     update_in_insert = true,
+    -- })
 end
 
 local function create_capabilities()
-    local _capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-    -- modify capabilities here
-    _capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-    return _capabilities
+    return capabilities
 end
 
 local capabilities = create_capabilities()
 
-nvim_lsp.lua_ls.setup {
+nvim_lsp.lua_ls.setup({
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -199,6 +206,7 @@ nvim_lsp.lua_ls.setup {
             },
             workspace = {
                 library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
             },
             telemetry = {
                 enable = false,
@@ -208,13 +216,13 @@ nvim_lsp.lua_ls.setup {
             },
         },
     },
-}
+})
 local function organize_imports()
     local params = { command = "_typescript.organizeImports", arguments = { vim.api.nvim_buf_get_name(0) }, title = "" }
     vim.lsp.buf.execute_command(params)
 end
 
-nvim_lsp.tsserver.setup {
+nvim_lsp.tsserver.setup({
     cmd = { "typescript-language-server", "--stdio" },
     on_attach = on_attach,
     capabilities = capabilities,
@@ -224,10 +232,10 @@ nvim_lsp.tsserver.setup {
             description = "Organize Imports",
         },
     },
-}
+})
 
 -- Enable rust_analyzer
-nvim_lsp.rust_analyzer.setup {
+nvim_lsp.rust_analyzer.setup({
     cmd = { "rustup", "run", "stable", "rust-analyzer" },
     on_attach = on_attach,
     capabilities = capabilities,
@@ -241,53 +249,52 @@ nvim_lsp.rust_analyzer.setup {
             },
         },
     },
-}
+})
 
-local elixir = require "elixir"
-elixir.setup {
-    settings = elixir.settings {
-        dialyzerEnabled = true,
-        fetchDeps = false,
-        enableTestLenses = false,
-        suggestSpecs = true,
+local elixir = require("elixir")
+local elixirls = require("elixir.elixirls")
+elixir.setup({
+    elixirls = {
+        settings = elixirls.settings({
+            dialyzerEnabled = true,
+            fetchDeps = false,
+            enableTestLenses = false,
+            suggestSpecs = true,
+        }),
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+            local map_opts = { buffer = true, noremap = true }
+
+            client.server_capabilities.documentFormattingProvider = true
+
+            -- run the codelens under the cursor
+            vim.keymap.set("n", "<space>r", vim.lsp.codelens.run, map_opts)
+            -- remove the pipe operator
+            vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", map_opts)
+            -- add the pipe operator
+            vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", map_opts)
+            vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", map_opts)
+
+            -- standard lsp keybinds
+            vim.keymap.set("n", "df", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", map_opts)
+            vim.keymap.set("n", "gd", "<cmd>lua vim.diagnostic.open_float()<cr>", map_opts)
+            vim.keymap.set("n", "dt", "<cmd>lua vim.lsp.buf.definition()<cr>", map_opts)
+            vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", map_opts)
+            vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
+            vim.keymap.set("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<cr>", map_opts)
+            vim.keymap.set("n", "gr", ":References<cr>", map_opts)
+            vim.keymap.set("n", "g0", ":DocumentSymbols<cr>", map_opts)
+            vim.keymap.set("n", "gW", ":WorkspaceSymbols<cr>", map_opts)
+            vim.keymap.set("n", "<leader>d", ":Diagnostics<cr>", map_opts)
+
+            require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+            return on_attach(client, bufnr)
+        end,
     },
-    on_attach = function(client, bufnr)
-        local map_opts = { buffer = true, noremap = true }
+})
 
-        client.server_capabilities.documentFormattingProvider = true
-
-        -- run the codelens under the cursor
-        vim.keymap.set("n", "<space>r", vim.lsp.codelens.run, map_opts)
-        -- remove the pipe operator
-        vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", map_opts)
-        -- add the pipe operator
-        vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", map_opts)
-        vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", map_opts)
-
-        -- standard lsp keybinds
-        vim.keymap.set("n", "df", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", map_opts)
-        vim.keymap.set("n", "gd", "<cmd>lua vim.diagnostic.open_float()<cr>", map_opts)
-        vim.keymap.set("n", "dt", "<cmd>lua vim.lsp.buf.definition()<cr>", map_opts)
-        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", map_opts)
-        vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
-        vim.keymap.set("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<cr>", map_opts)
-        vim.keymap.set("n", "gr", ":References<cr>", map_opts)
-        vim.keymap.set("n", "g0", ":DocumentSymbols<cr>", map_opts)
-        vim.keymap.set("n", "gW", ":WorkspaceSymbols<cr>", map_opts)
-        vim.keymap.set("n", "<leader>d", ":Diagnostics<cr>", map_opts)
-
-        -- keybinds for vim-vsnip: https://github.com/hrsh7th/vim-vsnip
-        vim.cmd [[imap <expr> <C-l> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']]
-        vim.cmd [[smap <expr> <C-l> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']]
-
-        -- update capabilities for nvim-cmp: https://github.com/hrsh7th/nvim-cmp
-        require("cmp_nvim_lsp").default_capabilities(capabilities)
-
-        return on_attach(client, bufnr)
-    end,
-}
-
-require("symbols-outline").setup {
+require("symbols-outline").setup({
     highlight_hovered_item = true,
     show_guides = true,
     auto_preview = true,
@@ -348,14 +355,22 @@ require("symbols-outline").setup {
         Operator = { icon = "+", hl = "TSOperator" },
         TypeParameter = { icon = "𝙏", hl = "TSParameter" },
     },
-}
+})
 
-require("lspconfig").astro.setup {
+require("lspconfig").astro.setup({
     cmd = { "npm", "run", "astro-ls", "--stdio" },
-}
+})
 
-require("go").setup {
+require("lspconfig").rome.setup({
+    on_attach = function(client, _bufnr)
+        client.server_capabilities.documentFormattingProvider = true
+        require("cmp_nvim_lsp").default_capabilities(capabilities)
+    end,
+    capabilities = capabilities,
+})
+
+require("go").setup({
     lsp_cfg = false,
-}
+})
 local cfg = require("go.lsp").config() -- config() return the go.nvim gopls setup
 require("lspconfig").gopls.setup(cfg)

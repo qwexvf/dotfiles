@@ -1,18 +1,18 @@
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system {
+    vim.fn.system({
         "git",
         "clone",
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
         "--branch=stable", -- latest stable release
         lazypath,
-    }
+    })
 end
 
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup {
+require("lazy").setup({
     "kyazdani42/nvim-web-devicons",
     "tpope/vim-fugitive",
     "tpope/vim-rhubarb",
@@ -21,7 +21,11 @@ require("lazy").setup {
 
     -- Extra languages
     "rust-lang/rust.vim",
-    { "mhanberg/elixir.nvim", dependencies = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" } },
+    {
+        "mhanberg/elixir.nvim",
+        ft = { "elixir" },
+        dependencies = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" },
+    },
     "earthly/earthly.vim",
     "jparise/vim-graphql",
 
@@ -38,28 +42,18 @@ require("lazy").setup {
             "nvim-treesitter/nvim-treesitter",
         },
         ft = { "go", "gomod" },
-        build = ":lua require(\"go.install\").update_all_sync()", -- if you need to install/update all binaries
+        build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
     },
     -- UI to select things (files, grep results, open buffers...)
     {
         "nvim-telescope/telescope.nvim",
         dependencies = {
-            { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable "make" == 1, build = "make" },
+            { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
         },
     },
     {
         "nvim-telescope/telescope-file-browser.nvim",
         dependencies = { "nvim-telescope/telescope.nvim" },
-    },
-    {
-        "projekt0n/github-nvim-theme",
-        lazy = false,
-        priority = 1000,
-    },
-    {
-        "folke/tokyonight.nvim",
-        lazy = false,
-        priority = 1000,
     },
     {
         "lewis6991/gitsigns.nvim",
@@ -92,6 +86,11 @@ require("lazy").setup {
     "j-hui/fidget.nvim",
     "folke/trouble.nvim",
     "folke/neodev.nvim",
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+    },
 
     -- auto complete
     "hrsh7th/nvim-cmp",
@@ -114,7 +113,9 @@ require("lazy").setup {
     {
         "glepnir/lspsaga.nvim",
         event = "BufRead",
-        config = function() require("lspsaga").setup {} end,
+        config = function()
+            require("lspsaga").setup({})
+        end,
     },
     "stevearc/aerial.nvim",
     "nvim-lualine/lualine.nvim",
@@ -122,9 +123,6 @@ require("lazy").setup {
     -- Window & Animations
     "camspiers/animate.vim",
     { "camspiers/lens.vim", dependencies = "nvim-lua/plenary.nvim" },
-
-    -- faster filetype
-    "nathom/filetype.nvim",
 
     "kevinhwang91/nvim-hlslens",
     "lewis6991/impatient.nvim",
@@ -136,5 +134,52 @@ require("lazy").setup {
     "simrat39/symbols-outline.nvim",
 
     { "Shatur/neovim-session-manager", event = "BufWritePost", cmd = "SessionManager" },
-    { "jose-elias-alvarez/null-ls.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-}
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                suggestion = { enabled = false },
+                panel = { enabled = false },
+            })
+        end,
+    },
+    {
+        "zbirenbaum/copilot-cmp",
+        dependencies = { "zbirenbaum/copilot.lua" },
+        config = function()
+            require("copilot_cmp").setup()
+        end,
+    },
+    {
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+            local null_ls = require("null-ls")
+
+            null_ls.setup({
+                sources = {
+                    -- formatting
+                    null_ls.builtins.formatting.stylua,
+                    null_ls.builtins.formatting.rome,
+                    null_ls.builtins.formatting.rustfmt,
+                    null_ls.builtins.formatting.jq,
+                    null_ls.builtins.formatting.mdformat,
+
+                    -- diagnostics
+                    null_ls.builtins.diagnostics.eslint,
+                    null_ls.builtins.diagnostics.credo,
+                    null_ls.builtins.diagnostics.zsh,
+
+                    -- completion
+                    null_ls.builtins.completion.spell,
+
+                    -- code actions
+                    null_ls.builtins.code_actions.eslint,
+                    null_ls.builtins.diagnostics.cspell,
+                    null_ls.builtins.code_actions.cspell,
+                },
+            })
+        end,
+    },
+})

@@ -1,8 +1,6 @@
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
 
-vim.g.did_load_filetypes = 1
-
 exec(
     [[
 	if !exists("g:os")
@@ -28,8 +26,4 @@ exec(
 )
 
 cmd "highlight WinSeparator guibg=None"
-
 cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
-
-cmd "au BufRead,BufNewFile Earthfile set filetype=Earthfile"
-cmd "au BufRead,BufNewFile build.earth set filetype=Earthfile"
