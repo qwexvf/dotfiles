@@ -85,6 +85,11 @@ require("fidget").setup({
             if task_name == "Validate documents" then
                 return nil
             end
+
+            if task_name == "code_action" then
+                return nil
+            end
+
             return string.format(
                 "%s%s [%s]",
                 message,

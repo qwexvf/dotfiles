@@ -19,7 +19,7 @@ vim.diagnostic.config({
     virtual_text = false,
     signs = false,
     float = {
-        border = "single",
+        border = "none",
         focus = false,
         scope = "cursor",
         source = "always",
@@ -37,11 +37,18 @@ cmp.setup({
             require("luasnip").lsp_expand(args.body)
         end,
     },
+    preselect = cmp.PreselectMode.None,
+    duplicates = {
+        nvim_lsp = 1,
+        copilot = 1,
+        luasnip = 1,
+        cmp_tabnine = 1,
+        buffer = 1,
+        path = 1,
+    },
     mapping = {
         ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
         ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-        ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-        ["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
@@ -57,8 +64,10 @@ cmp.setup({
     },
     sources = {
         { name = "nvim_lsp", priority = 1000 },
-        { name = "copilot", priority = 800, group_index = 2 },
-        { name = "luasnip", priority = 750 },
+        { name = "copilot",  priority = 800, group_index = 5 },
+        { name = "luasnip",  priority = 750 },
+        { name = "buffer",   priority = 500 },
+        { name = "path",     priority = 250 },
     },
     formatting = {
         fields = { "kind", "abbr", "menu" },
@@ -154,8 +163,6 @@ require("cmp_git").setup({
 })
 
 local on_attach = function(client, bufnr)
-    client.server_capabilities.documentFormattingProvider = false
-
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
@@ -265,8 +272,6 @@ elixir.setup({
         on_attach = function(client, bufnr)
             local map_opts = { buffer = true, noremap = true }
 
-            client.server_capabilities.documentFormattingProvider = true
-
             -- run the codelens under the cursor
             vim.keymap.set("n", "<space>r", vim.lsp.codelens.run, map_opts)
             -- remove the pipe operator
@@ -357,20 +362,23 @@ require("symbols-outline").setup({
     },
 })
 
+-- astro
 require("lspconfig").astro.setup({
     cmd = { "npm", "run", "astro-ls", "--stdio" },
 })
 
+-- rome formatter
 require("lspconfig").rome.setup({
     on_attach = function(client, _bufnr)
-        client.server_capabilities.documentFormattingProvider = true
         require("cmp_nvim_lsp").default_capabilities(capabilities)
     end,
     capabilities = capabilities,
 })
 
+-- golang
 require("go").setup({
     lsp_cfg = false,
 })
+
 local cfg = require("go.lsp").config() -- config() return the go.nvim gopls setup
 require("lspconfig").gopls.setup(cfg)

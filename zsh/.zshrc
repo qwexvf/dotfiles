@@ -36,7 +36,6 @@ setopt nolisttypes
 setopt listpacked
 setopt automenu
 unsetopt BEEP
-setopt vi
 
 setopt AUTO_CD
 setopt AUTO_PARAM_KEYS
@@ -76,12 +75,6 @@ zinit light junegunn/fzf
 zinit ice wait"1" lucid
 zinit light Aloxaf/fzf-tab
 
-# NVM
-export NVM_AUTO_USE=true
-export NVM_LAZY_LOAD=true
-zinit ice wait"1" lucid
-zinit light lukechilds/zsh-nvm
-
 # BAT
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
 zinit light sharkdp/bat
@@ -89,6 +82,9 @@ zinit light sharkdp/bat
 # rtx
 zinit ice from"gh-r" as"program" mv"rtx* -> rtx"
 zinit light jdxcode/rtx
+
+zinit ice as"completion"
+zinit snippet https://github.com/jdxcode/rtx/blob/main/completions/_rtx
 
 # BAT-EXTRAS
 zinit ice wait"1" as"program" pick"src/batgrep.sh" lucid
@@ -110,6 +106,9 @@ zinit light zsh-users/zsh-completions
 zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 zinit light sindresorhus/pure
 
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:default' menu select=1
 
@@ -118,14 +117,29 @@ zstyle ':completion:*:default' menu select=1
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
-# AWS
-export AWS_SDK_LOAD_CONFIG=1
+# Add amplify to path
+[ -f ~/.amplify ] && export PATH="$HOME/.amplify/bin:$PATH"
 
-export EDITOR='nvim'
-export VISUAL=$EDITOR
-export PAGER='less'
+# Bun
+if [ -s "$HOME/.bun/_bun" ]; then
+  # alias npm=pnpm
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+  source "$HOME/.bun/_bun"
+fi
 
-autoload colors && colors
+# Rust
+[ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+if [ -s "$HOME/.tmux/plugins/tmuxifier/bin" ]; then
+  export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
+fi
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+# rtx
+eval "$($HOME/.local/share/zinit/plugins/jdxcode---rtx/rtx activate -s zsh)"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -d "/opt/homebrew" ]; then
@@ -151,6 +165,17 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   fi
 fi
 
+export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
+
+export GOBIN=$GOROOT/bin
+
+# AWS
+export AWS_SDK_LOAD_CONFIG=1
+
+export EDITOR='nvim'
+export VISUAL=$EDITOR
+export PAGER='less'
+
 # Golang
 alias go-reshim="rtx reshim golang"
 
@@ -169,33 +194,12 @@ alias rg=batgrep.sh
 alias bd=batdiff.sh
 alias man=batman.sh
 
-# Add amplify to path
-[ -f ~/.amplify ] && export PATH="$HOME/.amplify/bin:$PATH"
-
 # HELPFUL commands
 alias yeet='git push'
 alias yoink='git pull'
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# Rust
-[ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
-
-# zoxide
-eval "$(zoxide init zsh)"
-
-# rtx
-eval "$($HOME/.local/share/zinit/plugins/jdxcode---rtx/rtx activate -s zsh)"
-
-# bun completions
-[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"
-
 autoload -Uz compinit
+
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
   compinit;
 else

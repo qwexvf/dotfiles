@@ -91,6 +91,12 @@ require("lazy").setup({
         lazy = false,
         priority = 1000,
     },
+    {
+        "mcchrish/zenbones.nvim",
+        lazy = false,
+        priority = 1000,
+        dependencies = { "rktjmp/lush.nvim" },
+    },
 
     -- auto complete
     "hrsh7th/nvim-cmp",
@@ -161,10 +167,10 @@ require("lazy").setup({
                 sources = {
                     -- formatting
                     null_ls.builtins.formatting.stylua,
-                    null_ls.builtins.formatting.rome,
                     null_ls.builtins.formatting.rustfmt,
                     null_ls.builtins.formatting.jq,
                     null_ls.builtins.formatting.mdformat,
+                    null_ls.builtins.formatting.gofmt,
 
                     -- diagnostics
                     null_ls.builtins.diagnostics.eslint,
@@ -173,11 +179,6 @@ require("lazy").setup({
 
                     -- completion
                     null_ls.builtins.completion.spell,
-
-                    -- code actions
-                    null_ls.builtins.code_actions.eslint,
-                    null_ls.builtins.diagnostics.cspell,
-                    null_ls.builtins.code_actions.cspell,
                 },
             })
         end,
