@@ -260,15 +260,18 @@ nvim_lsp.rust_analyzer.setup({
 
 local elixir = require("elixir")
 local elixirls = require("elixir.elixirls")
+
 elixir.setup({
+    credo = {
+        enabled = true,
+    },
     elixirls = {
         settings = elixirls.settings({
+            fetchDeps = true,
             dialyzerEnabled = true,
-            fetchDeps = false,
             enableTestLenses = false,
             suggestSpecs = true,
         }),
-        capabilities = capabilities,
         on_attach = function(client, bufnr)
             local map_opts = { buffer = true, noremap = true }
 
@@ -280,20 +283,7 @@ elixir.setup({
             vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", map_opts)
             vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", map_opts)
 
-            -- standard lsp keybinds
-            vim.keymap.set("n", "df", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", map_opts)
-            vim.keymap.set("n", "gd", "<cmd>lua vim.diagnostic.open_float()<cr>", map_opts)
-            vim.keymap.set("n", "dt", "<cmd>lua vim.lsp.buf.definition()<cr>", map_opts)
-            vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", map_opts)
-            vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<cr>", map_opts)
-            vim.keymap.set("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<cr>", map_opts)
-            vim.keymap.set("n", "gr", ":References<cr>", map_opts)
-            vim.keymap.set("n", "g0", ":DocumentSymbols<cr>", map_opts)
-            vim.keymap.set("n", "gW", ":WorkspaceSymbols<cr>", map_opts)
-            vim.keymap.set("n", "<leader>d", ":Diagnostics<cr>", map_opts)
-
-            require("cmp_nvim_lsp").default_capabilities(capabilities)
-
+            -- bindings for standard LSP functions.
             return on_attach(client, bufnr)
         end,
     },

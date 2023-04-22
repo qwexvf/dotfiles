@@ -22,9 +22,10 @@ require("lazy").setup({
     -- Extra languages
     "rust-lang/rust.vim",
     {
-        "mhanberg/elixir.nvim",
-        ft = { "elixir" },
-        dependencies = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" },
+        "elixir-tools/elixir-tools.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
     },
     "earthly/earthly.vim",
     "jparise/vim-graphql",
@@ -110,7 +111,7 @@ require("lazy").setup({
         dependencies = "nvim-lua/plenary.nvim",
     },
 
-    { "L3MON4D3/LuaSnip", dependencies = "rafamadriz/friendly-snippets" },
+    { "L3MON4D3/LuaSnip",   dependencies = "rafamadriz/friendly-snippets" },
     "saadparwaiz1/cmp_luasnip",
 
     -- Utilities
