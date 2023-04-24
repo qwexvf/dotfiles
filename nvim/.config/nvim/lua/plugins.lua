@@ -13,7 +13,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-web-devicons",
     "tpope/vim-fugitive",
     "tpope/vim-rhubarb",
     "tpope/vim-commentary",
@@ -39,12 +39,20 @@ require("lazy").setup({
         "ray-x/go.nvim",
         dependencies = { -- optional packages
             "ray-x/guihua.lua",
-            "neovim/nvim-lspconfig",
-            "nvim-treesitter/nvim-treesitter",
         },
         ft = { "go", "gomod" },
         build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+        config = function()
+            -- golang
+            require("go").setup({
+                lsp_cfg = false,
+            })
+
+            local cfg = require("go.lsp").config() -- config() return the go.nvim gopls setup
+            require("lspconfig").gopls.setup(cfg)
+        end
     },
+
     -- UI to select things (files, grep results, open buffers...)
     {
         "nvim-telescope/telescope.nvim",
@@ -161,27 +169,5 @@ require("lazy").setup({
     },
     {
         "jose-elias-alvarez/null-ls.nvim",
-        config = function()
-            local null_ls = require("null-ls")
-
-            null_ls.setup({
-                sources = {
-                    -- formatting
-                    null_ls.builtins.formatting.stylua,
-                    null_ls.builtins.formatting.rustfmt,
-                    null_ls.builtins.formatting.jq,
-                    null_ls.builtins.formatting.mdformat,
-                    null_ls.builtins.formatting.gofmt,
-
-                    -- diagnostics
-                    null_ls.builtins.diagnostics.eslint,
-                    null_ls.builtins.diagnostics.credo,
-                    null_ls.builtins.diagnostics.zsh,
-
-                    -- completion
-                    null_ls.builtins.completion.spell,
-                },
-            })
-        end,
     },
 })

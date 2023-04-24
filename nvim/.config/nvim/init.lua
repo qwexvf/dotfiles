@@ -14,3 +14,4 @@ require("lsp")
 -- require "efm"
 require("saga")
 require("utils")
+require("null_ls")
