@@ -1,7 +1,3 @@
-require("nvim-web-devicons").setup({
-    default = true,
-})
-
 require("gitsigns").setup({
     signs = {
         add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
@@ -67,14 +63,6 @@ require("gitsigns").setup({
         enable = false,
     },
 })
-
-require("nvim-autopairs").setup({})
-
--- Cool trobleshooting
-require("trouble").setup({})
-
--- Colorizer
-require("colorizer").setup({})
 
 require("fidget").setup({
     window = {
@@ -197,68 +185,4 @@ require("illuminate").configure({
     under_cursor = true,
     large_file_cutoff = nil,
     large_file_overrides = nil,
-})
-
-require("hlslens").setup({})
-
-require("bufferline").setup({})
-
-local actions = require("telescope.actions")
-
-require("telescope").setup({
-    defaults = {
-        path_display = { "truncate" },
-        sorting_strategy = "ascending",
-        layout_config = {
-            horizontal = {
-                prompt_position = "top",
-                preview_width = 0.55,
-            },
-            vertical = {
-                mirror = false,
-            },
-            width = 0.87,
-            height = 0.80,
-            preview_cutoff = 120,
-        },
-
-        mappings = {
-            i = {
-                ["<C-n>"] = actions.cycle_history_next,
-                ["<C-p>"] = actions.cycle_history_prev,
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-            },
-            n = { ["q"] = actions.close },
-        },
-    },
-    extensions = {
-        fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-            -- the default case_mode is "smart_case"
-        },
-    },
-})
-
-require("telescope").load_extension("fzf")
-require("telescope").load_extension("file_browser")
-
-local Path = require("plenary.path")
-require("session_manager").setup({
-    sessions_dir = Path:new(vim.fn.stdpath("data"), "sessions"), -- The directory where the session files will be saved.
-    path_replacer = "__", -- The character to which the path separator will be replaced for session files.
-    colon_replacer = "++", -- The character to which the colon symbol will be replaced for session files.
-    autoload_mode = require("session_manager.config").AutoloadMode.CurrentDir, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
-    autosave_last_session = true, -- Automatically save last session on exit and on session switch.
-    autosave_ignore_not_normal = true, -- Plugin kwill not save a session when no buffers are opened, or all of them aren't writable or listed.
-    autosave_ignore_dirs = {}, -- A list of directories where the session will not be autosaved.
-    autosave_ignore_filetypes = { -- All buffers of these file types will be closed before the session is saved.
-        "gitcommit",
-    },
-    autosave_ignore_buftypes = {}, -- All buffers of these bufer types will be closed before the session is saved.
-    autosave_only_in_session = true, -- Always autosaves session. If true, only autosaves after a session is active.
-    max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
 })

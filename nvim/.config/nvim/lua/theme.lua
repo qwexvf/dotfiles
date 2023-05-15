@@ -85,4 +85,4 @@ require("tokyonight").setup({
 })
 
 -- Lua
-vim.cmd([[colorscheme rosebones]])
+vim.cmd([[colorscheme tokyonight]])

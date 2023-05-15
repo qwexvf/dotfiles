@@ -40,13 +40,10 @@ cmp.setup({
     preselect = cmp.PreselectMode.None,
     duplicates = {
         nvim_lsp = 1,
-        copilot = 1,
         luasnip = 1,
-        cmp_tabnine = 1,
-        buffer = 1,
-        path = 1,
+        -- copilot = 1,
     },
-    mapping = {
+    mapping = cmp.mapping.preset.insert({
         ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
         ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -57,69 +54,49 @@ cmp.setup({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         }),
-    },
+    }),
     window = {
         completion = cmp.config.window.bordered(border_opts),
         documentation = cmp.config.window.bordered(border_opts),
     },
-    sources = {
+    sources = cmp.config.sources({
         { name = "nvim_lsp", priority = 1000 },
-        { name = "copilot",  priority = 800, group_index = 5 },
-        { name = "luasnip",  priority = 750 },
-        { name = "buffer",   priority = 500 },
-        { name = "path",     priority = 250 },
-    },
+        { name = "luasnip", priority = 750 },
+        -- { name = "copilot", priority = 600, group_index = 5 },
+    }),
     formatting = {
         fields = { "kind", "abbr", "menu" },
         format = lspkind.cmp_format({
             mode = "symbol",
             symbol_map = {
-                Text = "",
-                Method = "",
-                Function = "",
+                Text = "󰉿",
+                Method = "󰆧",
+                Function = "󰊕",
                 Constructor = "",
-                Field = "ﰠ",
-                Variable = "",
-                Class = "ﴯ",
+                Field = "󰜢",
+                Variable = "󰀫",
+                Class = "󰠱",
                 Interface = "",
                 Module = "",
-                Property = "ﰠ",
-                Unit = "塞",
-                Value = "",
+                Property = "󰜢",
+                Unit = "󰑭",
+                Value = "󰎠",
                 Enum = "",
-                Keyword = "",
+                Keyword = "󰌋",
                 Snippet = "",
-                Color = "",
-                File = "",
-                Reference = "",
-                Folder = "",
+                Color = "󰏘",
+                File = "󰈙",
+                Reference = "󰈇",
+                Folder = "󰉋",
                 EnumMember = "",
-                Constant = "",
-                Struct = "פּ",
+                Constant = "󰏿",
+                Struct = "󰙅",
                 Event = "",
-                Operator = "",
+                Operator = "󰆕",
                 TypeParameter = "",
-                Copilot = "",
+                -- Copilot = "",
             },
         }),
-    },
-    sorting = {
-        priority_weight = 2,
-        comparators = {
-            require("copilot_cmp.comparators").prioritize,
-
-            -- Below is the default comparitor list and order for nvim-cmp
-            cmp.config.compare.offset,
-            -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-            cmp.config.compare.exact,
-            cmp.config.compare.score,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.locality,
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-        },
     },
 })
 
@@ -254,6 +231,20 @@ nvim_lsp.rust_analyzer.setup({
             checkOnSave = {
                 command = "clippy",
             },
+            imports = {
+                granularity = {
+                    group = "module",
+                },
+                prefix = "self",
+            },
+            cargo = {
+                buildScripts = {
+                    enable = true,
+                },
+            },
+            procMacro = {
+                enable = true,
+            },
         },
     },
 })
@@ -322,46 +313,14 @@ require("symbols-outline").setup({
     },
     lsp_blacklist = {},
     symbol_blacklist = {},
-    symbols = {
-        File = { icon = "", hl = "TSURI" },
-        Module = { icon = "", hl = "TSNamespace" },
-        Namespace = { icon = "", hl = "TSNamespace" },
-        Package = { icon = "", hl = "TSNamespace" },
-        Class = { icon = "𝓒", hl = "TSType" },
-        Method = { icon = "ƒ", hl = "TSMethod" },
-        Property = { icon = "", hl = "TSMethod" },
-        Field = { icon = "", hl = "TSField" },
-        Constructor = { icon = "", hl = "TSConstructor" },
-        Enum = { icon = "ℰ", hl = "TSType" },
-        Interface = { icon = "ﰮ", hl = "TSType" },
-        Function = { icon = "", hl = "TSFunction" },
-        Variable = { icon = "", hl = "TSConstant" },
-        Constant = { icon = "", hl = "TSConstant" },
-        String = { icon = "𝓐", hl = "TSString" },
-        Number = { icon = "#", hl = "TSNumber" },
-        Boolean = { icon = "⊨", hl = "TSBoolean" },
-        Array = { icon = "", hl = "TSConstant" },
-        Object = { icon = "⦿", hl = "TSType" },
-        Key = { icon = "🔐", hl = "TSType" },
-        Null = { icon = "NULL", hl = "TSType" },
-        EnumMember = { icon = "", hl = "TSField" },
-        Struct = { icon = "𝓢", hl = "TSType" },
-        Event = { icon = "🗲", hl = "TSType" },
-        Operator = { icon = "+", hl = "TSOperator" },
-        TypeParameter = { icon = "𝙏", hl = "TSParameter" },
-    },
+})
+
+require("lspconfig").svelte.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
 })
 
 -- astro
 require("lspconfig").astro.setup({
     cmd = { "npm", "run", "astro-ls", "--stdio" },
 })
-
--- rome formatter
-require("lspconfig").rome.setup({
-    on_attach = function(client, _bufnr)
-        require("cmp_nvim_lsp").default_capabilities(capabilities)
-    end,
-    capabilities = capabilities,
-})
-

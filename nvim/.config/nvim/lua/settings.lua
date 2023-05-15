@@ -6,10 +6,6 @@ vim.o.autoindent = true
 vim.o.cursorline = true
 vim.o.laststatus = 3
 vim.o.relativenumber = true
-vim.o.shiftwidth = 2
-vim.o.showtabline = 2
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
 vim.o.pumheight = 5
 vim.o.termguicolors = true
 
@@ -40,7 +36,7 @@ opt.linebreak = true -- wrap on word boundary
 opt.signcolumn = "yes"
 
 opt.hidden = true -- enable background buffers
-opt.history = 100 -- remember n lines in history
+opt.history = 5 -- remember n lines in history
 opt.lazyredraw = true -- faster scrolling
 opt.synmaxcol = 240 -- max column for syntax highlight
 
@@ -53,7 +49,7 @@ opt.completeopt = "menuone,noselect"
 opt.shortmess = opt.shortmess + { c = true }
 
 -- perfomance
-opt.updatetime = 0
+vim.updatetime = 100
 opt.timeoutlen = 400
 opt.redrawtime = 1500
 opt.ttimeoutlen = 10
