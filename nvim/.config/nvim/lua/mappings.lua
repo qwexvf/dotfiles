@@ -1,4 +1,4 @@
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 
 local noremap = { noremap = true, silent = true }
 
@@ -7,7 +7,9 @@ map("i", "jj", "<Esc>", noremap)
 map("n", "<Esc>", "<cmd>set hlsearch!<CR>", noremap)
 
 -- Add leader shortcuts
-map("n", "<space>fb", [[<cmd>lua require('telescope.builtin').buffers()<CR>]], noremap)
+map("n", "<space>fb", function()
+    require("telescope.builtin").buffers()
+end, noremap)
 
 map(
     "n",
