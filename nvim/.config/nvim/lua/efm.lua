@@ -1,4 +1,4 @@
-local nvim_lsp = require "lspconfig"
+local nvim_lsp = require("lspconfig")
 
 local elixir_format = {
     lintCommand = "MIX_ENV=test mix credo suggest --format=flycheck --read-from-stdin ${INPUT}",
@@ -15,7 +15,7 @@ local stylua = {
     rootMarkers = { "stylua.toml", ".stylua.toml" },
 }
 
-nvim_lsp.efm.setup {
+nvim_lsp.efm.setup({
     init_options = { documentFormatting = true },
     settings = {
         rootMarkers = { ".git/" },
@@ -29,4 +29,4 @@ nvim_lsp.efm.setup {
         "lua",
         "elixir",
     },
-}
+})

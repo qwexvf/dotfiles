@@ -1,6 +1,7 @@
-local map = vim.keymap.set
+local builtin = require("telescope.builtin")
 
 local noremap = { noremap = true, silent = true }
+local map = vim.keymap.set
 
 -- map Esc to jj
 map("i", "jj", "<Esc>", noremap)
@@ -8,15 +9,12 @@ map("n", "<Esc>", "<cmd>set hlsearch!<CR>", noremap)
 
 -- Add leader shortcuts
 map("n", "<space>fb", function()
-    require("telescope.builtin").buffers()
+    builtin.buffers()
 end, noremap)
 
-map(
-    "n",
-    "<space>sf",
-    [[<cmd>lua require('telescope.builtin').find_files({previewer = false, hidden=true})<CR>]],
-    noremap
-)
+map("n", "<space>sf", function()
+    builtin.find_files()
+end, noremap)
 
 map("n", "<space>sb", [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], noremap)
 

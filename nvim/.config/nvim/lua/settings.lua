@@ -1,4 +1,5 @@
 local opt = vim.opt
+vim.g.loaded_ruby_provider = false
 
 vim.o.smartindent = true
 vim.o.expandtab = true
@@ -16,9 +17,6 @@ vim.o.hlsearch = true
 vim.wo.number = true
 vim.o.matchtime = 1
 
--- Do not save when switching buffers (note: this is now a default on master)
-vim.o.hidden = true
-
 -- Enable break indent
 vim.o.breakindent = false
 
@@ -33,7 +31,7 @@ opt.splitbelow = true -- orizontal split to the bottom
 opt.ignorecase = true -- ignore case letters when search
 opt.smartcase = true -- ignore lowercase for the whole pattern
 opt.linebreak = true -- wrap on word boundary
-opt.signcolumn = "yes"
+opt.signcolumn = "number"
 
 opt.hidden = true -- enable background buffers
 opt.history = 5 -- remember n lines in history

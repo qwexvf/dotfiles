@@ -26,92 +26,37 @@ vim.diagnostic.config({
     },
 })
 
-local border_opts = {
-    border = "single",
-    winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
-}
-
 cmp.setup({
+    enabled = true,
     snippet = {
         expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
         end,
     },
-    preselect = cmp.PreselectMode.None,
-    duplicates = {
-        nvim_lsp = 1,
-        luasnip = 1,
-        -- copilot = 1,
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-        ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-        }),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
-    window = {
-        completion = cmp.config.window.bordered(border_opts),
-        documentation = cmp.config.window.bordered(border_opts),
-    },
     sources = cmp.config.sources({
-        { name = "nvim_lsp", priority = 1000 },
-        { name = "luasnip", priority = 750 },
-        -- { name = "copilot", priority = 600, group_index = 5 },
+        { name = "nvim_lsp" },
+        { name = "luasnip" }, -- For luasnip users.
+    }, {
+        { name = "buffer" },
     }),
     formatting = {
-        fields = { "kind", "abbr", "menu" },
         format = lspkind.cmp_format({
-            mode = "symbol",
-            symbol_map = {
-                Text = "󰉿",
-                Method = "󰆧",
-                Function = "󰊕",
-                Constructor = "",
-                Field = "󰜢",
-                Variable = "󰀫",
-                Class = "󰠱",
-                Interface = "",
-                Module = "",
-                Property = "󰜢",
-                Unit = "󰑭",
-                Value = "󰎠",
-                Enum = "",
-                Keyword = "󰌋",
-                Snippet = "",
-                Color = "󰏘",
-                File = "󰈙",
-                Reference = "󰈇",
-                Folder = "󰉋",
-                EnumMember = "",
-                Constant = "󰏿",
-                Struct = "󰙅",
-                Event = "",
-                Operator = "󰆕",
-                TypeParameter = "",
-                -- Copilot = "",
-            },
+            mode = "symbol", -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
         }),
     },
-})
-
-vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
-
--- Use buffer source for `/`.
-cmp.setup.cmdline("/", {
-    sources = {
-        { name = "buffer" },
-    },
-})
-
--- Use cmdline & path source for ':'.
-cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
 })
 
 require("cmp_git").setup({
@@ -139,7 +84,7 @@ require("cmp_git").setup({
     },
 })
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
@@ -206,18 +151,6 @@ local function organize_imports()
     vim.lsp.buf.execute_command(params)
 end
 
-nvim_lsp.tsserver.setup({
-    cmd = { "typescript-language-server", "--stdio" },
-    on_attach = on_attach,
-    capabilities = capabilities,
-    commands = {
-        OrganizeImports = {
-            organize_imports,
-            description = "Organize Imports",
-        },
-    },
-})
-
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup({
     cmd = { "rustup", "run", "stable", "rust-analyzer" },
@@ -246,37 +179,6 @@ nvim_lsp.rust_analyzer.setup({
                 enable = true,
             },
         },
-    },
-})
-
-local elixir = require("elixir")
-local elixirls = require("elixir.elixirls")
-
-elixir.setup({
-    credo = {
-        enabled = true,
-    },
-    elixirls = {
-        settings = elixirls.settings({
-            fetchDeps = true,
-            dialyzerEnabled = true,
-            enableTestLenses = false,
-            suggestSpecs = true,
-        }),
-        on_attach = function(client, bufnr)
-            local map_opts = { buffer = true, noremap = true }
-
-            -- run the codelens under the cursor
-            vim.keymap.set("n", "<space>r", vim.lsp.codelens.run, map_opts)
-            -- remove the pipe operator
-            vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", map_opts)
-            -- add the pipe operator
-            vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", map_opts)
-            vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", map_opts)
-
-            -- bindings for standard LSP functions.
-            return on_attach(client, bufnr)
-        end,
     },
 })
 
@@ -323,4 +225,71 @@ require("lspconfig").svelte.setup({
 -- astro
 require("lspconfig").astro.setup({
     cmd = { "npm", "run", "astro-ls", "--stdio" },
+})
+
+local elixir = require("elixir")
+local elixirls = require("elixir.elixirls")
+
+elixir.setup({
+    nextls = { enable = true },
+    credo = {},
+    elixirls = {
+        enable = true,
+        settings = elixirls.settings({
+            dialyzerEnabled = true,
+            enableTestLenses = false,
+        }),
+        on_attach = function(client, bufnr)
+            vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+        end,
+    },
+})
+
+-- alternatively you can override the default configs
+require("flutter-tools").setup({
+    closing_tags = {
+        highlight = "ErrorMsg", -- highlight for the closing tag
+        prefix = ">", -- character to use for close tag e.g. > Widget
+        enabled = true, -- set to false to disable
+    },
+    lsp = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    },
+})
+
+-- golang
+require("go").setup({
+    lsp_cfg = true,
+})
+
+require("typescript-tools").setup({
+    on_attach = on_attach,
+    settings = {
+        -- spawn additional tsserver instance to calculate diagnostics on it
+        separate_diagnostic_server = true,
+        -- "change"|"insert_leave" determine when the client asks the server about diagnostic
+        publish_diagnostic_on = "insert_leave",
+        -- array of strings("fix_all"|"add_missing_imports"|"remove_unused"|
+        -- "remove_unused_imports"|"organize_imports") -- or string "all"
+        -- to include all supported code actions
+        -- specify commands exposed as code_actions
+        expose_as_code_action = {},
+        -- string|nil - specify a custom path to `tsserver.js` file, if this is nil or file under path
+        -- not exists then standard path resolution strategy is applied
+        tsserver_path = nil,
+        -- specify a list of plugins to load by tsserver, e.g., for support `styled-components`
+        -- (see 💅 `styled-components` support section)
+        tsserver_plugins = {},
+        -- this value is passed to: https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes
+        -- memory limit in megabytes or "auto"(basically no limit)
+        tsserver_max_memory = "auto",
+        -- described below
+        tsserver_format_options = {},
+        tsserver_file_preferences = {},
+        -- mirror of VSCode's `typescript.suggest.completeFunctionCalls`
+        complete_function_calls = false,
+    },
 })

@@ -30,14 +30,27 @@ require("lazy").setup({
     { "rust-lang/rust.vim", ft = { "rust" } },
     {
         "elixir-tools/elixir-tools.nvim",
-        ft = { "elixir" },
-        lazy = true,
+        version = "*",
+        event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
     },
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        opts = {},
+    },
     "earthly/earthly.vim",
     "jparise/vim-graphql",
+    {
+        "akinsho/flutter-tools.nvim",
+        lazy = false,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "stevearc/dressing.nvim", -- optional for vim.ui.select
+        },
+    },
 
     -- Focus
     "beauwilliams/focus.nvim",
@@ -55,70 +68,15 @@ require("lazy").setup({
             "ray-x/guihua.lua",
         },
         build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
-        config = function()
-            -- golang
-            require("go").setup({
-                lsp_cfg = false,
-            })
-
-            local cfg = require("go.lsp").config() -- config() return the go.nvim gopls setup
-            require("lspconfig").gopls.setup(cfg)
-        end,
     },
-
-    -- UI to select things (files, grep results, open buffers...)
     {
         "nvim-telescope/telescope.nvim",
-        dependencies = {
-            {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                enabled = vim.fn.executable("make") == 1,
-                build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-            },
-        },
-        config = function()
-            local telescope = require("telescope")
-            local actions = require("telescope.actions")
-
-            telescope.setup({
-                defaults = {
-                    path_display = { "truncate" },
-                    sorting_strategy = "ascending",
-                    layout_config = {
-                        horizontal = {
-                            prompt_position = "top",
-                            preview_width = 0.55,
-                        },
-                        vertical = {
-                            mirror = false,
-                        },
-                        width = 0.87,
-                        height = 0.80,
-                        preview_cutoff = 120,
-                    },
-                    mappings = {
-                        i = {
-                            ["<C-n>"] = actions.cycle_history_next,
-                            ["<C-p>"] = actions.cycle_history_prev,
-                            ["<C-j>"] = actions.move_selection_next,
-                            ["<C-k>"] = actions.move_selection_previous,
-                        },
-                        n = { ["q"] = actions.close },
-                    },
-                },
-                extensions = {
-                    fzf = {
-                        fuzzy = true,
-                        override_generic_sorter = true,
-                        override_file_sorter = true,
-                        case_mode = "smart_case",
-                    },
-                },
-            })
-
-            telescope.load_extension("fzf")
-            telescope.load_extension("file_browser")
-        end,
+        tag = "0.1.3",
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
+    {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
     },
     {
         "nvim-telescope/telescope-file-browser.nvim",
@@ -152,7 +110,6 @@ require("lazy").setup({
     },
 
     "neovim/nvim-lspconfig",
-    "j-hui/fidget.nvim",
     {
         "folke/trouble.nvim",
         setup = function()
@@ -203,15 +160,13 @@ require("lazy").setup({
         end,
     },
     {
-        "glepnir/lspsaga.nvim",
-        event = "LspAttach",
+        "nvimdev/lspsaga.nvim",
         config = function()
             require("lspsaga").setup({})
         end,
         dependencies = {
-            { "nvim-tree/nvim-web-devicons" },
-            --Please make sure you install markdown and markdown_inline parser
-            { "nvim-treesitter/nvim-treesitter" },
+            "nvim-treesitter/nvim-treesitter", -- optional
+            "nvim-tree/nvim-web-devicons", -- optional
         },
     },
     "stevearc/aerial.nvim",
@@ -257,8 +212,5 @@ require("lazy").setup({
                 max_path_length = 80,
             })
         end,
-    },
-    {
-        "jose-elias-alvarez/null-ls.nvim",
     },
 })

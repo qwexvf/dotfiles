@@ -3,15 +3,14 @@ if vim.loader then
 end
 
 require("settings")
+
+require("plugins")
 require("mappings")
 require("autocmds")
-
--- plugin configs
-require("plugins")
 require("theme")
 require("treesitter_config")
+require("telescope_config")
 require("lsp")
--- require "efm"
+require("efm")
 require("saga")
 require("utils")
-require("null_ls")
