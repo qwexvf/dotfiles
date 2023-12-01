@@ -1,5 +1,5 @@
 local cmd = vim.cmd -- execute Vim commands
-local exec = vim.api.nvim_exec -- execute Vimscript
+local exec = vim.api.nvim_exec2 -- execute Vimscript
 
 exec(
     [[
@@ -11,7 +11,7 @@ exec(
 			endif
 	endif
 	]],
-    false
+  {}
 )
 
 --Highlight on yank
@@ -22,7 +22,7 @@ exec(
 	autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 	augroup end
 	]],
-    false
+  {}
 )
 
 cmd("highlight WinSeparator guibg=None")
