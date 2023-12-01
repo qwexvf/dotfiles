@@ -1,4 +1,4 @@
-local builtin = require("telescope.builtin")
+local builtin = require "telescope.builtin"
 
 local noremap = { noremap = true, silent = true }
 local map = vim.keymap.set
@@ -9,11 +9,11 @@ map("n", "<Esc>", "<cmd>set hlsearch!<CR>", noremap)
 
 -- Add leader shortcuts
 map("n", "<space>fb", function()
-  builtin.buffers()
+	builtin.buffers()
 end, noremap)
 
 map("n", "<space>sf", function()
-  builtin.find_files()
+	builtin.find_files()
 end, noremap)
 
 map("n", "<space>sb", [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], noremap)
