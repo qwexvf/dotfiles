@@ -1,8 +1,8 @@
-return  {
+return {
   "folke/tokyonight.nvim",
   lazy = false,
   priority = 1000,
-  config = function ()
+  config = function()
     require("tokyonight").setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
@@ -38,5 +38,5 @@ return  {
       ---@param colors ColorScheme
       on_highlights = function(highlights, colors) end,
     })
-  end
+  end,
 }

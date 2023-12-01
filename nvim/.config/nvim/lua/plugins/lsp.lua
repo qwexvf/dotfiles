@@ -1,4 +1,4 @@
-local config = function ()
+local config = function()
   local nvim_lsp = require("lspconfig")
 
   local on_attach = function(_, bufnr)
@@ -85,10 +85,10 @@ local config = function ()
     cmd = { "npm", "run", "astro-ls", "--stdio" },
   })
 
-  require('go').setup({
+  require("go").setup({
     lsp_cfg = {
       capabilities = capabilities,
-    }
+    },
   })
 end
 
@@ -105,7 +105,7 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     {
       "ray-x/go.nvim",
-      build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
-    }
-  }
+      build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+    },
+  },
 }

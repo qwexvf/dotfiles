@@ -1,9 +1,9 @@
 return {
-  'nvim-tree/nvim-web-devicons',
+  "nvim-tree/nvim-web-devicons",
   {
-    'nvim-lualine/lualine.nvim',
+    "nvim-lualine/lualine.nvim",
     lazy = false,
-    config = function ()
+    config = function()
       require("lualine").setup({
         options = {
           theme = "auto",
@@ -34,6 +34,6 @@ return {
         tabline = {},
         extensions = {},
       })
-    end
+    end,
   },
 }

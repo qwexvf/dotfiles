@@ -3,7 +3,7 @@ return {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.3",
     dependencies = { "nvim-lua/plenary.nvim" },
-    config = function ()
+    config = function()
       local telescope = require("telescope")
       local actions = require("telescope.actions")
 
@@ -45,7 +45,7 @@ return {
 
       telescope.load_extension("fzf")
       telescope.load_extension("file_browser")
-    end
+    end,
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",

@@ -3,7 +3,7 @@ return {
   main = "ibl",
   opts = {},
   lazy = false,
-  config = function ()
+  config = function()
     require("ibl").setup()
-  end
+  end,
 }

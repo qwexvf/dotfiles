@@ -53,7 +53,7 @@ local opts = {
 
 require("config.globals")
 
-require("lazy").setup('plugins', opts)
+require("lazy").setup("plugins", opts)
 
 vim.cmd([[colorscheme tokyobones]])
 
