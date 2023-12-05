@@ -39,24 +39,6 @@ local config = function()
 			},
 		},
 	}
-
-	require("treesitter-context").setup {
-		enable = true,
-		throttle = true,
-		max_lines = 0,
-		patterns = {
-			default = {
-				"class",
-				"function",
-				"method",
-				"for",
-				"while",
-				"if",
-				"switch",
-				"case",
-			},
-		},
-	}
 end
 
 return {
@@ -65,6 +47,6 @@ return {
 	lazy = false,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		"nvim-treesitter/nvim-treesitter-context",
+		-- "nvim-treesitter/nvim-treesitter-context",
 	},
 }
