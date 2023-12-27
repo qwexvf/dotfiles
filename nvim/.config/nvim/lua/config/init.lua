@@ -17,7 +17,7 @@ local opts = {
         lazy = true,
     },
     install = {
-        colorscheme = { "tokyobones" },
+        colorscheme = { "rosebones" },
     },
     checker = {
         enabled = false,
@@ -50,7 +50,7 @@ require "config.globals"
 
 require("lazy").setup("plugins", opts)
 
-vim.cmd [[colorscheme tokyobones]]
+vim.cmd [[colorscheme rosebones]]
 
 require "config.options"
 require "config.keymaps"

@@ -44,9 +44,6 @@ zinit light bobsoppe/zsh-ssh-agent
 # AUTOSUGGESTIONS, TRIGGER PRECMD HOOK UPON LOAD
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
-zinit ice as"completion"
-zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
-
 zinit load robobenklein/zdharma-history-search-multi-word
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
@@ -81,10 +78,10 @@ zinit light sharkdp/bat
 
 # rtx
 zinit ice from"gh-r" as"program" mv"rtx* -> rtx"
-zinit light jdxcode/rtx
+zinit light jdx/rtx
 
 zinit ice as"completion"
-zinit snippet https://github.com/jdxcode/rtx/blob/main/completions/_rtx
+zinit snippet https://github.com/jdx/rtx/blob/main/completions/_rtx
 
 # BAT-EXTRAS
 zinit ice wait"1" as"program" pick"src/batgrep.sh" lucid
@@ -139,7 +136,7 @@ fi
 eval "$(zoxide init zsh)"
 
 # rtx
-eval "$($HOME/.local/share/zinit/plugins/jdxcode---rtx/rtx activate -s zsh)"
+eval "$($HOME/.local/share/zinit/plugins/jdx---rtx/rtx activate -s zsh)"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -d "/opt/homebrew" ]; then
@@ -167,17 +164,12 @@ fi
 
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 
-export GOBIN=$GOROOT/bin
-
 # AWS
 export AWS_SDK_LOAD_CONFIG=1
 
 export EDITOR='nvim'
 export VISUAL=$EDITOR
 export PAGER='less'
-
-# Golang
-alias go-reshim="rtx reshim golang"
 
 # GPG
 export GPG_TTY=$(tty)
@@ -186,7 +178,7 @@ export EDITOR=nvim
 # Aliases
 alias vimdiff="nvim -d "
 alias dc="docker compose"
-alias ls=exa
+alias ls=eza
 alias vim=nvim
 alias vi=nvim
 
@@ -197,6 +189,10 @@ alias man=batman.sh
 # HELPFUL commands
 alias yeet='git push'
 alias yoink='git pull'
+alias 'docker-compose'='docker compose'
+
+export GOBIN=$GOROOT/bin
+export PATH=/Users/qwexvf/.cache/rebar3/bin:$PATH
 
 autoload -Uz compinit
 
