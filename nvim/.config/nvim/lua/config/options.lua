@@ -37,10 +37,6 @@ opt.history = 5 -- remember n lines in history
 opt.lazyredraw = true -- faster scrolling
 opt.synmaxcol = 240 -- max column for syntax highlight
 
--- Case insensitive searching UNLESS /C or capital in search
-opt.ignorecase = true
-opt.smartcase = true
-
 -- autocomplete
 opt.completeopt = "menuone,noselect"
 opt.shortmess = opt.shortmess + { c = true }

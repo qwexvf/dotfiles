@@ -22,9 +22,6 @@ local opts = {
     checker = {
         enabled = false,
     },
-    change_detection = {
-        notify = false,
-    },
     performance = {
         cache = {
             enabled = true,

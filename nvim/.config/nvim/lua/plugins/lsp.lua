@@ -91,7 +91,7 @@ local config = function()
         },
     }
 
-    nvim_lsp.tsserver.setup{}
+    nvim_lsp.tsserver.setup {}
 end
 
 return {
@@ -100,7 +100,6 @@ return {
     lazy = false,
     dependencies = {
         "windwp/nvim-autopairs",
-        "williamboman/mason.nvim",
         "creativenull/efmls-configs-nvim",
         "hrsh7th/nvim-cmp",
         "hrsh7th/cmp-buffer",
@@ -108,6 +107,7 @@ return {
         {
             "ray-x/go.nvim",
             build = ":lua require(\"go.install\").update_all_sync()", -- if you need to install/update all binaries
+            ft = "go",
         },
         {
             "pmizio/typescript-tools.nvim",

@@ -59,6 +59,5 @@ return {
     config = config,
     dependencies = {
         "nvim-treesitter/nvim-treesitter", -- optional
-        "nvim-tree/nvim-web-devicons", -- optional
     },
 }

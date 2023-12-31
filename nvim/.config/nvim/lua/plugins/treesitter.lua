@@ -23,6 +23,8 @@ local config = function()
             "gitignore",
             "python",
             "vue",
+            "go",
+            "elixir",
         },
         auto_install = true,
         highlight = {
@@ -47,6 +49,6 @@ return {
     lazy = false,
     dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        -- "nvim-treesitter/nvim-treesitter-context",
+        "nvim-treesitter/nvim-treesitter-context",
     },
 }
