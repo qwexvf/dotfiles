@@ -80,18 +80,15 @@ local config = function()
         capabilities = capabilities,
     }
 
-    -- astro
-    nvim_lsp.astro.setup {
-        cmd = { "npm", "run", "astro-ls", "--stdio" },
-    }
-
     require("go").setup {
         lsp_cfg = {
             capabilities = capabilities,
         },
     }
 
-    nvim_lsp.tsserver.setup {}
+    nvim_lsp.tailwindcss.setup{}
+
+    require("typescript-tools").setup {}
 end
 
 return {
