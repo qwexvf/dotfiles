@@ -68,9 +68,6 @@ zinit light Aloxaf/fzf-tab
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
 zinit light sharkdp/bat
 
-zinit ice as"completion"
-zinit snippet https://github.com/jdx/rtx/blob/main/completions/_rtx
-
 # BAT-EXTRAS
 zinit ice wait"1" as"program" pick"src/batgrep.sh" lucid
 zinit ice wait"1" as"program" pick"src/batdiff.sh" lucid
