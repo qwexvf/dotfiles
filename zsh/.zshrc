@@ -36,9 +36,6 @@ zinit light bobsoppe/zsh-ssh-agent
 # AUTOSUGGESTIONS, TRIGGER PRECMD HOOK UPON LOAD
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
-zinit ice as"completion"
-zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
-
 zinit load robobenklein/zdharma-history-search-multi-word
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
@@ -70,9 +67,6 @@ zinit light Aloxaf/fzf-tab
 # BAT
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
 zinit light sharkdp/bat
-
-zinit ice from"gh-r" as"program" mv"rtx* -> rtx"
-zinit light jdx/rtx
 
 zinit ice as"completion"
 zinit snippet https://github.com/jdx/rtx/blob/main/completions/_rtx
@@ -129,10 +123,6 @@ fi
 # zoxide
 eval "$(zoxide init zsh)"
 
-# rtx
-eval "$(rtx activate -s zsh)"
-
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -d "/opt/homebrew" ]; then
     # for macos only
@@ -159,16 +149,12 @@ fi
 
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 
-
 # AWS
 export AWS_SDK_LOAD_CONFIG=1
 
 export EDITOR='nvim'
 export VISUAL=$EDITOR
 export PAGER='less'
-
-# Golang
-alias go-reshim="rtx reshim golang"
 
 # GPG
 export GPG_TTY=$(tty)
@@ -188,6 +174,10 @@ alias man=batman.sh
 # HELPFUL commands
 alias yeet='git push'
 alias yoink='git pull'
+alias 'docker-compose'='docker compose'
+
+export GOBIN=$GOROOT/bin
+export PATH=/Users/qwexvf/.cache/rebar3/bin:$PATH
 
 export GOBIN=$GOROOT/bin
 

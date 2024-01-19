@@ -1,4 +1,4 @@
-local builtin = require("telescope.builtin")
+local builtin = require "telescope.builtin"
 
 local noremap = { noremap = true, silent = true }
 local map = vim.keymap.set
