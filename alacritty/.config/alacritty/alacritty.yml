@@ -8,17 +8,17 @@ window:
 # Font configuration
 font:
   # Point size
-  size: 16.0
+  size: 12.0
 
   normal:
-    family: Iosevka Nerd Font
-    style: Light
+    family: IosevkaTerm Nerd Font
+    style: medium
   bold:
-    family: Iosevka Nerd Font
-    style: Light
+    family: IosevkaTerm Nerd Font
+    style: bold
   italic:
-    family: Iosevka Nerd Font
-    style: Light
+    family: IosevkaTerm Nerd Font
+    style: italic
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter

@@ -93,7 +93,7 @@ require("lazy").setup({
     },
 
     -- Add indentation guides even on blank lines
-    "lukas-reineke/indent-blankline.nvim",
+    {"lukas-reineke/indent-blankline.nvim", main = "ibl"},
 
     -- Highlight, edit, and navigate code using a fast incremental parsing library
     {

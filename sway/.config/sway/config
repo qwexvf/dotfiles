@@ -3,11 +3,10 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term wezterm
-set $uifont "Ubuntu 14"
+set $term alacritty
+set $uifont "IosevkaTerm 14"
 set $highlight #3daee9
 set $prompt #18b218
-# set $menu bemenu-run --fn $uifont -b -p "▶" --tf "$prompt" --hf "$highlight" --sf "$highlight" --scf "$highlight" | xargs swaymsg exec
 set $menu wofi --show=drun --lines=5 --prompt=""
 set $lock swaylock -f -i $wallpaper -s fill
 
@@ -25,10 +24,6 @@ exec_always ~/.config/sway/import-gsettings.sh \
 # gaps
 smart_gaps on
 gaps inner 10
-
-# Brightness controls
-bindsym --locked XF86MonBrightnessUp exec --no-startup-id light -A 10
-bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 10
 
 input "type:keyboard" {
   # Capslock key should work as escape key
@@ -172,13 +167,21 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 bar {
-  position top
+    position top
 
-  swaybar_command waybar
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
 }
 
 # Display
-output "HDMI-A-1" mode  1920x1080@164.997Hz pos 2114 136 transform normal scale 1.0 scale_filter nearest adaptive_sync off dpms on
-output "HDMI-A-2" mode  1920x1080@74.973Hz pos 194 136 transform normal scale 1.0 scale_filter nearest adaptive_sync off dpms on
+#output "HDMI-A-1" mode  1920x1080@164.997Hz pos 2114 136 transform normal scale 1.0 scale_filter nearest adaptive_sync off dpms on
+#output "HDMI-A-2" mode  1920x1080@74.973Hz pos 194 136 transform normal scale 1.0 scale_filter nearest adaptive_sync off dpms on
 
 include /etc/sway/config.d/*

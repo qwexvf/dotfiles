@@ -1,15 +1,7 @@
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-  print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-  command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-    print -P "%F{33} %F{34}Installation successful.%f%b" || \
-    print -P "%F{160} The clone has failed.%f%b"
-fi
-
-. "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh" 
 
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
@@ -79,12 +71,11 @@ zinit light Aloxaf/fzf-tab
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
 zinit light sharkdp/bat
 
-# rtx
 zinit ice from"gh-r" as"program" mv"rtx* -> rtx"
-zinit light jdxcode/rtx
+zinit light jdx/rtx
 
 zinit ice as"completion"
-zinit snippet https://github.com/jdxcode/rtx/blob/main/completions/_rtx
+zinit snippet https://github.com/jdx/rtx/blob/main/completions/_rtx
 
 # BAT-EXTRAS
 zinit ice wait"1" as"program" pick"src/batgrep.sh" lucid
@@ -139,7 +130,8 @@ fi
 eval "$(zoxide init zsh)"
 
 # rtx
-eval "$($HOME/.local/share/zinit/plugins/jdxcode---rtx/rtx activate -s zsh)"
+eval "$(rtx activate -s zsh)"
+
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -d "/opt/homebrew" ]; then
@@ -167,7 +159,6 @@ fi
 
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 
-export GOBIN=$GOROOT/bin
 
 # AWS
 export AWS_SDK_LOAD_CONFIG=1
@@ -186,7 +177,7 @@ export EDITOR=nvim
 # Aliases
 alias vimdiff="nvim -d "
 alias dc="docker compose"
-alias ls=exa
+alias ls=eza
 alias vim=nvim
 alias vi=nvim
 
@@ -198,7 +189,11 @@ alias man=batman.sh
 alias yeet='git push'
 alias yoink='git pull'
 
+export GOBIN=$GOROOT/bin
+
 autoload -Uz compinit
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
   compinit;
