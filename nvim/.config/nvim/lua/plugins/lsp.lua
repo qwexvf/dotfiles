@@ -80,18 +80,35 @@ local config = function()
         capabilities = capabilities,
     }
 
-    -- astro
-    nvim_lsp.astro.setup {
-        cmd = { "npm", "run", "astro-ls", "--stdio" },
-    }
-
     require("go").setup {
         lsp_cfg = {
             capabilities = capabilities,
         },
     }
 
-    nvim_lsp.tsserver.setup {}
+    nvim_lsp.tailwindcss.setup {}
+
+    require("typescript-tools").setup {
+        root_dir = nvim_lsp.util.root_pattern("tsconfig.json", "package.json"),
+    }
+
+    nvim_lsp.denols.setup({
+        root_dir = nvim_lsp.util.root_pattern("deno.json"),
+        init_options = {
+            lint = true,
+            unstable = true,
+            suggest = {
+                imports = {
+                    hosts = {
+                        ["https://deno.land"] = true,
+                        ["https://cdn.nest.land"] = true,
+                        ["https://crux.land"] = true,
+                    },
+                },
+            },
+        },
+
+    })
 end
 
 return {

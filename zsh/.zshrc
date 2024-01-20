@@ -68,6 +68,13 @@ zinit light Aloxaf/fzf-tab
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
 zinit light sharkdp/bat
 
+# mise
+zinit ice from"gh-r" as"program" mv"mise* -> mise"
+zinit light jdx/mise
+
+zinit ice as"completion"
+zinit snippet https://github.com/jdx/mise/blob/main/completions/_mise
+
 # BAT-EXTRAS
 zinit ice wait"1" as"program" pick"src/batgrep.sh" lucid
 zinit ice wait"1" as"program" pick"src/batdiff.sh" lucid
@@ -76,10 +83,6 @@ zinit light eth-p/bat-extras
 # RIPGREP
 zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
 zinit light BurntSushi/ripgrep
-
-# FD
-zinit ice as"command" from"gh-r" mv"fd* -> fd" pick"fd/fd"
-zinit light sharkdp/fd
 
 zinit ice wait'0'
 zinit light zsh-users/zsh-completions
@@ -91,6 +94,9 @@ zinit light sindresorhus/pure
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
 
+# activate mise
+eval "$(mise activate -s zsh)"
+
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:default' menu select=1
 
@@ -99,49 +105,30 @@ zstyle ':completion:*:default' menu select=1
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
-# Add amplify to path
-[ -f ~/.amplify ] && export PATH="$HOME/.amplify/bin:$PATH"
-
 # Bun
-if [ -s "$HOME/.bun/_bun" ]; then
-  # alias npm=pnpm
-  export BUN_INSTALL="$HOME/.bun"
-  export PATH="$BUN_INSTALL/bin:$PATH"
-  source "$HOME/.bun/_bun"
+if [ -d $HOME/.bun ]; then
+        [ -s "/home/qwexvf/.bun/_bun" ] && source "/home/qwexvf/.bun/_bun"
+        export BUN_INSTALL="$HOME/.bun"
+        export PATH="$BUN_INSTALL/bin:$PATH"
 fi
 
 # Rust
 [ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
 if [ -s "$HOME/.tmux/plugins/tmuxifier/bin" ]; then
-  export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
+        export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 fi
 
 # zoxide
 eval "$(zoxide init zsh)"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  if [ -d "/opt/homebrew" ]; then
-    # for macos only
-    export GOOS=darwin
-    export GOARCH=arm64
-
-    # :thinking:
-    export PATH="/usr/local/opt/libpq/bin:$PATH"
-
-    if [ -d "/opt/homebrew" ]; then
-      # for arm only
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    fi
-
-    if type brew &> /dev/null; then
-      # use gnubin
-      export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-    fi
-  else
-    export GOOS=linux
-    export GOARCH=amd64
-  fi
+        export GOOS=darwin
+        export GOARCH=arm64
+        FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+else
+        export GOOS=linux
+        export GOARCH=amd64
 fi
 
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
@@ -174,16 +161,14 @@ alias yoink='git pull'
 alias 'docker-compose'='docker compose'
 
 export GOBIN=$GOROOT/bin
-export PATH=/Users/qwexvf/.cache/rebar3/bin:$PATH
-
-export GOBIN=$GOROOT/bin
+export DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 
 autoload -Uz compinit
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
-  compinit;
+        compinit;
 else
-  compinit -C
+        compinit -C
 fi
