@@ -115,7 +115,7 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
 # Bun
 if [ -d $HOME/.bun ]; then
-  # alias npm=pnpm
+  alias npm=pnpm
   export BUN_INSTALL="$HOME/.bun"
   export PATH="$BUN_INSTALL/bin:$PATH"
 fi
