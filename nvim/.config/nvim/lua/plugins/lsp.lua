@@ -89,6 +89,7 @@ local config = function()
     nvim_lsp.tailwindcss.setup {}
 
     require("typescript-tools").setup {
+        single_file_support = false,
         root_dir = nvim_lsp.util.root_pattern("tsconfig.json", "package.json"),
     }
 

@@ -19,9 +19,6 @@ local opts = {
     install = {
         colorscheme = { "rosebones" },
     },
-    checker = {
-        enabled = false,
-    },
     performance = {
         cache = {
             enabled = true,
