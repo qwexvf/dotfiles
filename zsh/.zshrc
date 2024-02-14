@@ -107,9 +107,9 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
 # Bun
 if [ -d $HOME/.bun ]; then
-        [ -s "/home/qwexvf/.bun/_bun" ] && source "/home/qwexvf/.bun/_bun"
-        export BUN_INSTALL="$HOME/.bun"
-        export PATH="$BUN_INSTALL/bin:$PATH"
+  alias npm=pnpm
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
 fi
 
 # Rust
