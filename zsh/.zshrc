@@ -2,7 +2,6 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh" 
-
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=1000000
@@ -68,6 +67,24 @@ zinit light Aloxaf/fzf-tab
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
 zinit light sharkdp/bat
 
+# zoxide
+zinit ice from"gh-r" as"program"
+zinit light ajeetdsouza/zoxide
+
+# fd better than find ?
+zinit ice from"gh-r" as"program" mv"fd* -> fd" pick"fd/fd" atload"alias find=fd"
+zinit light sharkdp/fd
+
+zinit ice as"completion"
+zinit snippet https://github.com/sharkdp/fd/blob/master/contrib/completion/_fd
+
+# eza
+zinit ice from"gh-r" as"program"
+zinit light eza-community/eza
+
+zinit ice as"completion"
+zinit snippet https://github.com/eza-community/eza/blob/main/completions/zsh/_eza
+
 # mise
 zinit ice from"gh-r" as"program" mv"mise* -> mise"
 zinit light jdx/mise
@@ -127,6 +144,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         export GOARCH=arm64
         FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 else
+	export GTK_IM_MODULE=fcitx
+	export QT_IM_MODULE=fcitx
+	export XMODIFIERS=@im=fcitx
+
         export GOOS=linux
         export GOARCH=amd64
 fi

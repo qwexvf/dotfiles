@@ -37,15 +37,15 @@ TERM = "xterm-256color"
 size = 12.0
 
 [font.bold]
-family = "IosevkaTerm Nerd Font"
+family = "Iosevka Nerd Font"
 style = "bold"
 
 [font.italic]
-family = "IosevkaTerm Nerd Font"
+family = "Iosevka Nerd Font"
 style = "italic"
 
 [font.normal]
-family = "IosevkaTerm Nerd Font"
+family = "Iosevka Nerd Font"
 style = "medium"
 
 [font.offset]
