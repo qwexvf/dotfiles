@@ -1,28 +1,9 @@
 local config = function()
     local nvim_lsp = require "lspconfig"
+    local utils = require "utils"
 
-    local on_attach = function(_, bufnr)
-        local function buf_set_keymap(...)
-            vim.api.nvim_buf_set_keymap(bufnr, ...)
-        end
-
-        local bufopts = { noremap = true, silent = true }
-
-        buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", bufopts)
-        buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", bufopts)
-        buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", bufopts)
-        buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", bufopts)
-        buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", bufopts)
-        buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", bufopts)
-        buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", bufopts)
-        buf_set_keymap("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", bufopts)
-        buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", bufopts)
-        buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", bufopts)
-        buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", bufopts)
-        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", bufopts)
-    end
-
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    local on_attach = utils.on_attach
+    local capabilities = utils.capabilities
 
     nvim_lsp.lua_ls.setup {
         on_attach = on_attach,
@@ -43,6 +24,14 @@ local config = function()
             },
         },
     }
+
+    -- nvim_lsp.biome.setup {
+    --     on_attach = on_attach,
+    --     capabilities = capabilities,
+    --     -- get config file from current project root directory
+    --     cmd = { "bun", "run", "biome", "lsp-proxy", "--config-path", vim.fn.getcwd() .. "/biome.json" },
+    --     root_dir = nvim_lsp.util.root_pattern("biome.json", "rome.json"),
+    -- }
 
     -- Enable rust_analyzer
     nvim_lsp.rust_analyzer.setup {
@@ -80,17 +69,8 @@ local config = function()
         capabilities = capabilities,
     }
 
-    require("go").setup {
-        lsp_cfg = {
-            capabilities = capabilities,
-        },
-    }
-
-    nvim_lsp.tailwindcss.setup {}
-
-    require("typescript-tools").setup {
-        single_file_support = false,
-        root_dir = nvim_lsp.util.root_pattern("tsconfig.json", "package.json"),
+    nvim_lsp.tailwindcss.setup {
+        root_dir = nvim_lsp.util.root_pattern("tailwind.config.ts"),
     }
 
     nvim_lsp.denols.setup({
@@ -116,20 +96,4 @@ return {
     "neovim/nvim-lspconfig",
     config = config,
     lazy = false,
-    dependencies = {
-        "windwp/nvim-autopairs",
-        "creativenull/efmls-configs-nvim",
-        "hrsh7th/nvim-cmp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-nvim-lsp",
-        {
-            "ray-x/go.nvim",
-            build = ":lua require(\"go.install\").update_all_sync()", -- if you need to install/update all binaries
-            ft = "go",
-        },
-        {
-            "pmizio/typescript-tools.nvim",
-            dependencies = { "nvim-lua/plenary.nvim" },
-        },
-    },
 }

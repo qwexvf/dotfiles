@@ -40,7 +40,10 @@ end
 return {
     "hrsh7th/nvim-cmp",
     config = config,
+    lazy = false,
     dependencies = {
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-nvim-lsp",
         "onsails/lspkind.nvim",
         {
             "L3MON4D3/LuaSnip",
