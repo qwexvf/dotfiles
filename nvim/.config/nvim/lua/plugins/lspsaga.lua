@@ -1,5 +1,9 @@
 local config = function()
-    require("lspsaga").setup {}
+    require("lspsaga").setup {
+        ui = {
+            code_action = ''
+        }
+    }
 
     local keymap = vim.keymap.set
     -- Lsp finder find the symbol definition implement reference

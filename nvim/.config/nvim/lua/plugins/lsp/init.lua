@@ -90,6 +90,8 @@ local config = function()
         },
 
     })
+
+    nvim_lsp.prismals.setup{}
 end
 
 return {
