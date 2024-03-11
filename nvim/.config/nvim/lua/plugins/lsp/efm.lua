@@ -1,9 +1,12 @@
 local config = function()
-    local stylua = require('efmls-configs.formatters.stylua')
     local utils = require "utils"
+    local on_attach = utils.on_attach
+    local capabilities = utils.capabilities
+
+    local stylua = require('efmls-configs.formatters.stylua')
 
     local biome_formatter = {
-        formatCommand = "bun biome check --apply --stdin-file-path ${INPUT}",
+        formatCommand = "bun biome format --write --stdin-file-path ${INPUT}",
         formatStdin = true,
         rootMarkers = { 'rome.json', 'biome.json' },
     }
@@ -13,9 +16,6 @@ local config = function()
         typescriptreact = { biome_formatter },
         -- lua = { stylua },
     }
-
-    local on_attach = utils.on_attach
-    local capabilities = utils.capabilities
 
     local efmls_config = {
         filetypes = vim.tbl_keys(languages),

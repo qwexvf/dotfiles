@@ -30,26 +30,26 @@ yellow = "0xd29922"
 background = "0x0d1117"
 foreground = "0xb3b1ad"
 
-# [env]
-#TERM = "xterm-256color"
+[env]
+TERM = "xterm-256color"
 
 [font]
-size = 10.0
+size = 16.0
 
 [font.bold_italic]
-family = "IosevkaSS04 Nerd Font"
+family = "Iosevka Nerd Font"
 style = "Bold Italic"
 
 [font.bold]
-family = "IosevkaSS04 Nerd Font"
+family = "Iosevka Nerd Font"
 style = "Bold"
 
 [font.italic]
-family = "IosevkaSS04 Nerd Font"
+family = "Iosevka Nerd Font"
 style = "Italic"
 
 [font.normal]
-family = "IosevkaSS04 Nerd Font"
+family = "Iosevka Nerd Font"
 style = "Regular"
 
 [font.offset]
