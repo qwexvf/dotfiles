@@ -25,13 +25,19 @@ local config = function()
         },
     }
 
-    -- nvim_lsp.biome.setup {
-    --     on_attach = on_attach,
-    --     capabilities = capabilities,
-    --     -- get config file from current project root directory
-    --     cmd = { "bun", "run", "biome", "lsp-proxy", "--config-path", vim.fn.getcwd() .. "/biome.json" },
-    --     root_dir = nvim_lsp.util.root_pattern("biome.json", "rome.json"),
-    -- }
+    nvim_lsp.graphql.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        cmd = { "bun", "run", "graphql-lsp", "server", "-m", "stream" }
+    }
+
+    nvim_lsp.biome.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        -- get config file from current project root directory
+        cmd = { "bun", "run", "biome", "lsp-proxy", "--config-path", vim.fn.getcwd() .. "/biome.json" },
+        root_dir = nvim_lsp.util.root_pattern("biome.json", "rome.json"),
+    }
 
     -- Enable rust_analyzer
     nvim_lsp.rust_analyzer.setup {
