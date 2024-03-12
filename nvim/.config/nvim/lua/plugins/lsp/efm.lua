@@ -30,7 +30,7 @@ local config = function()
     }
 
     require('lspconfig').efm.setup(vim.tbl_extend('force', efmls_config, {
-        cmd = { 'efm-langserver', '-logfile', '/home/qwexvf/logfile', '-loglevel', '5' },
+        cmd = { 'efm-langserver' },
         on_attach = on_attach,
         capabilities = capabilities,
     }))
