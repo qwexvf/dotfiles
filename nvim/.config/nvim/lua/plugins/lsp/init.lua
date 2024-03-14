@@ -79,8 +79,8 @@ local config = function()
         root_dir = nvim_lsp.util.root_pattern "tailwind.config.ts",
     }
 
-    nvim_lsp.denols.setup {
-        root_dir = nvim_lsp.util.root_pattern "deno.json",
+    nvim_lsp.denols.setup({
+        root_dir = nvim_lsp.util.root_pattern("deno.json", "import_maps.json"),
         init_options = {
             lint = true,
             unstable = true,
@@ -94,7 +94,9 @@ local config = function()
                 },
             },
         },
-    }
+        on_attach = on_attach,
+        capabilities = capabilities,
+    })
 
     nvim_lsp.prismals.setup {}
 end
