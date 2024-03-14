@@ -28,7 +28,7 @@ local config = function()
     nvim_lsp.graphql.setup {
         on_attach = on_attach,
         capabilities = capabilities,
-        cmd = { "bun", "run", "graphql-lsp", "server", "-m", "stream" }
+        cmd = { "bun", "run", "graphql-lsp", "server", "-m", "stream" },
     }
 
     nvim_lsp.biome.setup {
@@ -76,11 +76,11 @@ local config = function()
     }
 
     nvim_lsp.tailwindcss.setup {
-        root_dir = nvim_lsp.util.root_pattern("tailwind.config.ts"),
+        root_dir = nvim_lsp.util.root_pattern "tailwind.config.ts",
     }
 
-    nvim_lsp.denols.setup({
-        root_dir = nvim_lsp.util.root_pattern("deno.json"),
+    nvim_lsp.denols.setup {
+        root_dir = nvim_lsp.util.root_pattern "deno.json",
         init_options = {
             lint = true,
             unstable = true,
@@ -94,10 +94,9 @@ local config = function()
                 },
             },
         },
+    }
 
-    })
-
-    nvim_lsp.prismals.setup{}
+    nvim_lsp.prismals.setup {}
 end
 
 return {

@@ -4,14 +4,14 @@ return {
         version = "*", -- Use for stability; omit to use `main` branch for the latest features
         event = "VeryLazy",
         config = function()
-            require("nvim-surround").setup({
+            require("nvim-surround").setup {
                 -- Configuration here, or leave empty to use defaults
-            })
-        end
+            }
+        end,
     },
     {
-        'windwp/nvim-autopairs',
+        "windwp/nvim-autopairs",
         event = "InsertEnter",
-        opts = {} -- this is equalent to setup({}) function
-    }
+        opts = {}, -- this is equalent to setup({}) function
+    },
 }

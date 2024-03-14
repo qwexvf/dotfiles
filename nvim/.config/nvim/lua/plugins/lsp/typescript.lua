@@ -11,5 +11,5 @@ return {
             end,
             root_dir = nvim_lsp.util.root_pattern("tsconfig.json", "package.json"),
         }
-    end
+    end,
 }

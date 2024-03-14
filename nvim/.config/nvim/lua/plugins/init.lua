@@ -1,10 +1,10 @@
 return {
-    { "folke/neoconf.nvim",  cmd = "Neoconf" },
+    { "folke/neoconf.nvim", cmd = "Neoconf" },
     "folke/neodev.nvim",
     {
         "nvim-tree/nvim-web-devicons",
         config = function()
-            require 'nvim-web-devicons'.setup {
+            require("nvim-web-devicons").setup {
                 -- globally enable different highlight colors per icon (default to true)
                 -- if set to false all icons will have the default icon's color
                 color_icons = true,
@@ -17,7 +17,7 @@ return {
                 -- because its name happened to match some extension (default to false)
                 strict = true,
             }
-        end
+        end,
     },
 
     { import = "plugins.lsp" },

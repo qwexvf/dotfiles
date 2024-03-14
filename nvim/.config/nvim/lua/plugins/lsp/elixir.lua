@@ -3,8 +3,8 @@ return {
     version = "*",
     ft = "elixir",
     config = function()
-        local elixir = require("elixir")
-        local elixirls = require("elixir.elixirls")
+        local elixir = require "elixir"
+        local elixirls = require "elixir.elixirls"
         local utils = require "utils"
 
         local on_attach = utils.on_attach
@@ -34,7 +34,7 @@ return {
                     on_attach(client, bufnr)
                 end,
                 capabilities = capabilities,
-            }
+            },
         }
     end,
 }
