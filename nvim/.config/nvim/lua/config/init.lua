@@ -17,7 +17,7 @@ local opts = {
         lazy = true,
     },
     install = {
-        colorscheme = { "zenbones" },
+        colorscheme = { "rosebones" },
     },
     performance = {
         cache = {
@@ -44,7 +44,7 @@ require "config.globals"
 
 require("lazy").setup("plugins", opts)
 
-vim.cmd [[colorscheme zenbones]]
+vim.cmd [[colorscheme rosebones]]
 
 require "config.options"
 require "config.keymaps"
