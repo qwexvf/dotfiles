@@ -80,7 +80,6 @@ local config = function()
     }
 
     nvim_lsp.denols.setup({
-        root_dir = nvim_lsp.util.root_pattern("deno.json", "import_maps.json"),
         init_options = {
             lint = true,
             unstable = true,
@@ -94,6 +93,21 @@ local config = function()
                 },
             },
         },
+        root_dir = function(path)
+            local marker = require("climbdir.marker")
+            return require("climbdir").climb(path,
+                marker.one_of(
+                    marker.has_readable_file("deno.json"),
+                    marker.has_readable_file("deno.jsonc"),
+                    marker.has_readable_file("import_maps.json"),
+                    marker.has_directory("denops")
+                ), {
+                    halt = marker.one_of(
+                        marker.has_readable_file("package.json"),
+                        marker.has_directory("node_modules")
+                    ),
+                })
+        end,
         on_attach = on_attach,
         capabilities = capabilities,
     })
