@@ -113,6 +113,10 @@ local config = function()
     })
 
     nvim_lsp.prismals.setup {}
+    nvim_lsp.gleam.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    }
 end
 
 return {
