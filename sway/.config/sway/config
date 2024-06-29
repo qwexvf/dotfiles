@@ -7,8 +7,7 @@ set $term alacritty
 set $uifont "IosevkaTerm 14"
 set $highlight #3daee9
 set $prompt #18b218
-set $lock swaylock -f -i $wallpaper -s fill
-set $menu tofi-drun | xargs swaymsg exec --
+set $menu wofi --show run | xargs swaymsg exec --
 
 # borders
 default_border pixel 2
@@ -17,10 +16,19 @@ hide_edge_borders smart
 
 # exec
 exec_always fcitx5 -d
+exec_always nm-applet --indicator
 exec way-displays > /tmp/way-displays.${XDG_VTNR}.${USER}.log 2>&1
 
 # gaps smart_gaps on
 gaps inner 10
+
+input "type:touchpad" {
+        natural_scroll enabled
+        accel_profile adaptive
+        pointer_accel 0
+        scroll_factor 0.3
+        click_method none
+}
 
 input "type:keyboard" {
   # Capslock key should work as escape key
@@ -163,21 +171,15 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+
+bindsym XF86MonBrightnessUp exec light -A 10
+bindsym XF86MonBrightnessDown exec light -U 10
+
 bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-
+        swaybar_command waybar
 }
-    workspace 1 output DP-3
-    workspace 2 output DP-1
+
+workspace 1 output DP-3
+workspace 2 output DP-1
 
 include /etc/sway/config.d/*

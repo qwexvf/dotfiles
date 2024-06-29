@@ -34,7 +34,7 @@ foreground = "0xb3b1ad"
 TERM = "xterm-256color"
 
 [font]
-size = 16.0
+size = 13.0
 
 [font.bold_italic]
 family = "Iosevka Nerd Font"
@@ -58,5 +58,7 @@ y = 1
 
 [window]
 decorations = "None"
-opacity = 0.95
-blur = true
+
+[window.padding]
+x = 5
+y = 5

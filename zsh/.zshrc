@@ -47,33 +47,9 @@ bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# FZF
-zinit ice from"gh-r" as"command"
-zinit light junegunn/fzf
-
-# FZF BYNARY AND TMUX HELPER SCRIPT
-#zinit ice lucid wait'0c' as"command" id-as"junegunn/fzf-tmux" pick"bin/fzf-tmux"
-#zinit light junegunn/fzf
-
-# BIND MULTIPLE WIDGETS USING FZF
-zinit ice lucid wait'0c' multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" pick"/dev/null"
-zinit light junegunn/fzf
-
 # FZF-TAB
 zinit ice wait"1" lucid
 zinit light Aloxaf/fzf-tab
-
-# BAT
-zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat" atload"alias cat=bat"
-zinit light sharkdp/bat
-
-# zoxide
-zinit ice from"gh-r" as"program"
-zinit light ajeetdsouza/zoxide
-
-# fd better than find ?
-zinit ice from"gh-r" as"program" mv"fd* -> fd" pick"fd/fd" atload"alias find=fd"
-zinit light sharkdp/fd
 
 zinit ice as"completion"
 zinit snippet https://github.com/sharkdp/fd/blob/master/contrib/completion/_fd
@@ -85,22 +61,6 @@ zinit light eza-community/eza
 zinit ice as"completion"
 zinit snippet https://github.com/eza-community/eza/blob/main/completions/zsh/_eza
 
-# mise
-zinit ice from"gh-r" as"program" mv"mise* -> mise"
-zinit light jdx/mise
-
-zinit ice as"completion"
-zinit snippet https://github.com/jdx/mise/blob/main/completions/_mise
-
-# BAT-EXTRAS
-zinit ice wait"1" as"program" pick"src/batgrep.sh" lucid
-zinit ice wait"1" as"program" pick"src/batdiff.sh" lucid
-zinit light eth-p/bat-extras
-
-# RIPGREP
-zinit ice from"gh-r" as"program" mv"ripgrep* -> ripgrep" pick"ripgrep/rg"
-zinit light BurntSushi/ripgrep
-
 zinit ice wait'0'
 zinit light zsh-users/zsh-completions
 
@@ -111,8 +71,6 @@ zinit light sindresorhus/pure
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
 
-# activate mise
-eval "$(mise activate -s zsh)"
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:default' menu select=1
@@ -139,27 +97,21 @@ fi
 # zoxide
 eval "$(zoxide init zsh)"
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-        export GOOS=darwin
-        export GOARCH=arm64
-        FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-else
-	export GTK_IM_MODULE=fcitx
-	export QT_IM_MODULE=fcitx
-	export XMODIFIERS=@im=fcitx
+# activate mise
+eval "$(mise activate -s zsh)"
 
-        export GOOS=linux
-        export GOARCH=amd64
-fi
+# direnv
+eval "$(direnv hook zsh)"
+
+export GOOS=linux
+export GOARCH=amd64
+export GOBIN=$GOROOT/bin
 
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 
-# AWS
-export AWS_SDK_LOAD_CONFIG=1
-
-export EDITOR='nvim'
+export EDITOR="nvim"
 export VISUAL=$EDITOR
-export PAGER='less'
+export PAGER="less"
 
 # GPG
 export GPG_TTY=$(tty)
@@ -171,17 +123,12 @@ alias dc="docker compose"
 alias ls=eza
 alias vim=nvim
 alias vi=nvim
-
-alias rg=batgrep.sh
-alias bd=batdiff.sh
-alias man=batman.sh
+alias find=fd
 
 # HELPFUL commands
 alias yeet='git push'
 alias yoink='git pull'
-alias 'docker-compose'='docker compose'
 
-export GOBIN=$GOROOT/bin
 export DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 
 autoload -Uz compinit
@@ -194,5 +141,3 @@ else
         compinit -C
 fi
 
-# bun completions
-[ -s "/Users/qwexvf/.bun/_bun" ] && source "/Users/qwexvf/.bun/_bun"

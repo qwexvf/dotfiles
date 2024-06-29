@@ -13,11 +13,6 @@ return {
         elixir.setup {
             nextls = {
                 enable = true,
-                -- experimental = {
-                --     completions = {
-                --         enable = true
-                --     }
-                -- }
             },
             credo = {},
             elixirls = {
