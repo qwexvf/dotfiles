@@ -31,7 +31,7 @@ unsetopt BEEP
 setopt AUTO_CD
 setopt AUTO_PARAM_KEYS
 
-zinit light bobsoppe/zsh-ssh-agent
+# zinit light bobsoppe/zsh-ssh-agent
 # AUTOSUGGESTIONS, TRIGGER PRECMD HOOK UPON LOAD
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
@@ -50,16 +50,6 @@ bindkey -M vicmd 'j' history-substring-search-down
 # FZF-TAB
 zinit ice wait"1" lucid
 zinit light Aloxaf/fzf-tab
-
-zinit ice as"completion"
-zinit snippet https://github.com/sharkdp/fd/blob/master/contrib/completion/_fd
-
-# eza
-zinit ice from"gh-r" as"program"
-zinit light eza-community/eza
-
-zinit ice as"completion"
-zinit snippet https://github.com/eza-community/eza/blob/main/completions/zsh/_eza
 
 zinit ice wait'0'
 zinit light zsh-users/zsh-completions
