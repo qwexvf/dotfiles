@@ -34,7 +34,7 @@ foreground = "0xb3b1ad"
 TERM = "xterm-256color"
 
 [font]
-size = 13.0
+size = 12.0
 
 [font.bold_italic]
 family = "Iosevka Nerd Font"
@@ -50,7 +50,7 @@ style = "Italic"
 
 [font.normal]
 family = "Iosevka Nerd Font"
-style = "Regular"
+style = "Bold"
 
 [font.offset]
 x = 0
