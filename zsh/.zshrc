@@ -120,6 +120,7 @@ alias yeet='git push'
 alias yoink='git pull'
 
 export DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+export ANDROID_HOME=$HOME/Android/Sdk
 
 autoload -Uz compinit
 autoload -Uz _zinit
