@@ -1,4 +1,6 @@
 local config = function()
+
+    -- apply lazydev.nvim sources config
     local cmp = require "cmp"
     local luasnip = require "luasnip"
     local lspkind = require "lspkind"
@@ -17,15 +19,15 @@ local config = function()
             ["<C-b>"] = cmp.mapping.scroll_docs(-4),
             ["<C-f>"] = cmp.mapping.scroll_docs(4),
             ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-            ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+            ["<C-e>"] = cmp.mapping.abort(),        -- close completion window
             ["<CR>"] = cmp.mapping.confirm { select = false },
         },
         -- sources for autocompletion
         sources = cmp.config.sources {
-            { name = "luasnip" }, -- snippets
+            { name = "luasnip" },  -- snippets
             { name = "nvim_lsp" }, -- lsp
-            { name = "buffer" }, -- text within current buffer
-            { name = "path" }, -- file system paths
+            { name = "buffer" },   -- text within current buffer
+            { name = "path" },     -- file system paths
         },
         -- configure lspkind for vs-code like icons
         formatting = {

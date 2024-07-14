@@ -1,133 +1,86 @@
+# Initialize Zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh" 
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)" && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+
+# History Settings
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=1000000
+setopt extended_history hist_expire_dups_first hist_ignore_all_dups hist_ignore_space \
+        hist_verify inc_append_history share_history always_to_end hash_list_all \
+        completealiases nocorrect list_ambiguous nolisttypes listpacked automenu \
+        AUTO_CD AUTO_PARAM_KEYS
 
-#####################
-# SETOPT            #
-#####################
-setopt extended_history       # record timestamp of command in HISTFILE
-setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_all_dups   # ignore duplicated commands history list
-setopt hist_ignore_space      # ignore commands that start with space
-setopt hist_verify            # show command with history expansion to user before running it
-setopt inc_append_history     # add commands to HISTFILE in order of execution
-setopt share_history          # share command history data
-setopt always_to_end          # cursor moved to the end in full completion
-setopt hash_list_all          # hash everything before completion
-setopt completealiases        # complete alisases
-setopt always_to_end          # when completing from the middle of a word, move the cursor to the end of the word
-setopt complete_in_word       # allow completion from within a word/phrase
-setopt nocorrect                # spelling correction for commands
-setopt list_ambiguous         # complete as much of a completion until it gets ambiguous.
-setopt nolisttypes
-setopt listpacked
-setopt automenu
-unsetopt BEEP
-
-setopt AUTO_CD
-setopt AUTO_PARAM_KEYS
-
-# zinit light bobsoppe/zsh-ssh-agent
-# AUTOSUGGESTIONS, TRIGGER PRECMD HOOK UPON LOAD
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-
+# Zinit Plugins
+zinit light bobsoppe/zsh-ssh-agent
 zinit load robobenklein/zdharma-history-search-multi-word
 zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma-continuum/fast-syntax-highlighting
-
-# History
-zinit ice wait"0b" lucid atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
 zinit light zsh-users/zsh-history-substring-search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
-# FZF-TAB
-zinit ice wait"1" lucid
-zinit light Aloxaf/fzf-tab
-
-zinit ice wait'0'
+zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 
-# because starship is beign slow
-zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
+zinit light Aloxaf/fzf-tab
+zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
 
-zinit ice depth=1
-zinit light jeffreytse/zsh-vi-mode
+# Completion System
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' menu select=1
 
-
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' menu select=1
-
-# Fzf
-[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+# Fzf Configuration
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
-# Bun
-if [ -d $HOME/.bun ]; then
+# Bun Configuration
+[ -d $HOME/.bun ] && {
   alias npm=pnpm
   export BUN_INSTALL="$HOME/.bun"
   export PATH="$BUN_INSTALL/bin:$PATH"
-fi
+}
 
-# Rust
+# Rust Environment
 [ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
-if [ -s "$HOME/.tmux/plugins/tmuxifier/bin" ]; then
-        export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
-fi
+# Tmuxifier Plugin
+[ -s "$HOME/.tmux/plugins/tmuxifier/bin" ] && export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 
-# zoxide
+# Zoxide Initialization
 eval "$(zoxide init zsh)"
 
-# activate mise
+# Mise Activation
 eval "$(mise activate -s zsh)"
 
-# direnv
+# Direnv Hook
 eval "$(direnv hook zsh)"
 
+# Go Environment Variables
 export GOOS=linux
 export GOARCH=amd64
 export GOBIN=$GOROOT/bin
 
-export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
-
+# Editor Settings
 export EDITOR="nvim"
 export VISUAL=$EDITOR
 export PAGER="less"
 
-# GPG
+# GPG Configuration
 export GPG_TTY=$(tty)
-export EDITOR=nvim
 
 # Aliases
-alias vimdiff="nvim -d "
-alias dc="docker compose"
-alias ls=eza
-alias vim=nvim
-alias vi=nvim
-alias find=fd
+alias vimdiff="nvim -d" dc="docker compose" ls=eza vim=nvim vi=nvim find=fd yeet='git push' yoink='git pull'
 
-# HELPFUL commands
-alias yeet='git push'
-alias yoink='git pull'
-
+# Docker and Android SDK Paths
 export DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+export ANDROID_HOME=$HOME/Android/Sdk
 
-autoload -Uz compinit
-autoload -Uz _zinit
+# Completion Initialization
+autoload -Uz compinit _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
-        compinit;
+  compinit;
 else
-        compinit -C
+  compinit -C
 fi
-
