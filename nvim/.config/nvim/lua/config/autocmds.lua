@@ -1,4 +1,4 @@
--- local cmd = vim.cmd -- execute Vim commands
+local cmd = vim.cmd -- execute Vim commands
 -- local exec = vim.api.nvim_exec2 -- execute Vimscript
 --
 -- exec(
@@ -26,7 +26,7 @@
 -- )
 --
 -- cmd "highlight WinSeparator guibg=None"
--- cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
+cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
 --
 -- local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
 -- vim.api.nvim_create_autocmd("BufWritePre", {
