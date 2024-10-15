@@ -44,7 +44,7 @@ require "config.globals"
 
 require("lazy").setup("plugins", opts)
 
-vim.cmd [[colorscheme rose-pine]]
+vim.cmd [[colorscheme gruvbuddy]]
 
 require "config.options"
 require "config.keymaps"
