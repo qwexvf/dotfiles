@@ -1,8 +1,4 @@
 local config = function()
-    local utils = require "utils"
-    local on_attach = utils.on_attach
-    local capabilities = utils.capabilities
-
     local stylua = require "efmls-configs.formatters.stylua"
 
     local biome_formatter = {
@@ -14,7 +10,7 @@ local config = function()
     local languages = {
         typescript = { biome_formatter },
         typescriptreact = { biome_formatter },
-        -- lua = { stylua },
+        lua = { stylua },
     }
 
     local efmls_config = {
@@ -31,8 +27,6 @@ local config = function()
 
     require("lspconfig").efm.setup(vim.tbl_extend("force", efmls_config, {
         cmd = { "efm-langserver" },
-        on_attach = on_attach,
-        capabilities = capabilities,
     }))
 end
 
