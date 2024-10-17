@@ -58,8 +58,7 @@ local config = function()
         },
     }
 
-    nvim_lsp.svelte.setup {
-    }
+    nvim_lsp.svelte.setup {}
 
     nvim_lsp.tailwindcss.setup {
         root_dir = nvim_lsp.util.root_pattern "tailwind.config.ts",
@@ -100,8 +99,7 @@ local config = function()
         root_dir = nvim_lsp.util.root_pattern(".git", "package.json", "deno.json")
     }
 
-    nvim_lsp.gleam.setup {
-    }
+    nvim_lsp.gleam.setup {}
 end
 
 return {
