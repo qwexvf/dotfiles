@@ -1,11 +1,14 @@
 return {
-    "pmizio/typescript-tools.nvim",
+    dir = "/home/qwexvf/git/typescript-tools.nvim",
     dependencies = {
         "kyoh86/climbdir.nvim",
     },
     lazy = false,
     config = function()
         require("typescript-tools").setup {
+            settings = {
+                tsserver_node_executable = "bun",
+            },
             root_dir = function(path)
                 local marker = require("climbdir.marker")
                 return require("climbdir").climb(path,

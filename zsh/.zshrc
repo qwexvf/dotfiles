@@ -70,17 +70,14 @@ alias vimdiff="nvim -d" \
 export DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 export ANDROID_HOME=$HOME/Android/Sdk
 
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 # Zoxide Initialization
 eval "$(zoxide init zsh)"
 
-# Mise Activation
-eval "$(mise activate -s zsh)"
-
 # Direnv Hook
 eval "$(direnv hook zsh)"
+
+# Mise Activation
+eval "$(mise activate zsh)"
 
 # Completion Initialization
 autoload -Uz compinit _zinit
@@ -90,6 +87,3 @@ if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-
-# bun completions
-[ -s "/home/qwexvf/.bun/_bun" ] && source "/home/qwexvf/.bun/_bun"
