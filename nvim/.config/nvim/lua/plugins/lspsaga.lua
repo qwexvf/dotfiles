@@ -59,7 +59,7 @@ end
 
 return {
     "nvimdev/lspsaga.nvim",
-    lazy = true,
+    lazy = false,
     config = config,
     dependencies = {
         "nvim-treesitter/nvim-treesitter", -- optional

@@ -40,11 +40,6 @@ opt.synmaxcol = 240   -- max column for syntax highlight
 opt.completeopt = "menuone,noselect"
 opt.shortmess = opt.shortmess + { c = true }
 
--- perfomance
-vim.updatetime = 100
-opt.timeoutlen = 400
-opt.redrawtime = 1500
-opt.ttimeoutlen = 10
 opt.clipboard = "unnamed,unnamedplus"
 
 -- Adjust window size of preview and help.
