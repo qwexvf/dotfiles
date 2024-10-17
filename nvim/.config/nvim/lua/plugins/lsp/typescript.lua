@@ -1,5 +1,5 @@
 return {
-    dir = "/home/qwexvf/git/typescript-tools.nvim",
+    "qwexvf/typescript-tools.nvim",
     dependencies = {
         "kyoh86/climbdir.nvim",
     },
