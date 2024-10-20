@@ -1,7 +1,4 @@
 return {
-    "j-hui/fidget.nvim",
-    opts = {
-        -- options
-    },
-    lazy = false
+  "j-hui/fidget.nvim",
+  lazy = false,
 }
