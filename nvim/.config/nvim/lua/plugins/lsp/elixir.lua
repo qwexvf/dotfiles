@@ -5,10 +5,6 @@ return {
   config = function()
     local elixir = require "elixir"
     local elixirls = require "elixir.elixirls"
-    local utils = require "utils"
-
-    local on_attach = utils.on_attach
-    local capabilities = utils.capabilities
 
     elixir.setup {
       nextls = {
@@ -25,10 +21,7 @@ return {
           vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
           vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
           vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
-
-          on_attach(client, bufnr)
         end,
-        capabilities = capabilities,
       },
     }
   end,
