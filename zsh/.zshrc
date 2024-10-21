@@ -69,7 +69,6 @@ alias vimdiff="nvim -d" \
 # Docker and Android SDK Paths
 export DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 export ANDROID_HOME=$HOME/Android/Sdk
-export PATH="$HOME/.bun/bin:$PATH"
 
 # Zoxide Initialization
 eval "$(zoxide init zsh)"
