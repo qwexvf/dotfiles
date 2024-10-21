@@ -27,14 +27,14 @@ opt.cursorline = true
 opt.splitright = true -- vertical split to the right
 opt.splitbelow = true -- orizontal split to the bottom
 opt.ignorecase = true -- ignore case letters when search
-opt.smartcase = true -- ignore lowercase for the whole pattern
-opt.linebreak = true -- wrap on word boundary
+opt.smartcase = true  -- ignore lowercase for the whole pattern
+opt.linebreak = true  -- wrap on word boundary
 opt.signcolumn = "yes"
 
-opt.hidden = true -- enable background buffers
-opt.history = 5 -- remember n lines in history
+opt.hidden = true     -- enable background buffers
+opt.history = 5       -- remember n lines in history
 opt.lazyredraw = true -- faster scrolling
-opt.synmaxcol = 240 -- max column for syntax highlight
+opt.synmaxcol = 240   -- max column for syntax highlight
 
 -- autocomplete
 opt.completeopt = "menuone,noselect"

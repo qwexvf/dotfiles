@@ -1,1 +1,1 @@
-return { "ray-x/guihua.lua", build = "cd lua/fzy && make" }
+return { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' }

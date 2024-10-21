@@ -1,4 +1,4 @@
 return {
-  "j-hui/fidget.nvim",
-  lazy = false,
+    "j-hui/fidget.nvim",
+    lazy = false
 }
