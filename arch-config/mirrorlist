@@ -1,0 +1,30 @@
+##
+## Arch Linux repository mirrorlist
+## Filtered by mirror score from mirror status page
+## Generated on 2024-10-22
+##
+
+## Japan
+#Server = https://repo.jing.rocks/archlinux/$repo/os/$arch
+## Japan
+#Server = https://www.miraa.jp/archlinux/$repo/os/$arch
+## Japan
+#Server = http://mirrors.cat.net/archlinux/$repo/os/$arch
+## Japan
+#Server = https://ftp.jaist.ac.jp/pub/Linux/ArchLinux/$repo/os/$arch
+## Japan
+#Server = https://mirrors.cat.net/archlinux/$repo/os/$arch
+## Japan
+#Server = http://www.miraa.jp/archlinux/$repo/os/$arch
+## Japan
+Server = http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/$repo/os/$arch
+## Japan
+Server = http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/$repo/os/$arch
+## Japan
+Server = http://jp.mirrors.cicku.me/archlinux/$repo/os/$arch
+## Japan
+Server = http://repo.jing.rocks/archlinux/$repo/os/$arch
+## Japan
+Server = https://jp.mirrors.cicku.me/archlinux/$repo/os/$arch
+
+
