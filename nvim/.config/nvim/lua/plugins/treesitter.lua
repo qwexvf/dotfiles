@@ -34,10 +34,22 @@ local config = function()
     incremental_selection = {
       enable = true,
       keymaps = {
-        init_selection = "<C-s>",
-        node_incremental = "<C-s>",
-        scope_incremental = false,
-        node_decremental = "<BS>",
+        init_selection = "gnn", -- set to `false` to disable one of the mappings
+        node_incremental = "grn",
+        scope_incremental = "grc",
+        node_decremental = "grm",
+      },
+    },
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true,
+        keymaps = {
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        },
       },
     },
   }

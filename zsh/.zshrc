@@ -99,3 +99,6 @@ if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
+
+# bun completions
+[ -s "/home/qwexvf/.bun/_bun" ] && source "/home/qwexvf/.bun/_bun"

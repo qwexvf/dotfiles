@@ -1,62 +1,34 @@
-local config = function()
-  -- apply lazydev.nvim sources config
-  local cmp = require "cmp"
-  local luasnip = require "luasnip"
-  local lspkind = require "lspkind"
-
-  require("luasnip.loaders.from_vscode").lazy_load()
-
-  cmp.setup {
-    snippet = {
-      expand = function(args)
-        luasnip.lsp_expand(args.body)
-      end,
-    },
-    mapping = cmp.mapping.preset.insert {
-      ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-      ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-      ["<C-e>"] = cmp.mapping.abort(), -- close completion window
-      ["<CR>"] = cmp.mapping.confirm { select = false },
-    },
-    -- sources for autocompletion
-    sources = cmp.config.sources {
-      { name = "luasnip" }, -- snippets
-      { name = "nvim_lsp" }, -- lsp
-      { name = "buffer" }, -- text within current buffer
-      { name = "path" }, -- file system paths
-    },
-    -- configure lspkind for vs-code like icons
-    formatting = {
-      format = lspkind.cmp_format {
-        maxwidth = 50,
-        ellipsis_char = "...",
-      },
-    },
-  }
-end
-
 return {
-  "iguanacucumber/magazine.nvim",
-  name = "nvim-cmp",
-  version = false,
-  lazy = false,
-  config = config,
-  dependencies = {
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-nvim-lsp",
-    "onsails/lspkind.nvim",
-    {
-      "L3MON4D3/LuaSnip",
-      lazy = false,
-      version = "2.*",
-      build = "make install_jsregexp",
+  "saghen/blink.cmp",
+  dependencies = "rafamadriz/friendly-snippets",
+  version = "*",
+  ---@module 'blink.cmp'
+  ---@type blink.cmp.Config
+  opts = {
+    keymap = { preset = "default" },
+
+    appearance = {
+      -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+      -- Useful for when your theme doesn't support blink.cmp
+      -- Will be removed in a future release
+      use_nvim_cmp_as_default = true,
+      -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+      -- Adjusts spacing to ensure icons are aligned
+      nerd_font_variant = "mono",
     },
-    {
-      "rafamadriz/friendly-snippets",
-      lazy = false,
+
+    -- Default list of enabled providers defined so that you can extend it
+    -- elsewhere in your config, without redefining it, due to `opts_extend`
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer" },
     },
+
+    -- Blink.cmp uses a Rust fuzzy matcher by default for typo resistance and significantly better performance
+    -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+    -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+    --
+    -- See the fuzzy documentation for more information
+    fuzzy = { implementation = "prefer_rust_with_warning" },
   },
+  opts_extend = { "sources.default" },
 }

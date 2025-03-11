@@ -61,6 +61,10 @@ window#waybar.chromium {
     /* box-shadow: inset 0 -3px #ffffff; */
 }
 
+#workspaces button.current_output.focused {
+    background: #ff0088;
+}
+
 #workspaces button.urgent {
     background-color: #eb4d4b;
 }

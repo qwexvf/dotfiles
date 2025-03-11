@@ -7,7 +7,7 @@ set $term alacritty
 set $uifont "IosevkaTerm 14"
 set $highlight #3daee9
 set $prompt #18b218
-set $menu wofi --show run | xargs swaymsg exec --
+set $menu fuzzel
 
 # borders
 default_border pixel 2
@@ -17,10 +17,8 @@ hide_edge_borders smart
 # exec
 exec_always fcitx5 -d
 exec_always nm-applet --indicator
-exec way-displays > /tmp/way-displays.${XDG_VTNR}.${USER}.log 2>&1
-
-# gaps smart_gaps on
-gaps inner 10
+exec_always blueman-applet
+exec_always swaybg -m fill -i ~/Downloads/wallpaper.jpg
 
 input "type:touchpad" {
         natural_scroll enabled
@@ -28,13 +26,11 @@ input "type:touchpad" {
         pointer_accel 0
         scroll_factor 0.3
         click_method none
+        tap enabled
 }
 
 input "type:keyboard" {
-  # Capslock key should work as escape key
-  # See /usr/share/X11/xkb/rules/xorg.lst for options
   xkb_options ctrl:nocaps
-
   repeat_delay 250
   repeat_rate 45
 }
@@ -46,7 +42,7 @@ bindsym $mod+p exec grim -g "$(slurp -d)" - | wl-copy
 bindsym $mod+Return exec $term
 
 # Kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # Start your launcher
 bindsym $mod+d exec $menu
@@ -144,13 +140,7 @@ bindsym $mod+a focus parent
 # Move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
-
-#
-# Resizing containers:
-#
 
 mode "resize" {
   bindsym $left resize shrink width 10px
@@ -171,7 +161,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-
 bindsym XF86MonBrightnessUp exec light -A 10
 bindsym XF86MonBrightnessDown exec light -U 10
 
@@ -179,7 +168,34 @@ bar {
         swaybar_command waybar
 }
 
-workspace 1 output DP-3
-workspace 2 output DP-1
 
-include /etc/sway/config.d/*
+## Colours
+set $base00 #282828
+set $base01 #3c3836
+set $base02 #504945
+set $base03 #665c54
+set $base04 #d5c4a1
+set $base05 #ebdbb2
+set $base06 #fbf1c7
+set $base07 #ebdbb2
+set $base08 #cc241d
+set $base09 #d65d0e
+set $base0A #d79921
+set $base0B #98971a
+set $base0C #458588
+set $base0D #b16286
+set $base0E #689d6a
+set $base0F #a89984
+
+## Window Colours
+client.focused   $base0D  $base00  $base06  $base08  $base09
+client.focused_inactive  $base02  $base00  $base06  $base08  $base02
+client.unfocused   $base01  $base00  $base06  $base08  $base02
+client.urgent   $base07  $base00  $base08  $base0B  $base02
+client.placeholder       $base02  $base00  $base06  $base03  $base04
+client.background        $base00
+
+include ~/.config/sway/outputs
+
+smart_gaps on
+gaps inner 10
