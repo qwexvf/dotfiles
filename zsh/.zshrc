@@ -27,10 +27,6 @@ zinit light zsh-users/zsh-completions
 
 zinit light Aloxaf/fzf-tab
 zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
-zinit ice as"command" from"gh-r" \
-          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-          atpull"%atclone" src"init.zsh"
-zinit light starship/starship
 
 # Completion System
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' menu select=1
@@ -70,26 +66,16 @@ alias vimdiff="nvim -d" \
 export DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 export ANDROID_HOME=$HOME/Android/Sdk
 
-# Zoxide Initialization
-eval "$(zoxide init zsh)"
-
 # Direnv Hook
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"
 
 # Mise Activation
 eval "$(mise activate zsh)"
 
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 # Zoxide Initialization
 eval "$(zoxide init zsh)"
 
-# Mise Activation
-eval "$(mise activate -s zsh)"
-
-# Direnv Hook
-eval "$(direnv hook zsh)"
+eval "$(starship init zsh)"
 
 # Completion Initialization
 autoload -Uz compinit _zinit

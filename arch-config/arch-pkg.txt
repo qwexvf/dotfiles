@@ -1,16 +1,9 @@
-act
 alacritty
 amd-ucode
-android-studio
 aws-cli
 base
 base-devel
 bat
-bind
-blueman
-bluez
-bluez-utils
-catnap-git
 clamav
 cmake
 dhcpcd
