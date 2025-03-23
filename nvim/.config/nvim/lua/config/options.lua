@@ -45,3 +45,7 @@ opt.clipboard = "unnamed,unnamedplus"
 -- Adjust window size of preview and help.
 opt.previewheight = 8
 opt.helpheight = 12
+
+-- spell check
+opt.spelllang = "en_us"
+opt.spell = true
