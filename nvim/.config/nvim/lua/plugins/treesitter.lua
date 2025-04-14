@@ -61,6 +61,5 @@ return {
   lazy = false,
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    "nvim-treesitter/nvim-treesitter-context",
   },
 }

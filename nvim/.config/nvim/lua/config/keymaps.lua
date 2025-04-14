@@ -33,3 +33,5 @@ end, noremap)
 map("n", "<space>?", function()
   builtin.oldfiles()
 end, noremap)
+
+map("n", "<leader>ca", vim.lsp.buf.code_action)
