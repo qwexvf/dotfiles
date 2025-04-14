@@ -27,6 +27,8 @@ zinit light zsh-users/zsh-completions
 
 zinit light Aloxaf/fzf-tab
 zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+zinit ice pick"async.zsh" src"pure.zsh"
+zinit light sindresorhus/pure
 
 # Completion System
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' menu select=1
@@ -37,12 +39,6 @@ bindkey '^[[B' history-substring-search-down
 # Fzf Configuration
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
-
-# Rust Environment
-[ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
-
-# Tmuxifier Plugin
-[ -s "$HOME/.tmux/plugins/tmuxifier/bin" ] && export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 
 # Editor Settings
 export EDITOR="nvim"
@@ -62,6 +58,8 @@ alias vimdiff="nvim -d" \
         yeet='git push' \
         yoink='git pull'
 
+alias cat=bat
+
 # Docker and Android SDK Paths
 export DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 export ANDROID_HOME=$HOME/Android/Sdk
@@ -75,7 +73,14 @@ eval "$(mise activate zsh)"
 # Zoxide Initialization
 eval "$(zoxide init zsh)"
 
-eval "$(starship init zsh)"
+# bun completions
+[ -s "/home/qwexvf/.bun/_bun" ] && source "/home/qwexvf/.bun/_bun"
+
+# Rust Environment
+[ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# Tmuxifier Plugin
+[ -s "$HOME/.tmux/plugins/tmuxifier/bin" ] && export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 
 # Completion Initialization
 autoload -Uz compinit _zinit
@@ -85,6 +90,3 @@ if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-
-# bun completions
-[ -s "/home/qwexvf/.bun/_bun" ] && source "/home/qwexvf/.bun/_bun"
