@@ -25,8 +25,8 @@ local config = function()
 
   nvim_lsp.biome.setup {
     -- get config file from current project root directory
-    cmd = { "bun", "run", "biome", "lsp-proxy", "--config-path", vim.fn.getcwd() .. "/biome.json" },
-    root_dir = nvim_lsp.util.root_pattern("biome.json", "rome.json"),
+    cmd = { "bun", "run", "biome", "lsp-proxy" },
+    root_dir = nvim_lsp.util.root_pattern "biome.json",
   }
 
   -- Enable rust_analyzer
@@ -56,12 +56,6 @@ local config = function()
         },
       },
     },
-  }
-
-  nvim_lsp.svelte.setup {}
-
-  nvim_lsp.tailwindcss.setup {
-    root_dir = nvim_lsp.util.root_pattern "tailwind.config.ts",
   }
 
   nvim_lsp.denols.setup {
@@ -95,11 +89,9 @@ local config = function()
     end,
   }
 
-  nvim_lsp.prismals.setup {
-    root_dir = nvim_lsp.util.root_pattern(".git", "package.json", "deno.json"),
-  }
-
   nvim_lsp.gleam.setup {}
+
+  vim.lsp.enable "zls"
 end
 
 return {
