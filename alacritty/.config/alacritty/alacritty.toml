@@ -1,34 +1,43 @@
-[[colors.indexed_colors]]
-color = "0xd18616"
-index = 16
+# moonfly theme for Alacritty
+#
+# Upstream: github.com/bluz71/vim-moonfly-colors
 
-[[colors.indexed_colors]]
-color = "0xffa198"
-index = 17
+[colors]
+draw_bold_text_with_bright_colors = true
 
 [colors.bright]
-black = "0x6e7681"
-blue = "0x79c0ff"
-cyan = "0x56d4dd"
-green = "0x56d364"
-magenta = "0xd2a8ff"
-red = "0xffa198"
-white = "0xf0f6fc"
-yellow = "0xe3b341"
+black = "#949494"
+blue = "#74b2ff"
+cyan = "#85dc85"
+green = "#36c692"
+magenta = "#ae81ff"
+red = "#ff5189"
+white = "#e4e4e4"
+yellow = "#c6c684"
+
+[colors.cursor]
+cursor = "#8e8e8e"
+text = "#080808"
 
 [colors.normal]
-black = "0x484f58"
-blue = "0x58a6ff"
-cyan = "0x39c5cf"
-green = "0x3fb950"
-magenta = "0xbc8cff"
-red = "0xff7b72"
-white = "0xb1bac4"
-yellow = "0xd29922"
+black = "#323437"
+blue = "#80a0ff"
+cyan = "#79dac8"
+green = "#8cc85f"
+magenta = "#cf87e8"
+red = "#ff5d5d"
+white = "#c6c6c6"
+yellow = "#e3c78a"
 
 [colors.primary]
-background = "0x0d1117"
-foreground = "0xb3b1ad"
+background = "#080808"
+bright_foreground = "#eeeeee"
+foreground = "#bdbdbd"
+
+[colors.selection]
+background = "#b2ceee"
+text = "#080808"
+
 
 [env]
 TERM = "xterm-256color"

@@ -5,7 +5,7 @@
     "height": 20, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "hyprland/mode", "custom/media"],
+    "modules-left": ["hyprland/workspaces", "hyprland/submap", "custom/media"],
     "modules-center": ["hyprland/window"],
     "modules-right": ["pulseaudio", "network", "backlight","cpu","memory","battery", "battery#bat2", "clock", "tray"],
     // Modules configuration
@@ -24,7 +24,7 @@
     //         "default": ""
     //     }
     // },
-    "hyprland/mode": {
+    "hyprland/submap": {
         "format": "<span style=\"italic\">{}</span>"
     },
     "mpd": {
