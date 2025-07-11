@@ -19,10 +19,6 @@ local config = function()
     },
   }
 
-  nvim_lsp.graphql.setup {
-    cmd = { "bun", "run", "graphql-lsp", "server", "-m", "stream" },
-  }
-
   nvim_lsp.biome.setup {
     -- get config file from current project root directory
     cmd = { "bun", "run", "biome", "lsp-proxy" },
