@@ -1,120 +1,62 @@
-
 {
-    // "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 20, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "hyprland/submap", "custom/media"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["pulseaudio", "network", "backlight","cpu","memory","battery", "battery#bat2", "clock", "tray"],
-    // Modules configuration
-    // "hyprland/workspaces": {
-    //     "disable-scroll": true,
-    //     "all-outputs": true,
-    //     "format": "{name}: {icon}",
-    //     "format-icons": {
-    //         "1": "",
-    //         "2": "",
-    //         "3": "",
-    //         "4": "",
-    //         "5": "",
-    //         "urgent": "",
-    //         "focused": "",
-    //         "default": ""
-    //     }
-    // },
-    "hyprland/submap": {
-        "format": "<span style=\"italic\">{}</span>"
+    "position": "top",
+    "height": 24,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["custom/cpu-info", "memory", "network", "pulseaudio", "battery", "tray"],
+    
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate"
     },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 2,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
-    },
-    "tray": {
-        // "icon-size": 21,
-        "spacing": 10
-    },
+    
     "clock": {
-        "format": "{:%Y-%m-%d :%I:%M}",
+        "format": "󰥔 {:%H:%M}",
+        "format-alt": "󰃭 {:%Y-%m-%d}",
+        "tooltip-format": "{:%Y-%m-%d | %H:%M}"
     },
-    "cpu": {
-        "format": "CPU: {usage}% ",
-        "tooltip": false
-    },
-    "memory": {
-        "format": "MEM: {}% "
-    },
-    "temperature": {
-        "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
-    },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% ",
-        "format-icons": ["", ""]
-    },
+    
     "battery": {
-        "states": {
-            "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{capacity}% ",
-        "format-charging": "{capacity}%",
-        "format-plugged": "{capacity}%",
-        "format-alt": "{time} ",
+        "format": "{icon} {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%"
     },
-    "battery#bat2": {
-        "bat": "BAT2"
+    
+    "custom/cpu-info": {
+        "format": " {} ",
+        "exec": "usage=$(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{print int(100 - $1)}'); gov=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor); if [ \"$gov\" = \"performance\" ]; then mode=\"PERF\"; elif [ \"$gov\" = \"powersave\" ]; then mode=\"SAVE\"; else mode=\"$gov\"; fi; fan=$(cat /sys/class/hwmon/hwmon*/fan*_input 2>/dev/null | head -1 || echo '0'); temp=$(cat /sys/class/thermal/thermal_zone*/temp 2>/dev/null | head -1 | awk '{print int($1/1000)}'); echo \"${usage}% | ${mode} |  ${fan}rpm |  ${temp}°C\"",
+        "interval": 2,
+        "on-click": "if [ \"$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)\" = \"powersave\" ]; then sudo cpupower frequency-set -g performance; else sudo cpupower frequency-set -g powersave; fi",
+        "tooltip": true,
+        "tooltip-format": "Click to toggle governor"
     },
+    
+    "memory": {
+        "format": " {used:0.1f}/{total:0.1f}G",
+        "tooltip": true,
+        "tooltip-format": "RAM: {used:0.1f}GiB used, {avail:0.1f}GiB available\nUsage: {percentage}%"
+    },
+    
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-wifi": "WiFi ({essid})",
+        "format-ethernet": "Ethernet ({ifname})",
+        "format-disconnected": "No Network",
+        "tooltip": true,
+        "tooltip-format-wifi": "WiFi: {essid}\nSignal: {signalStrength}%\nIPv4: {ipaddr}\nIPv6: {ipaddr6}",
+        "tooltip-format-ethernet": "Ethernet: {ifname}\nIPv4: {ipaddr}\nIPv6: {ipaddr6}"
     },
+    
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}%  {format_source}",
-        "format-bluetooth": "{volume}%  {format_source}",
-        "format-bluetooth-muted": " {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 Muted",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
         "on-click": "pavucontrol"
     },
+    
+    "tray": {
+        "spacing": 10
+    }
 }
