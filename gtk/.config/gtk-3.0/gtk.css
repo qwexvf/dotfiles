@@ -1,0 +1,148 @@
+/* Fix transparent text selection */
+*:selected,
+*:selected:focus,
+selection {
+    background-color: #3584e4;
+    color: #ffffff;
+}
+
+textview text selection,
+textview text:selected,
+entry selection,
+entry:selected {
+    background-color: #3584e4;
+    color: #ffffff;
+}
+
+/* Browser-specific fixes */
+webview selection {
+    background-color: #3584e4 !important;
+    color: #ffffff !important;
+}
+
+/* Remove transparency from all GUI elements */
+* {
+    background-color: inherit;
+    opacity: 1.0 !important;
+    -gtk-window-decoration-opacity: 1.0 !important;
+}
+
+window {
+    background-color: #2e3440;
+    opacity: 1.0 !important;
+}
+
+.background {
+    background-color: #2e3440;
+    opacity: 1.0 !important;
+}
+
+headerbar {
+    background-color: #3b4252;
+    opacity: 1.0 !important;
+}
+
+button {
+    background-color: #434c5e;
+    opacity: 1.0 !important;
+}
+
+entry {
+    background-color: #434c5e;
+    opacity: 1.0 !important;
+}
+
+menubar {
+    background-color: #3b4252;
+    opacity: 1.0 !important;
+}
+
+toolbar {
+    background-color: #3b4252;
+    opacity: 1.0 !important;
+}
+
+/* File dialog and browser specific fixes */
+filechooser {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+filechooserwidget {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+filechooserdialog {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+dialog {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+.dialog {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+/* Fix Dolphin/KDE file manager */
+QWidget {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+/* Portal file picker */
+.file-chooser {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+popover {
+    background-color: #3b4252 !important;
+    opacity: 1.0 !important;
+}
+
+.popover {
+    background-color: #3b4252 !important;
+    opacity: 1.0 !important;
+}
+
+/* More aggressive file picker fixes */
+GtkFileChooserWidget,
+GtkFileChooserDialog,
+.file-chooser-widget,
+.file-chooser-dialog {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+    background: #2e3440 !important;
+    background-image: none !important;
+}
+
+/* Fix any remaining transparency */
+.window-frame {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+.titlebar {
+    background-color: #3b4252 !important;
+    opacity: 1.0 !important;
+}
+
+.view {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+treeview {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}
+
+scrolledwindow {
+    background-color: #2e3440 !important;
+    opacity: 1.0 !important;
+}

@@ -3,7 +3,7 @@
     "height": 24,
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["custom/cpu-info", "memory", "network", "pulseaudio", "battery", "tray"],
+    "modules-right": ["custom/displaylink", "custom/cpu-info", "memory", "network", "pulseaudio", "battery", "tray"],
     
     "hyprland/workspaces": {
         "format": "{id}",
@@ -56,6 +56,15 @@
         "on-click": "pavucontrol"
     },
     
+    "custom/displaylink": {
+        "format": "{}",
+        "exec": "if systemctl --user is-active --quiet displaylink.service; then echo '󰍹 DL'; else echo '󰍷 DL'; fi",
+        "interval": 5,
+        "on-click": "if systemctl --user is-active --quiet displaylink.service; then systemctl --user stop displaylink.service; else systemctl --user start displaylink.service; fi",
+        "tooltip": true,
+        "tooltip-format": "Click to toggle DisplayLink service"
+    },
+
     "tray": {
         "spacing": 10
     }

@@ -1,9 +1,0 @@
-output "eDP-1" {
-    mode 1920x1200@60Hz
-    pos 0 0
-    transform normal
-    scale 1.25
-    scale_filter nearest
-    adaptive_sync off
-    dpms on
-}

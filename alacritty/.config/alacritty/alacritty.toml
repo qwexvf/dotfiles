@@ -1,6 +1,5 @@
-# moonfly theme for Alacritty
-#
-# Upstream: github.com/bluz71/vim-moonfly-colors
+# Moonfly + 2D Space theme for Alacritty
+# Based on bluz71/vim-moonfly-colors with flat space elements
 
 [colors]
 draw_bold_text_with_bright_colors = true
@@ -38,7 +37,6 @@ foreground = "#bdbdbd"
 background = "#b2ceee"
 text = "#080808"
 
-
 [env]
 TERM = "xterm-256color"
 
@@ -46,19 +44,19 @@ TERM = "xterm-256color"
 size = 12.0
 
 [font.bold_italic]
-family = "Iosevka Nerd Font"
+family = "ZedMono Nerd Font"
 style = "Bold Italic"
 
 [font.bold]
-family = "Iosevka Nerd Font"
+family = "ZedMono Nerd Font"
 style = "Bold"
 
 [font.italic]
-family = "Iosevka Nerd Font"
+family = "ZedMono Nerd Font"
 style = "Italic"
 
 [font.normal]
-family = "Iosevka Nerd Font"
+family = "ZedMono Nerd Font"
 style = "Bold"
 
 [font.offset]
