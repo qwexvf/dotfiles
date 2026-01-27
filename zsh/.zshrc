@@ -117,9 +117,6 @@ TMUXIFIER_BIN_PATH="${HOME}/.tmux/plugins/tmuxifier/bin"
 alias vi='nvim'
 alias vim='nvim'
 alias vimdiff='nvim -d'
-alias ls='eza'
-alias cat='bat'
-alias find='fd'
 alias dc='docker compose'
 alias yeet='git push'
 alias yoink='git pull'
@@ -128,7 +125,7 @@ alias yoink='git pull'
 # TOOL INITIALIZATIONS
 # ------------------------------------------------------------------------------
 # mise (replaces direnv, nvm, etc.)
-eval "$(/home/qwexvf/.local/bin/mise activate zsh)"
+eval "$(mise activate zsh)"
 
 # zoxide (smarter cd)
 if command -v zoxide &> /dev/null; then

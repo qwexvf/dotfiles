@@ -1,5 +1,5 @@
 return {
   "j-hui/fidget.nvim",
   opts = {},
-  lazy = false,
+  event = "LspAttach",
 }

@@ -1,7 +1,40 @@
-local config = function()
-  local nvim_lsp = require "lspconfig"
+local function deno_root_dir(bufnr, on_dir)
+  local marker = require "climbdir.marker"
+  local path = vim.api.nvim_buf_get_name(bufnr)
 
-  nvim_lsp.lua_ls.setup {
+  if path == "" then
+    return
+  end
+
+  local root = require("climbdir").climb(
+    path,
+    marker.one_of(
+      marker.has_readable_file "deno.json",
+      marker.has_readable_file "deno.jsonc",
+      marker.has_readable_file "import_maps.json",
+      marker.has_directory "denops"
+    ),
+    {
+      halt = marker.one_of(marker.has_readable_file "package.json", marker.has_directory "node_modules"),
+    }
+  )
+
+  if root then
+    on_dir(root)
+  end
+end
+
+local function configure_and_enable(name, cfg)
+  if cfg then
+    vim.lsp.config(name, cfg)
+  end
+
+  vim.lsp.enable(name)
+end
+
+local config = function()
+  configure_and_enable("lua_ls", {
+    root_markers = { ".luarc.json", ".luarc.jsonc", ".stylua.toml", "stylua.toml", ".git" },
     settings = {
       Lua = {
         diagnostics = {
@@ -17,17 +50,31 @@ local config = function()
         },
       },
     },
-  }
+  })
 
-  nvim_lsp.biome.setup {
-    -- get config file from current project root directory
+  configure_and_enable("biome", {
     cmd = { "bun", "run", "biome", "lsp-proxy" },
-    root_dir = nvim_lsp.util.root_pattern "biome.json",
-  }
+    root_markers = { "biome.json" },
+  })
 
-  -- Enable rust_analyzer
-  nvim_lsp.rust_analyzer.setup {
+  -- Elixir LSP - only starts in projects with mix.exs
+  -- Set ELIXIR_LS_PATH env var or place elixir-ls in PATH
+  local elixir_ls = vim.fn.exepath("elixir-ls") ~= "" and "elixir-ls"
+    or vim.fn.exepath("lexical") ~= "" and "lexical"
+    or vim.env.ELIXIR_LS_PATH
+
+  if elixir_ls then
+    vim.lsp.config("elixir", {
+      cmd = { elixir_ls },
+      root_markers = { "mix.exs", "mix.lock" },
+      filetypes = { "elixir", "eelixir", "heex", "surface" },
+    })
+    vim.lsp.enable("elixir", true)
+  end
+
+  configure_and_enable("rust_analyzer", {
     cmd = { "rustup", "run", "stable", "rust-analyzer" },
+    root_markers = { "Cargo.toml", "Cargo.lock" },
     settings = {
       -- to enable rust-analyzer settings visit:
       -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
@@ -52,9 +99,9 @@ local config = function()
         },
       },
     },
-  }
+  })
 
-  nvim_lsp.denols.setup {
+  configure_and_enable("denols", {
     init_options = {
       lint = true,
       unstable = true,
@@ -68,26 +115,20 @@ local config = function()
         },
       },
     },
-    root_dir = function(path)
-      local marker = require "climbdir.marker"
-      return require("climbdir").climb(
-        path,
-        marker.one_of(
-          marker.has_readable_file "deno.json",
-          marker.has_readable_file "deno.jsonc",
-          marker.has_readable_file "import_maps.json",
-          marker.has_directory "denops"
-        ),
-        {
-          halt = marker.one_of(marker.has_readable_file "package.json", marker.has_directory "node_modules"),
-        }
-      )
-    end,
-  }
+    root_dir = deno_root_dir,
+  })
 
-  nvim_lsp.gleam.setup {}
+  -- Gleam LSP - only starts in Gleam projects
+  vim.lsp.config("gleam", {
+    root_markers = { "gleam.toml" },
+  })
+  vim.lsp.enable("gleam")
 
-  vim.lsp.enable "zls"
+  -- Zig LSP - only starts in Zig projects
+  vim.lsp.config("zls", {
+    root_markers = { "build.zig", "build.zig.zon" },
+  })
+  vim.lsp.enable("zls")
 end
 
 return {

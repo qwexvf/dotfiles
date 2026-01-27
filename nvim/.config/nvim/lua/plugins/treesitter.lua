@@ -1,15 +1,10 @@
 local config = function()
   require("nvim-treesitter.configs").setup {
-    build = ":TSUpdate",
     indent = {
       enable = true,
     },
     autotag = {
       enable = true,
-    },
-    event = {
-      "BufReadPre",
-      "BufNewFile",
     },
     ensure_installed = {
       "json",
@@ -58,7 +53,9 @@ end
 return {
   "nvim-treesitter/nvim-treesitter",
   config = config,
-  lazy = false,
+  event = { "BufReadPost", "BufNewFile" },
+  cmd = { "TSUpdate", "TSInstall" },
+  build = ":TSUpdate",
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
   },

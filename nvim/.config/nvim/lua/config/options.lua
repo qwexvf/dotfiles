@@ -46,6 +46,5 @@ opt.clipboard = "unnamed,unnamedplus"
 opt.previewheight = 8
 opt.helpheight = 12
 
--- spell check
+-- spell check (enabled per filetype in autocmds.lua)
 opt.spelllang = "en_us"
-opt.spell = true
