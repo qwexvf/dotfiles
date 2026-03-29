@@ -25,7 +25,7 @@
     
     "custom/cpu-info": {
         "format": " {} ",
-        "exec": "usage=$(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{print int(100 - $1)}'); gov=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor); if [ \"$gov\" = \"performance\" ]; then mode=\"PERF\"; elif [ \"$gov\" = \"powersave\" ]; then mode=\"SAVE\"; else mode=\"$gov\"; fi; fan=$(cat /sys/class/hwmon/hwmon*/fan*_input 2>/dev/null | head -1 || echo '0'); temp=$(cat /sys/class/thermal/thermal_zone*/temp 2>/dev/null | head -1 | awk '{print int($1/1000)}'); echo \"${usage}% | ${mode} |  ${fan}rpm |  ${temp}°C\"",
+        "exec": "usage=$(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{print int(100 - $1)}'); gov=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor); if [ \"$gov\" = \"performance\" ]; then mode=\"PERF\"; elif [ \"$gov\" = \"powersave\" ]; then mode=\"SAVE\"; else mode=\"$gov\"; fi; tp_hwmon=$(grep -l thinkpad /sys/class/hwmon/hwmon*/name 2>/dev/null | head -1 | xargs dirname); fan=$(cat \"$tp_hwmon/fan1_input\" 2>/dev/null || echo '0'); temp=$(cat \"$tp_hwmon/temp1_input\" 2>/dev/null | awk '{print int($1/1000)}' || echo '?'); echo \"${usage}% | ${mode} |  ${fan}rpm |  ${temp}°C\"",
         "interval": 2,
         "on-click": "if [ \"$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)\" = \"powersave\" ]; then sudo cpupower frequency-set -g performance; else sudo cpupower frequency-set -g powersave; fi",
         "tooltip": true,

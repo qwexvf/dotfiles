@@ -1,0 +1,18 @@
+// Moonfly + 2D Space Theme for Zellij
+// Migrated from tmux configuration
+
+themes {
+    moonfly {
+        bg "#080808"
+        fg "#bdbdbd"
+        black "#323437"
+        red "#ff5454"
+        green "#8cc85f"
+        yellow "#e3c78a"
+        blue "#80a0ff"
+        magenta "#cf87e8"
+        cyan "#79dac8"
+        white "#c6c6c6"
+        orange "#de935f"
+    }
+}

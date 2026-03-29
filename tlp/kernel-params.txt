@@ -1,0 +1,35 @@
+# Recommended kernel boot parameters for maximum battery life
+# Add these to your bootloader (systemd-boot, GRUB, etc.)
+#
+# For systemd-boot: Edit /boot/loader/entries/*.conf
+# For GRUB: Edit GRUB_CMDLINE_LINUX_DEFAULT in /etc/default/grub
+
+# Current cmdline:
+# initrd=\initramfs-linux-zen.img cryptdevice=PARTUUID=... root=... zswap.enabled=0 rw rootfstype=ext4
+
+# Recommended additions:
+#
+# nvme.noacpi=1              # Let NVMe drives use APST power saving
+# amd_pstate=active          # Use AMD P-State EPP driver (best for Ryzen 7000+)
+# pcie_aspm=force            # Force PCIe ASPM even if BIOS says no (CRITICAL for power saving)
+# pcie_aspm.policy=powersupersave  # Maximum PCIe power saving
+# i915.enable_dc=2           # (Intel only, not needed for AMD)
+# amdgpu.dpm=1               # Enable AMD GPU power management
+# amdgpu.ppfeaturemask=0xffffffff  # Enable all GPU power features
+# mem_sleep_default=s2idle   # Use modern standby (already default on Z13)
+# nowatchdog                 # Disable watchdog timers
+# nmi_watchdog=0             # Disable NMI watchdog
+# workqueue.power_efficient=1 # Use power-efficient workqueues
+# split_lock_detect=off      # Avoid split lock performance penalty
+
+# Full recommended cmdline for your system:
+# initrd=\initramfs-linux-zen.img cryptdevice=PARTUUID=57acf334-a5ec-48ad-b00b-fa3af84b94d0:root root=/dev/mapper/root zswap.enabled=0 rw rootfstype=ext4 amd_pstate=active pcie_aspm=force nowatchdog nmi_watchdog=0 workqueue.power_efficient=1
+
+# To apply:
+# 1. Edit /boot/loader/entries/arch-linux-zen.conf (or similar)
+# 2. Add the parameters to the 'options' line
+# 3. Reboot
+
+# Verify ASPM after reboot:
+# cat /sys/module/pcie_aspm/parameters/policy
+# Should show: [powersupersave] or similar

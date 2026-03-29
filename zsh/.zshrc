@@ -97,6 +97,10 @@ export GPG_TTY=$(tty)
 # FZF
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --no-ignore'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+export FZF_CTRL_R_OPTS='--scheme=history --bind=ctrl-y:execute-silent(echo -n {2..} | wl-copy)+abort'
+
+# FZF key bindings (Ctrl+R for history, Ctrl+T for files, Alt+C for cd)
+source <(fzf --zsh 2>/dev/null) || eval "$(fzf --zsh)"
 
 # Docker
 export DOCKER_CONFIG="${DOCKER_CONFIG:-$HOME/.docker}"
@@ -107,10 +111,6 @@ export ANDROID_HOME="${HOME}/Android/Sdk"
 # Rust
 [ -s "${HOME}/.cargo/env" ] && source "${HOME}/.cargo/env"
 
-# Tmuxifier
-TMUXIFIER_BIN_PATH="${HOME}/.tmux/plugins/tmuxifier/bin"
-[ -d "$TMUXIFIER_BIN_PATH" ] && export PATH="$TMUXIFIER_BIN_PATH:$PATH"
-
 # ------------------------------------------------------------------------------
 # ALIASES
 # ------------------------------------------------------------------------------
@@ -120,6 +120,7 @@ alias vimdiff='nvim -d'
 alias dc='docker compose'
 alias yeet='git push'
 alias yoink='git pull'
+alias ze='zellij'
 
 # ------------------------------------------------------------------------------
 # TOOL INITIALIZATIONS
@@ -134,3 +135,5 @@ fi
 
 # bun completions
 [ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/share/sbt/bin:$PATH"
