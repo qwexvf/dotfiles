@@ -169,7 +169,7 @@
   (centerbox :class "bar"
     (box :halign "start" :spacing 0
       (workspaces))
-    (windowtitle)
+    (box)
     (box :halign "end" :spacing 12
       (cpu)
       (memory)
