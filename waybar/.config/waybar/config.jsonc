@@ -2,7 +2,7 @@
     "position": "top",
     "height": 24,
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock"],
+    "modules-center": ["custom/monitor-ws"],
     "modules-right": ["custom/displaylink", "custom/cpu-info", "memory", "network", "pulseaudio", "battery", "tray"],
     
     "hyprland/workspaces": {
@@ -63,6 +63,14 @@
         "on-click": "if systemctl --user is-active --quiet displaylink.service; then systemctl --user stop displaylink.service; else systemctl --user start displaylink.service; fi",
         "tooltip": true,
         "tooltip-format": "Click to toggle DisplayLink service"
+    },
+
+    "custom/monitor-ws": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/monitor-workspaces.sh",
+        "interval": 1,
+        "tooltip": false
     },
 
     "tray": {

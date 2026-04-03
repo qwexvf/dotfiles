@@ -1,0 +1,88 @@
+* {
+    bg:       rgba(10, 8, 16, 0.85);
+    bg-alt:   rgba(20, 16, 24, 0.9);
+    fg:       #c0b8b4;
+    fg-dim:   #6a5058;
+    accent:   #7888a0;
+    urgent:   #c45068;
+    border:   rgba(255, 255, 255, 0.06);
+
+    background-color: transparent;
+    text-color: @fg;
+    spacing: 0;
+}
+
+window {
+    background-color: @bg;
+    border: 1px solid;
+    border-color: @border;
+    border-radius: 12px;
+    width: 480px;
+    padding: 0;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing: 0;
+    padding: 0;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    padding: 14px 18px;
+    spacing: 10px;
+    children: [ prompt, entry ];
+    border-radius: 12px 12px 0 0;
+}
+
+prompt {
+    text-color: @accent;
+    font: "ZedMono Nerd Font Bold 12";
+}
+
+entry {
+    text-color: @fg;
+    placeholder: "Search...";
+    placeholder-color: @fg-dim;
+}
+
+listview {
+    lines: 7;
+    padding: 6px 0;
+    scrollbar: false;
+    fixed-height: true;
+}
+
+element {
+    padding: 10px 18px;
+    spacing: 12px;
+}
+
+element normal.normal {
+    background-color: transparent;
+}
+
+element alternate.normal {
+    background-color: transparent;
+}
+
+element selected.normal {
+    background-color: @bg-alt;
+    text-color: @accent;
+    border-radius: 0;
+}
+
+element-icon {
+    size: 22px;
+    vertical-align: 0.5;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color: inherit;
+}
+
+element selected.urgent,
+element normal.urgent {
+    text-color: @urgent;
+}

@@ -1,0 +1,9 @@
+configuration {
+    show-icons: true;
+    icon-theme: "Adwaita";
+    font: "ZedMono Nerd Font 12";
+    drun-display-format: "{name}";
+    disable-history: false;
+}
+
+@theme "slate"

@@ -1,41 +1,40 @@
-# Moonfly + 2D Space theme for Alacritty
-# Based on bluz71/vim-moonfly-colors with flat space elements
+# Mountain dusk theme for Alacritty
 
 [colors]
 draw_bold_text_with_bright_colors = true
 
 [colors.bright]
-black = "#949494"
-blue = "#74b2ff"
-cyan = "#85dc85"
-green = "#36c692"
-magenta = "#ae81ff"
-red = "#ff5189"
-white = "#e4e4e4"
-yellow = "#c6c684"
+black = "#6a5058"
+blue = "#7888a0"
+cyan = "#6a9090"
+green = "#7a9068"
+magenta = "#a06888"
+red = "#d86878"
+white = "#dbd4d0"
+yellow = "#b8a068"
 
 [colors.cursor]
-cursor = "#8e8e8e"
-text = "#080808"
+cursor = "#7888a0"
+text = "#0a0810"
 
 [colors.normal]
-black = "#323437"
-blue = "#80a0ff"
-cyan = "#79dac8"
-green = "#8cc85f"
-magenta = "#cf87e8"
-red = "#ff5d5d"
-white = "#c6c6c6"
-yellow = "#e3c78a"
+black = "#1a1420"
+blue = "#5a6880"
+cyan = "#508080"
+green = "#5a7848"
+magenta = "#885078"
+red = "#c45068"
+white = "#c0b8b4"
+yellow = "#a08850"
 
 [colors.primary]
-background = "#080808"
-bright_foreground = "#eeeeee"
-foreground = "#bdbdbd"
+background = "#0a0810"
+bright_foreground = "#dbd4d0"
+foreground = "#b8b0ac"
 
 [colors.selection]
-background = "#b2ceee"
-text = "#080808"
+background = "#3a2840"
+text = "#dbd4d0"
 
 [env]
 TERM = "xterm-256color"

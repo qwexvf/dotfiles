@@ -1,18 +1,141 @@
-// Moonfly + 2D Space Theme for Zellij
-// Migrated from tmux configuration
+// Slate mountain theme for Zellij
+// Cool blue-grey palette to match wallpaper
 
 themes {
     moonfly {
-        bg "#080808"
-        fg "#bdbdbd"
-        black "#323437"
-        red "#ff5454"
-        green "#8cc85f"
-        yellow "#e3c78a"
-        blue "#80a0ff"
-        magenta "#cf87e8"
-        cyan "#79dac8"
-        white "#c6c6c6"
-        orange "#de935f"
+        // Unselected tab ribbons
+        ribbon_unselected {
+            base 176 182 196
+            background 30 32 40
+            emphasis_0 106 122 150
+            emphasis_1 90 100 120
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        // Selected/active tab ribbon
+        ribbon_selected {
+            base 10 11 14
+            background 106 122 150
+            emphasis_0 224 228 236
+            emphasis_1 192 198 208
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        // Unselected text areas
+        text_unselected {
+            base 176 182 196
+            background 10 11 14
+            emphasis_0 106 122 150
+            emphasis_1 90 138 130
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        // Selected text areas
+        text_selected {
+            base 224 228 236
+            background 30 32 40
+            emphasis_0 138 164 200
+            emphasis_1 122 176 168
+            emphasis_2 184 176 122
+            emphasis_3 154 130 184
+        }
+        // Table headers
+        table_title {
+            base 176 182 196
+            background 10 11 14
+            emphasis_0 106 122 150
+            emphasis_1 90 138 130
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        // Table cells
+        table_cell_unselected {
+            base 106 112 128
+            background 10 11 14
+            emphasis_0 106 122 150
+            emphasis_1 90 138 130
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        table_cell_selected {
+            base 224 228 236
+            background 30 32 40
+            emphasis_0 138 164 200
+            emphasis_1 122 176 168
+            emphasis_2 184 176 122
+            emphasis_3 154 130 184
+        }
+        // List items
+        list_unselected {
+            base 176 182 196
+            background 10 11 14
+            emphasis_0 106 122 150
+            emphasis_1 90 138 130
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        list_selected {
+            base 224 228 236
+            background 30 32 40
+            emphasis_0 138 164 200
+            emphasis_1 122 176 168
+            emphasis_2 184 176 122
+            emphasis_3 154 130 184
+        }
+        // Pane frames
+        frame_unselected {
+            base 30 32 40
+            background 10 11 14
+            emphasis_0 72 78 92
+            emphasis_1 90 138 130
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        frame_selected {
+            base 106 122 150
+            background 10 11 14
+            emphasis_0 138 164 200
+            emphasis_1 122 176 168
+            emphasis_2 184 176 122
+            emphasis_3 154 130 184
+        }
+        frame_highlight {
+            base 138 155 181
+            background 10 11 14
+            emphasis_0 106 122 150
+            emphasis_1 90 138 130
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        // Exit codes
+        exit_code_success {
+            base 90 138 88
+            background 10 11 14
+            emphasis_0 122 170 120
+            emphasis_1 106 122 150
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        exit_code_error {
+            base 160 88 88
+            background 10 11 14
+            emphasis_0 200 112 112
+            emphasis_1 106 122 150
+            emphasis_2 160 152 96
+            emphasis_3 122 104 152
+        }
+        // Multiplayer colors
+        multiplayer_user_colors {
+            player_1 106 122 150
+            player_2 90 138 130
+            player_3 160 152 96
+            player_4 122 104 152
+            player_5 160 88 88
+            player_6 138 164 200
+            player_7 122 176 168
+            player_8 184 176 122
+            player_9 154 130 184
+            player_10 200 112 112
+        }
     }
 }

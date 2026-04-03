@@ -1,0 +1,57 @@
+* {
+    bg:       rgba(10, 8, 16, 0.85);
+    bg-alt:   rgba(20, 16, 24, 0.9);
+    fg:       #c0b8b4;
+    accent:   #7888a0;
+    border:   rgba(255, 255, 255, 0.06);
+
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    background-color: @bg;
+    border: 1px solid;
+    border-color: @border;
+    border-radius: 12px;
+    width: 240px;
+    padding: 0;
+    location: center;
+}
+
+mainbox {
+    children: [ listview ];
+    spacing: 0;
+    padding: 6px 0;
+}
+
+listview {
+    lines: 5;
+    scrollbar: false;
+    fixed-height: true;
+    padding: 0;
+}
+
+element {
+    padding: 12px 20px;
+    spacing: 12px;
+}
+
+element normal.normal {
+    background-color: transparent;
+}
+
+element alternate.normal {
+    background-color: transparent;
+}
+
+element selected.normal {
+    background-color: @bg-alt;
+    text-color: @accent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color: inherit;
+    font: "ZedMono Nerd Font 13";
+}

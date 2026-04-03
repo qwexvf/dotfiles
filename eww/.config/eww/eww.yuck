@@ -1,0 +1,214 @@
+; ── Data sources ──────────────────────────────────────────────
+
+(deflisten workspaces
+  :initial "{\"active\":1,\"workspaces\":[]}"
+  `bash ~/.config/eww/bar-workspaces.sh`)
+
+(deflisten active-window
+  :initial ""
+  `bash ~/.config/eww/bar-activewindow.sh`)
+
+(deflisten volume-data
+  :initial "{\"volume\":0,\"muted\":false}"
+  `bash ~/.config/eww/bar-volume.sh`)
+
+(defpoll fcitx-im
+  :interval "1s"
+  :initial "EN"
+  `bash ~/.config/eww/bar-fcitx.sh | head -1`)
+
+(defpoll clock-time :interval "30s" `date '+%H:%M'`)
+(defpoll clock-full :interval "30s" `date '+%A, %B %d %Y  %H:%M:%S'`)
+
+(defpoll battery-data
+  :interval "10s"
+  :initial "{\"capacity\":0,\"status\":\"Unknown\"}"
+  `bash ~/.config/eww/bar-battery.sh | head -1`)
+
+(defpoll network-data
+  :interval "5s"
+  :initial "{\"type\":\"disconnected\",\"essid\":\"\"}"
+  `bash ~/.config/eww/bar-network.sh | head -1`)
+
+(defpoll cpu-data
+  :interval "2s"
+  :initial "{\"usage\":0,\"governor\":\"?\",\"fan\":0,\"temp\":0}"
+  `bash ~/.config/eww/bar-cpu.sh | head -1`)
+
+(defpoll memory-data
+  :interval "3s"
+  :initial "{\"used\":\"0\",\"total\":\"0\",\"percent\":0}"
+  `bash ~/.config/eww/bar-memory.sh | head -1`)
+
+(defpoll disk-data
+  :interval "30s"
+  :initial "{\"percent\":0,\"used\":\"0\"}"
+  `bash ~/.config/eww/bar-disk.sh | head -1`)
+
+(defpoll brightness
+  :interval "2s"
+  :initial "0"
+  `bash ~/.config/eww/bar-brightness.sh | head -1`)
+
+(defpoll notif-data
+  :interval "3s"
+  :initial "{\"count\":0,\"dnd\":false}"
+  `bash ~/.config/eww/bar-notif.sh | head -1`)
+
+; ── Widgets ──────────────────────────────────────────────────
+
+(defwidget workspaces []
+  (box :class "workspaces" :halign "start" :spacing 2
+    (for ws in {workspaces.workspaces}
+      (button
+        :class {ws.id == workspaces.active ? "ws ws-active" :
+                ws.urgent ? "ws ws-urgent" : "ws"}
+        :onclick "hyprctl dispatch workspace ${ws.id}"
+        :tooltip "Workspace ${ws.id}"
+        {ws.id}))))
+
+(defwidget windowtitle []
+  (label :class "title" :limit-width 50 :text active-window :tooltip active-window))
+
+(defwidget cpu []
+  (button
+    :class "mod"
+    :onclick "bash -c 'if [ \"$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)\" = \"powersave\" ]; then sudo cpupower frequency-set -g performance; else sudo cpupower frequency-set -g powersave; fi'"
+    :tooltip "CPU: ${cpu-data.usage}%  Governor: ${cpu-data.governor}  Fan: ${cpu-data.fan}rpm  Temp: ${cpu-data.temp}°C"
+    " ${cpu-data.usage}%"))
+
+(defwidget memory []
+  (label :class "mod"
+    :tooltip "Memory: ${memory-data.used}G / ${memory-data.total}G (${memory-data.percent}%)"
+    :text " ${memory-data.used}G"))
+
+(defwidget disk []
+  (label :class "mod"
+    :tooltip "Disk: ${disk-data.used} used (${disk-data.percent}%)"
+    :text "󰋊 ${disk-data.percent}%"))
+
+(defwidget network []
+  (label :class {network-data.type == "disconnected" ? "mod dim" : "mod"}
+    :tooltip {
+      network-data.type == "wifi" ? "Network: WiFi (${network-data.essid})" :
+      network-data.type == "ethernet" ? "Network: Ethernet (${network-data.essid})" :
+      "Network: Disconnected"}
+    :text {
+      network-data.type == "wifi" ? " ${network-data.essid}" :
+      network-data.type == "ethernet" ? "󰈀" :
+      "󰖪"}))
+
+(defwidget bright []
+  (label :class "mod"
+    :tooltip "Brightness: ${brightness}%"
+    :text "󰃠 ${brightness}"))
+
+(defwidget volume []
+  (button
+    :class {volume-data.muted ? "mod dim" : "mod"}
+    :onclick "bash -c 'if eww active-windows | grep -q vol-popup; then eww close vol-popup; else eww open vol-popup; fi'"
+    :onrightclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    :tooltip {volume-data.muted ? "Volume: Muted" : "Volume: ${volume-data.volume}%"}
+    {volume-data.muted ? "󰝟" :
+     volume-data.volume > 66 ? "󰕾 ${volume-data.volume}" :
+     volume-data.volume > 33 ? "󰖀 ${volume-data.volume}" :
+     "󰕿 ${volume-data.volume}"}))
+
+(defwidget vol-slider []
+  (box :class "vol-popup" :orientation "v" :spacing 8
+    (box :class "vol-header" :spacing 8
+      (label :class "vol-icon" :text {volume-data.muted ? "󰝟" : "󰕾"})
+      (label :class "vol-pct" :text "${volume-data.volume}%"))
+    (scale
+      :class "vol-scale"
+      :min 0
+      :max 100
+      :value {volume-data.volume}
+      :onchange "bash -c 'wpctl set-volume @DEFAULT_AUDIO_SINK@ $(awk \"BEGIN{printf \\\"%.2f\\\", {}/100}\")'")
+    (button
+      :class "vol-mute"
+      :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      {volume-data.muted ? "Unmute" : "Mute"})))
+
+(defwidget inputmethod []
+  (label :class {fcitx-im == "EN" ? "mod dim" : "mod accent"}
+    :tooltip "Input Method: ${fcitx-im}"
+    :text fcitx-im))
+
+(defwidget notif []
+  (button
+    :class {notif-data.count > 0 ? "mod accent" : "mod dim"}
+    :onclick "swaync-client -t -sw"
+    :tooltip {notif-data.dnd ? "Notifications: Do Not Disturb" :
+              notif-data.count > 0 ? "Notifications: ${notif-data.count} unread" :
+              "Notifications: None"}
+    {notif-data.dnd ? "󰂛" :
+     notif-data.count > 0 ? "󰂚 ${notif-data.count}" :
+     "󰂜"}))
+
+(defwidget battery []
+  (label :class {
+    battery-data.capacity < 10 ? "mod critical" :
+    battery-data.capacity < 20 ? "mod warn" :
+    battery-data.status == "Charging" || battery-data.status == "Full" ? "mod accent" :
+    "mod"}
+    :tooltip "Battery: ${battery-data.capacity}% (${battery-data.status})"
+    :text {
+      battery-data.status == "Charging" ? "󰂄 ${battery-data.capacity}" :
+      battery-data.capacity > 80 ? "󰁹 ${battery-data.capacity}" :
+      battery-data.capacity > 50 ? "󰁿 ${battery-data.capacity}" :
+      battery-data.capacity > 20 ? "󰁽 ${battery-data.capacity}" :
+      "󰁺 ${battery-data.capacity}"}))
+
+(defwidget clock []
+  (label :class "time" :text clock-time :tooltip clock-full))
+
+; ── Layout ───────────────────────────────────────────────────
+
+(defwidget bar-layout []
+  (centerbox :class "bar"
+    (box :halign "start" :spacing 0
+      (workspaces))
+    (windowtitle)
+    (box :halign "end" :spacing 12
+      (cpu)
+      (memory)
+      (disk)
+      (network)
+      (bright)
+      (volume)
+      (inputmethod)
+      (notif)
+      (battery)
+      (clock))))
+
+; ── Windows ──────────────────────────────────────────────────
+
+(defwindow vol-popup
+  :monitor 0
+  :namespace "eww-vol-popup"
+  :stacking "overlay"
+  :focusable false
+  :geometry (geometry
+    :anchor "top right"
+    :x "160px"
+    :y "34px"
+    :width "200px"
+    :height "100px")
+  (eventbox
+    :onhoverlost "eww close vol-popup"
+    (vol-slider)))
+
+(defwindow bar
+  :monitor 0
+  :namespace "eww-bar"
+  :stacking "fg"
+  :exclusive true
+  :focusable false
+  :geometry (geometry
+    :anchor "top center"
+    :x "0px"
+    :y "0px"
+    :width "100%"
+    :height "28px")
+  (bar-layout))

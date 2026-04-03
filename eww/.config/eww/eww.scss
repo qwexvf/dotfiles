@@ -1,0 +1,142 @@
+$bg: rgba(10, 8, 16, 0.7);
+$accent: #7888a0;
+$secondary: #c45068;
+$muted: #5a6880;
+$dim: #2a2838;
+$text: #c0b8b4;
+$bright: #dbd4d0;
+$font: "ZedMono Nerd Font", "JetBrainsMono Nerd Font", monospace;
+
+* {
+  all: unset;
+  font-family: $font;
+  font-size: 13px;
+}
+
+window {
+  background: transparent;
+}
+
+.bar {
+  background: $bg;
+  padding: 0 6px;
+}
+
+// ── Workspaces ─────────────────────────────
+
+.workspaces {
+  margin: 0;
+}
+
+.ws {
+  color: $dim;
+  padding: 0 8px;
+  margin: 2px 1px;
+  border-radius: 4px;
+
+  &:hover { color: $muted; }
+}
+
+.ws-active {
+  color: $accent;
+  font-weight: bold;
+}
+
+.ws-urgent {
+  color: $secondary;
+  font-weight: bold;
+}
+
+// ── Right modules ──────────────────────────
+
+.mod {
+  color: $muted;
+}
+
+.dim {
+  color: $dim;
+}
+
+.accent {
+  color: $accent;
+}
+
+.warn {
+  color: #c09040;
+}
+
+.critical {
+  color: #d04040;
+}
+
+// ── Center title ───────────────────────────
+
+.title {
+  color: #3a3848;
+  font-size: 12px;
+}
+
+// ── Volume popup ───────────────────────────
+
+.vol-popup {
+  background: rgba(10, 8, 16, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.vol-header {
+  margin-bottom: 2px;
+}
+
+.vol-icon {
+  color: $accent;
+  font-size: 15px;
+}
+
+.vol-pct {
+  color: $text;
+  font-size: 13px;
+}
+
+.vol-scale {
+  min-height: 6px;
+
+  trough {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    min-height: 6px;
+  }
+
+  highlight {
+    background: $accent;
+    border-radius: 3px;
+    min-height: 6px;
+  }
+
+  slider {
+    background: $bright;
+    border-radius: 50%;
+    min-width: 14px;
+    min-height: 14px;
+    margin: -4px 0;
+  }
+}
+
+.vol-mute {
+  color: $muted;
+  font-size: 11px;
+  margin-top: 2px;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+// ── Clock ──────────────────────────────────
+
+.time {
+  color: $accent;
+  font-weight: bold;
+  padding-right: 2px;
+}

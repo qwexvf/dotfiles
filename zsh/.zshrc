@@ -137,3 +137,38 @@ fi
 [ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/share/sbt/bin:$PATH"
+
+# ------------------------------------------------------------------------------
+# ZELLIJ TAB NAME (dir: command)
+# ------------------------------------------------------------------------------
+if [[ -n "$ZELLIJ" ]]; then
+  _zellij_short_pwd() {
+    local dir="${PWD/#$HOME/~}"
+    local parts=("${(@s:/:)dir}")
+    local n=${#parts}
+    local result=""
+    for (( i=1; i<=n; i++ )); do
+      if (( i > 1 )); then result+="/"; fi
+      local p="${parts[$i]}"
+      if [[ "$p" == "~" ]] || (( ${#p} <= 7 )); then
+        result+="$p"
+      else
+        result+="${p:0:3}..${p: -3}"
+      fi
+    done
+    echo "$result"
+  }
+
+  _zellij_precmd() {
+    zellij action rename-tab "$(_zellij_short_pwd)" 2>/dev/null
+  }
+
+  _zellij_preexec() {
+    local cmd="${1%% *}"
+    zellij action rename-tab "$(_zellij_short_pwd): $cmd" 2>/dev/null
+  }
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _zellij_precmd
+  add-zsh-hook preexec _zellij_preexec
+fi

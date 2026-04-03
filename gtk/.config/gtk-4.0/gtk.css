@@ -2,7 +2,7 @@
 *:selected,
 *:selected:focus,
 selection {
-    background-color: #3584e4;
+    background-color: #7888a0;
     color: #ffffff;
 }
 
@@ -10,13 +10,13 @@ textview text selection,
 textview text:selected,
 entry selection,
 entry:selected {
-    background-color: #3584e4;
+    background-color: #7888a0;
     color: #ffffff;
 }
 
 /* Browser-specific fixes */
 webview selection {
-    background-color: #3584e4 !important;
+    background-color: #7888a0 !important;
     color: #ffffff !important;
 }
 
@@ -28,79 +28,79 @@ webview selection {
 }
 
 window {
-    background-color: #2e3440;
+    background-color: #0e1014;
     opacity: 1.0 !important;
 }
 
 .background {
-    background-color: #2e3440;
+    background-color: #0e1014;
     opacity: 1.0 !important;
 }
 
 headerbar {
-    background-color: #3b4252;
+    background-color: #181b22;
     opacity: 1.0 !important;
 }
 
 button {
-    background-color: #434c5e;
+    background-color: #222630;
     opacity: 1.0 !important;
 }
 
 entry {
-    background-color: #434c5e;
+    background-color: #222630;
     opacity: 1.0 !important;
 }
 
 menubar {
-    background-color: #3b4252;
+    background-color: #181b22;
     opacity: 1.0 !important;
 }
 
 toolbar {
-    background-color: #3b4252;
+    background-color: #181b22;
     opacity: 1.0 !important;
 }
 
 /* File dialog and browser specific fixes */
 filechooser {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 filechooserwidget {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 filechooserdialog {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 dialog {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 .dialog {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 /* Portal file picker */
 .file-chooser {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 popover {
-    background-color: #3b4252 !important;
+    background-color: #181b22 !important;
     opacity: 1.0 !important;
 }
 
 .popover {
-    background-color: #3b4252 !important;
+    background-color: #181b22 !important;
     opacity: 1.0 !important;
 }
 
@@ -109,34 +109,34 @@ filechooserwidget,
 filechooserdialog,
 .file-chooser-widget,
 .file-chooser-dialog {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
-    background: #2e3440 !important;
+    background: #0e1014 !important;
     background-image: none !important;
 }
 
 /* Fix any remaining transparency */
 .window-frame {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 .titlebar {
-    background-color: #3b4252 !important;
+    background-color: #181b22 !important;
     opacity: 1.0 !important;
 }
 
 .view {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 treeview {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }
 
 scrolledwindow {
-    background-color: #2e3440 !important;
+    background-color: #0e1014 !important;
     opacity: 1.0 !important;
 }

@@ -8,36 +8,38 @@
 }
 
 window#waybar {
-    background: #0a0a0a;
-    color: #e0e0e0;
-    border-bottom: 1px solid #222222;
+    background: #0a0b0e;
+    color: #c8cdd8;
 }
 
 #workspaces {
     margin: 0;
-    background: #0a0a0a;
+    background: #0a0b0e;
 }
 
 #workspaces button {
     padding: 0 16px;
-    color: #555555;
-    background: #0a0a0a;
+    color: #484e5c;
+    background: #0a0b0e;
+    margin: 3px 2px;
+    border-radius: 4px;
 }
 
 #workspaces button:hover {
-    color: #7aa2b3;
-    background: #111111;
+    color: #8a9bb5;
+    background: #12141a;
 }
 
 #workspaces button.active {
-    color: #7aa2b3;
-    background: #0a0a0a;
+    color: #e0e4ec;
+    background: #6a7a96;
     font-weight: bold;
-    border-bottom: 2px solid #7aa2b3;
+    border-radius: 4px;
+    margin: 3px 2px;
 }
 
 #workspaces button.urgent {
-    color: #0a0a0a;
+    color: #0a0b0e;
     background: #ff4444;
 }
 
@@ -51,33 +53,33 @@ window#waybar {
 #tray {
     padding: 0 14px;
     margin: 0;
-    background: #0a0a0a;
-    color: #888888;
-    border-left: 1px solid #1a1a1a;
+    background: #0a0b0e;
+    color: #6a7080;
+    border-left: 1px solid #181b22;
 }
 
 #clock {
-    color: #7aa2b3;
+    color: #8a9bb5;
     font-weight: bold;
     border-left: none;
     padding-right: 8px;
 }
 
 #custom-cpu-info {
-    color: #777777;
+    color: #5c6270;
 }
 
 #memory {
-    color: #888888;
+    color: #6a7080;
 }
 
 #battery {
-    color: #888888;
+    color: #6a7080;
 }
 
 #battery.plugged,
 #battery.charging {
-    color: #7aa2b3;
+    color: #8a9bb5;
 }
 
 #battery.warning {
@@ -85,29 +87,29 @@ window#waybar {
 }
 
 #battery.critical {
-    color: #0a0a0a;
+    color: #0a0b0e;
     background: #ff4444;
     font-weight: bold;
 }
 
 #network {
-    color: #888888;
+    color: #6a7080;
 }
 
 #network.disconnected {
-    color: #444444;
+    color: #2e3340;
 }
 
 #pulseaudio {
-    color: #777777;
+    color: #5c6270;
 }
 
 #pulseaudio.muted {
-    color: #333333;
+    color: #282c36;
 }
 
 #tray {
-    background: #0a0a0a;
+    background: #0a0b0e;
 }
 
 #tray > .passive {
@@ -115,9 +117,16 @@ window#waybar {
 }
 
 #tray > .needs-attention {
-    background: #1a1a1a;
+    background: #181b22;
+}
+
+#custom-monitor-ws {
+    color: #8a9bb5;
+    font-weight: bold;
+    padding: 0 12px;
+    margin-left: 8px;
 }
 
 #custom-displaylink {
-    color: #888888;
+    color: #6a7080;
 }
